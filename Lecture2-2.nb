@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       145,          7]
-NotebookDataLength[     34520,        946]
-NotebookOptionsPosition[     31925,        862]
-NotebookOutlinePosition[     32353,        879]
-CellTagsIndexPosition[     32310,        876]
+NotebookDataLength[     39861,       1060]
+NotebookOptionsPosition[     37134,        973]
+NotebookOutlinePosition[     37562,        990]
+CellTagsIndexPosition[     37519,        987]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -33,28 +33,38 @@ Cell[CellGroupData[{
 Cell["Initialization", "Subsection",
  CellChangeTimes->{{3.5360374730944557`*^9, 3.536037479508855*^9}}],
 
+Cell[TextData[{
+ "Generate model files from ",
+ ButtonBox["phi4.fr",
+  BaseStyle->"Hyperlink",
+  ButtonData->{"phi4.fr", None}],
+ " by using FeynRules before doing this tutoral. See the example in \
+\[OpenCurlyDoubleQuote]",
+ ButtonBox["phi4_feynrules.nb",
+  BaseStyle->"Hyperlink",
+  ButtonData->{"phi4_feynrules.nb", None}],
+ "\[CloseCurlyDoubleQuote]."
+}], "Text",
+ CellChangeTimes->{{3.630407361427362*^9, 3.630407369333026*^9}, {
+  3.63040860623291*^9, 3.630408730857409*^9}}],
+
 Cell[BoxData[
  RowBox[{
   RowBox[{"Exit", "[", "]"}], ";"}]], "Input",
  CellChangeTimes->{{3.5360382549509077`*^9, 3.536038276342574*^9}, 
-   3.53603834277113*^9}],
+   3.53603834277113*^9, {3.63040870828338*^9, 3.630408715560848*^9}}],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[{
  RowBox[{
-  RowBox[{"SetDirectory", "[", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{"$HomeDirectory", ",", "\"\<FeynLecture\>\""}], "}"}], "]"}], 
-   "]"}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
   RowBox[{"model", "=", 
    RowBox[{"FileNameJoin", "[", 
     RowBox[{"{", 
      RowBox[{
-     "\"\<phi_to_four_theory_FA\>\"", ",", "\"\<phi_to_four_theory_FA\>\""}], 
-     "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+      RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+      "\"\<phi_to_four_theory_FA\>\"", ",", "\"\<phi_to_four_theory_FA\>\""}],
+      "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{"<<", "FeynArts`"}], "\[IndentingNewLine]", 
  RowBox[{"<<", "FormCalc`"}], "\[IndentingNewLine]", 
  RowBox[{
@@ -75,7 +85,8 @@ Cell[BoxData[{
   3.53603838940345*^9}, {3.536045708094194*^9, 3.536045714062668*^9}, {
   3.536052625049251*^9, 3.536052625325549*^9}, {3.536053272279801*^9, 
   3.536053273111397*^9}, {3.5363028962875032`*^9, 3.536302959580532*^9}, {
-  3.583232144794043*^9, 3.5832321452628736`*^9}}],
+  3.583232144794043*^9, 3.5832321452628736`*^9}, {3.630407217847831*^9, 
+  3.630407276241263*^9}, {3.630408749673829*^9, 3.630408751189788*^9}}],
 
 Cell[CellGroupData[{
 
@@ -83,50 +94,71 @@ Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.583232249272353*^9}],
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.630408753346887*^9}],
 
-Cell[BoxData["\<\"FeynArts 3.8\"\>"], "Print",
+Cell[BoxData["\<\"FeynArts 3.9\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.5832322492735567`*^9}],
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.630408753351122*^9}],
 
 Cell[BoxData["\<\"by Hagen Eck, Sepp Kueblbeck, and Thomas Hahn\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.583232249274871*^9}],
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.6304087533548193`*^9}],
 
-Cell[BoxData["\<\"last revised 1 Jul 13\"\>"], "Print",
+Cell[BoxData["\<\"last revised 2 Dec 14\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.583232249276222*^9}],
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.630408753358458*^9}],
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.5832322493432007`*^9}],
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.6304087534315*^9}],
 
-Cell[BoxData["\<\"FormCalc 8.2\"\>"], "Print",
+Cell[BoxData["\<\"FormCalc 8.4\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.583232249344688*^9}],
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.630408753435899*^9}],
 
 Cell[BoxData["\<\"by Thomas Hahn\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.583232249346182*^9}],
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.6304087534402857`*^9}],
 
-Cell[BoxData["\<\"last revised 2 Jul 13\"\>"], "Print",
+Cell[BoxData["\<\"last revised 5 Nov 14\"\>"], "Print",
  CellChangeTimes->{
   3.536302960180992*^9, 3.537755593946958*^9, 3.537755682506302*^9, 
    3.537861521368989*^9, {3.583232152678288*^9, 3.583232170993794*^9}, 
-   3.583232249347908*^9}]
-}, Open  ]]
+   3.583232249272353*^9, 3.630407190861538*^9, 3.630407250734097*^9, 
+   3.630407293162382*^9, 3.6304087534441977`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"$CharacterEncoding", "::", "utf8"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The byte sequence \[NoBreak]\\!\\({160}\\)\[NoBreak] could \
+not be interpreted as a character in the UTF-8 character encoding. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/$CharacterEncoding\\\", \
+ButtonNote -> \\\"$CharacterEncoding::utf8\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.630407191061612*^9, 3.630407250823463*^9, 
+  3.6304072933616877`*^9, 3.630408753553768*^9}]
 }, Open  ]]
 }, Open  ]],
 
@@ -180,7 +212,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757403454*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -191,7 +225,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.58323225140946*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574066057`*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -202,7 +238,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.58323225141145*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757410534*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -213,7 +251,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.58323225141343*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.63040875741477*^9}],
 
 Cell[BoxData[
  GraphicsBox[{InsetBox[
@@ -229,7 +269,7 @@ Cell[BoxData[
       {PointSize[0.04], PointBox[{10., 10.}]}, InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"T1\"\>",
+         TagBox["T1",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->7.997355371900827],
@@ -252,7 +292,7 @@ Cell[BoxData[
        PointBox[{13.99999999999999, 10.}]}, InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"T2\"\>",
+         TagBox["T2",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->7.997355371900827],
@@ -274,7 +314,7 @@ Cell[BoxData[
        PointBox[{10., 6.}]}, InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"T3\"\>",
+         TagBox["T3",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->7.997355371900827],
@@ -295,7 +335,7 @@ Cell[BoxData[
        PointBox[{10., 6.}]}, InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"T4\"\>",
+         TagBox["T4",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->7.997355371900827],
@@ -305,7 +345,7 @@ Cell[BoxData[
      PlotRange->{{-1, 21}, {-1, 21}}], {0, 22}, {0, 0}, {22, 22}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"2\"\>",
+      TagBox["2",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -313,7 +353,7 @@ Cell[BoxData[
       11.996033057851239`]& ], {28.5, 69.96}, {0, 0}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"\[RightArrow]\"\>",
+      TagBox["\[RightArrow]",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -321,7 +361,7 @@ Cell[BoxData[
       11.996033057851239`]& ], {33., 69.96}, {0, 0}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"2\"\>",
+      TagBox["2",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -331,12 +371,16 @@ Cell[BoxData[
   PlotRange->{{0, 66}, {0, 72.6}}]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251463719*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574204407`*^9}],
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251465275*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757427452*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -344,39 +388,49 @@ Cell[BoxData[
    "\[InvisibleSpace]", "\<\"generic\"\>", 
    "\[InvisibleSpace]", "\<\" model file \"\>", 
    "\[InvisibleSpace]", \
-"\<\"/Users/misho/Documents/website/phys/FeynLecture/all_20130720/phi_to_four_\
-theory_FA/phi_to_four_theory_FA.gen\"\>"}],
+"\<\"/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_theory_\
+FA.gen\"\>"}],
   SequenceForm[
   "", "loading ", "generic", " model file ", 
-   "/Users/misho/Documents/website/phys/FeynLecture/all_20130720/phi_to_four_\
-theory_FA/phi_to_four_theory_FA.gen"],
+   "/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_theory_\
+FA.gen"],
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.5832322514667664`*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757431168*^9}],
 
 Cell[BoxData["\<\"> $GenericMixing is OFF\"\>"], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251468606*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574348383`*^9}],
 
 Cell[BoxData[
  InterpretationBox[
   RowBox[{"\<\"generic model \"\>", "\[InvisibleSpace]", 
-   RowBox[{"{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}], 
-   "\[InvisibleSpace]", "\<\" initialized\"\>"}],
+   RowBox[{
+   "{", "\<\"/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_\
+theory_FA\"\>", "}"}], "\[InvisibleSpace]", "\<\" initialized\"\>"}],
   SequenceForm[
-  "generic model ", {"phi_to_four_theory_FA/phi_to_four_theory_FA"}, 
-   " initialized"],
+  "generic model ", {
+   "/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_theory_\
+FA"}, " initialized"],
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251470093*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757438513*^9}],
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.5832322514716167`*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757442196*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -384,16 +438,18 @@ Cell[BoxData[
    "\[InvisibleSpace]", "\<\"classes\"\>", 
    "\[InvisibleSpace]", "\<\" model file \"\>", 
    "\[InvisibleSpace]", \
-"\<\"/Users/misho/Documents/website/phys/FeynLecture/all_20130720/phi_to_four_\
-theory_FA/phi_to_four_theory_FA.mod\"\>"}],
+"\<\"/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_theory_\
+FA.mod\"\>"}],
   SequenceForm[
   "", "loading ", "classes", " model file ", 
-   "/Users/misho/Documents/website/phys/FeynLecture/all_20130720/phi_to_four_\
-theory_FA/phi_to_four_theory_FA.mod"],
+   "/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_theory_\
+FA.mod"],
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251473167*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574462976`*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -404,12 +460,16 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.5832322514749393`*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757450583*^9}],
 
 Cell[BoxData["\<\"> $CounterTerms are ON\"\>"], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251476557*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757454804*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -419,25 +479,33 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251478109*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757458942*^9}],
 
 Cell[BoxData[
  InterpretationBox[
   RowBox[{"\<\"classes model \"\>", "\[InvisibleSpace]", 
-   RowBox[{"{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}], 
-   "\[InvisibleSpace]", "\<\" initialized\"\>"}],
+   RowBox[{
+   "{", "\<\"/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_\
+theory_FA\"\>", "}"}], "\[InvisibleSpace]", "\<\" initialized\"\>"}],
   SequenceForm[
-  "classes model ", {"phi_to_four_theory_FA/phi_to_four_theory_FA"}, 
-   " initialized"],
+  "classes model ", {
+   "/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_four_theory_\
+FA"}, " initialized"],
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251479599*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574628553`*^9}],
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251481073*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574671793`*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -447,7 +515,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251482539*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.63040875747069*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -458,7 +528,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251484097*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757474318*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -469,7 +541,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251485607*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574783707`*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -480,7 +554,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251487115*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574824038`*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -491,7 +567,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251488618*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.630408757486109*^9}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -501,7 +579,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251490107*^9}]
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087574901543`*^9}]
 }, Open  ]],
 
 Cell[BoxData[
@@ -520,10 +600,12 @@ Cell[BoxData[
         RowBox[{"S", "[", "1", "]"}]}], "}"}]}]}], ",", 
     RowBox[{"Model", "\[Rule]", 
      RowBox[{
-     "{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}]}], ",", 
+     "{", "\<\"/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_\
+four_theory_FA\"\>", "}"}]}], ",", 
     RowBox[{"GenericModel", "\[Rule]", 
      RowBox[{
-     "{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}]}], ",", 
+     "{", "\<\"/Users/misho/repos/FeynLecture/phi_to_four_theory_FA/phi_to_\
+four_theory_FA\"\>", "}"}]}], ",", 
     RowBox[{"InsertionLevel", "\[Rule]", 
      RowBox[{"{", "Classes", "}"}]}], ",", 
     RowBox[{"ExcludeParticles", "\[Rule]", 
@@ -610,7 +692,9 @@ Cell[BoxData[
   "]"}]], "Output",
  CellChangeTimes->{
   3.536303015740984*^9, {3.536303050109687*^9, 3.536303076786826*^9}, 
-   3.53775568442761*^9, 3.537861524172722*^9, 3.583232251492051*^9}],
+   3.53775568442761*^9, 3.537861524172722*^9, 3.583232251492051*^9, 
+   3.630407197684949*^9, 3.630407253679574*^9, 3.63040729588208*^9, 
+   3.630408757495573*^9}],
 
 Cell[CellGroupData[{
 
@@ -623,7 +707,9 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251497527*^9}],
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.63040875749932*^9}],
 
 Cell[BoxData[
  GraphicsBox[{InsetBox[
@@ -633,7 +719,7 @@ Cell[BoxData[
        9.999999999983629, 10.000000000007276`}}], InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"phi\"\>",
+         TagBox["phi",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->9.996694214876033],
@@ -643,7 +729,7 @@ Cell[BoxData[
        9.999999999985448, 9.999999999989086}}], InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"phi\"\>",
+         TagBox["phi",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->9.996694214876033],
@@ -654,7 +740,7 @@ Cell[BoxData[
        10.000000000009095`, 10.000000000003638`}}], InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"phi\"\>",
+         TagBox["phi",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->9.996694214876033],
@@ -663,7 +749,7 @@ Cell[BoxData[
 {1, -1}], LineBox[{{20., 5.}, {10., 10.}}], InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"phi\"\>",
+         TagBox["phi",
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->9.996694214876033],
@@ -673,7 +759,8 @@ Cell[BoxData[
       {PointSize[0.04], PointBox[{10., 10.}]}, InsetBox[
        TagBox[
         StyleBox[
-         TagBox["\<\"T1 C1 N1\"\>",
+         TagBox[
+          RowBox[{"T1", " ", "C1", " ", "N1"}],
           DisplayForm],
          FontFamily->"Helvetica",
          FontSize->7.997355371900827],
@@ -683,7 +770,7 @@ Cell[BoxData[
      PlotRange->{{-1, 21}, {-1, 21}}], {0, 44}, {0, 0}, {22, 22}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"phi\"\>",
+      TagBox["phi",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -691,7 +778,7 @@ Cell[BoxData[
       11.996033057851239`]& ], {24., 69.96}, {0, 0}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"phi\"\>",
+      TagBox["phi",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -699,7 +786,7 @@ Cell[BoxData[
       11.996033057851239`]& ], {28.5, 69.96}, {0, 0}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"\[RightArrow]\"\>",
+      TagBox["\[RightArrow]",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -707,7 +794,7 @@ Cell[BoxData[
       11.996033057851239`]& ], {33., 69.96}, {0, 0}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"phi\"\>",
+      TagBox["phi",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -715,7 +802,7 @@ Cell[BoxData[
       11.996033057851239`]& ], {37.5, 69.96}, {0, 0}], InsetBox[
     TagBox[
      StyleBox[
-      TagBox["\<\"phi\"\>",
+      TagBox["phi",
        DisplayForm],
       FontFamily->"Helvetica",
       FontSize->11.996033057851239`],
@@ -725,7 +812,9 @@ Cell[BoxData[
   PlotRange->{{0, 66}, {0, 72.6}}]], "Print",
  CellChangeTimes->{
   3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
-   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251499329*^9}]
+   3.537755683760273*^9, 3.5378615231622543`*^9, 3.583232251407583*^9, 
+   3.630407197568304*^9, 3.6304072535810947`*^9, 3.630407295789062*^9, 
+   3.6304087575030527`*^9}]
 }, Open  ]]
 }, Open  ]],
 
@@ -740,14 +829,17 @@ Cell[BoxData[{
     RowBox[{"CreateFeynAmp", "[", "diag", "]"}], ",", 
     RowBox[{"FermionChains", "\[Rule]", "VA"}]}], 
    "]"}]}], "\[IndentingNewLine]", 
- RowBox[{"SquaredME", "[", "amp", "]"}]}], "Input"],
+ RowBox[{"SquaredME", "[", "amp", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"%", "//", "FullForm"}]}], "Input",
+ CellChangeTimes->{{3.6304087705183687`*^9, 3.630408772640792*^9}}],
 
 Cell[CellGroupData[{
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.583232262408499*^9}}],
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.6304087729231453`*^9}}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -757,7 +849,8 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.583232262409692*^9}}],
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.630408772926199*^9}}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -768,7 +861,8 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.5832322624109507`*^9}}],
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.630408772931282*^9}}],
 
 Cell[BoxData[
  InterpretationBox[
@@ -778,37 +872,37 @@ Cell[BoxData[
   Editable->False]], "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.583232262411681*^9}}],
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.630408772933847*^9}}],
 
 Cell[BoxData["\<\"\"\>"], "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.583232262412369*^9}}],
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.6304087729362297`*^9}}],
 
 Cell[BoxData[
  InterpretationBox[
   RowBox[{"\<\"preparing FORM code in \"\>", 
-   "\[InvisibleSpace]", \
-"\<\"/Users/misho/Documents/website/phys/FeynLecture/all_20130720/fc-amp-1.\
-frm\"\>"}],
-  SequenceForm[
-  "preparing FORM code in ", 
-   "/Users/misho/Documents/website/phys/FeynLecture/all_20130720/fc-amp-1.\
-frm"],
+   "\[InvisibleSpace]", "\<\"/Users/misho/fc-amp-1.frm\"\>"}],
+  SequenceForm["preparing FORM code in ", "/Users/misho/fc-amp-1.frm"],
   Editable->False]], "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.583232262413046*^9}}],
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.630408772938271*^9}}],
 
 Cell["running FORM... ", "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.5832322624142103`*^9}}],
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.630408772940906*^9}}],
 
 Cell[BoxData["\<\"ok\"\>"], "Print",
  CellChangeTimes->{
   3.5363030788531427`*^9, 3.537755688632115*^9, 3.537861525900263*^9, {
-   3.5832322533058767`*^9, 3.5832322624440613`*^9}}]
+   3.5832322533058767`*^9, 3.583232262408499*^9}, {3.630408760856298*^9, 
+   3.6304087729631357`*^9}}]
 }, Open  ]],
 
 Cell[BoxData[
@@ -842,7 +936,8 @@ Cell[BoxData[
   RowBox[{"-", "lambda"}], "]"}]], "Output",
  CellChangeTimes->{
   3.536303079163224*^9, 3.53775568979605*^9, 3.537861526311384*^9, {
-   3.5832322533443327`*^9, 3.583232262445153*^9}}],
+   3.5832322533443327`*^9, 3.583232262445153*^9}, {3.630408760929001*^9, 
+   3.630408772994657*^9}}],
 
 Cell[BoxData[
  RowBox[{"lambda", " ", 
@@ -855,15 +950,31 @@ Cell[BoxData[
     Editable->False], ")"}]}]], "Output",
  CellChangeTimes->{
   3.536303079163224*^9, 3.53775568979605*^9, 3.537861526311384*^9, {
-   3.5832322533443327`*^9, 3.5832322624471083`*^9}}]
+   3.5832322533443327`*^9, 3.583232262445153*^9}, {3.630408760929001*^9, 
+   3.630408772997964*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   RowBox[{"Times", "[", 
+    RowBox[{"lambda", ",", 
+     RowBox[{"Conjugate", "[", "lambda", "]"}]}], "]"}],
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Output",
+ CellChangeTimes->{
+  3.536303079163224*^9, 3.53775568979605*^9, 3.537861526311384*^9, {
+   3.5832322533443327`*^9, 3.583232262445153*^9}, {3.630408760929001*^9, 
+   3.630408773001484*^9}}]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1440, 852},
-WindowMargins->{{-16, Automatic}, {Automatic, 0}},
-FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 28, \
-2013)",
+WindowSize->{2880, 1684},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (December 4, \
+2014)",
 StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
   CharacterEncoding -> "UTF-8"]
 ]
@@ -882,69 +993,72 @@ Cell[CellGroupData[{
 Cell[567, 22, 192, 6, 179, "Title"],
 Cell[CellGroupData[{
 Cell[784, 32, 104, 1, 63, "Subsection"],
-Cell[891, 35, 163, 4, 74, "Input"],
+Cell[891, 35, 481, 13, 60, "Text"],
+Cell[1375, 50, 208, 4, 74, "Input"],
 Cell[CellGroupData[{
-Cell[1079, 43, 1518, 34, 273, "Input"],
+Cell[1608, 58, 1457, 30, 207, "Input"],
 Cell[CellGroupData[{
-Cell[2622, 81, 221, 4, 41, "Print"],
-Cell[2846, 87, 235, 4, 41, "Print"],
-Cell[3084, 93, 266, 4, 41, "Print"],
-Cell[3353, 99, 242, 4, 41, "Print"],
-Cell[3598, 105, 223, 4, 41, "Print"],
-Cell[3824, 111, 233, 4, 41, "Print"],
-Cell[4060, 117, 235, 4, 41, "Print"],
-Cell[4298, 123, 242, 4, 41, "Print"]
-}, Open  ]]
-}, Open  ]]
+Cell[3090, 92, 313, 5, 41, "Print"],
+Cell[3406, 99, 325, 5, 41, "Print"],
+Cell[3734, 106, 360, 5, 41, "Print"],
+Cell[4097, 113, 334, 5, 41, "Print"],
+Cell[4434, 120, 311, 5, 41, "Print"],
+Cell[4748, 127, 325, 5, 41, "Print"],
+Cell[5076, 134, 329, 5, 41, "Print"],
+Cell[5408, 141, 336, 5, 41, "Print"]
 }, Open  ]],
-Cell[CellGroupData[{
-Cell[4601, 134, 233, 3, 63, "Subsection"],
-Cell[CellGroupData[{
-Cell[4859, 141, 1120, 28, 207, "Input"],
-Cell[CellGroupData[{
-Cell[6004, 173, 417, 9, 41, "Print"],
-Cell[6424, 184, 416, 9, 41, "Print"],
-Cell[6843, 195, 416, 9, 41, "Print"],
-Cell[7262, 206, 416, 9, 41, "Print"],
-Cell[7681, 217, 4839, 116, 808, "Print"],
-Cell[12523, 335, 197, 3, 41, "Print"],
-Cell[12723, 340, 715, 15, 104, "Print"],
-Cell[13441, 357, 220, 3, 41, "Print"],
-Cell[13664, 362, 519, 11, 42, "Print"],
-Cell[14186, 375, 199, 3, 41, "Print"],
-Cell[14388, 380, 713, 15, 104, "Print"],
-Cell[15104, 397, 504, 9, 41, "Print"],
-Cell[15611, 408, 219, 3, 41, "Print"],
-Cell[15833, 413, 362, 8, 41, "Print"],
-Cell[16198, 423, 519, 11, 42, "Print"],
-Cell[16720, 436, 197, 3, 41, "Print"],
-Cell[16920, 441, 390, 8, 41, "Print"],
-Cell[17313, 451, 437, 9, 41, "Print"],
-Cell[17753, 462, 439, 9, 41, "Print"],
-Cell[18195, 473, 439, 9, 41, "Print"],
-Cell[18637, 484, 439, 9, 41, "Print"],
-Cell[19079, 495, 369, 8, 41, "Print"]
-}, Open  ]],
-Cell[19463, 506, 3922, 106, 471, "Output"],
-Cell[CellGroupData[{
-Cell[23410, 616, 417, 9, 41, "Print"],
-Cell[23830, 627, 3745, 100, 808, "Print"]
+Cell[5759, 149, 598, 11, 45, "Message"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[27624, 733, 352, 9, 163, "Input"],
+Cell[6406, 166, 233, 3, 63, "Subsection"],
 Cell[CellGroupData[{
-Cell[28001, 746, 177, 3, 41, "Print"],
-Cell[28181, 751, 390, 8, 41, "Print"],
-Cell[28574, 761, 419, 9, 41, "Print"],
-Cell[28996, 772, 349, 8, 41, "Print"],
-Cell[29348, 782, 177, 3, 41, "Print"],
-Cell[29528, 787, 496, 13, 73, "Print"],
-Cell[30027, 802, 178, 3, 41, "Print"],
-Cell[30208, 807, 181, 3, 41, "Print"]
+Cell[6664, 173, 1120, 28, 174, "Input"],
+Cell[CellGroupData[{
+Cell[7809, 205, 515, 11, 41, "Print"],
+Cell[8327, 218, 517, 11, 41, "Print"],
+Cell[8847, 231, 515, 11, 41, "Print"],
+Cell[9365, 244, 514, 11, 41, "Print"],
+Cell[9882, 257, 4883, 118, 808, "Print"],
+Cell[14768, 377, 295, 5, 41, "Print"],
+Cell[15066, 384, 751, 17, 41, "Print"],
+Cell[15820, 403, 320, 5, 41, "Print"],
+Cell[16143, 410, 683, 15, 41, "Print"],
+Cell[16829, 427, 295, 5, 41, "Print"],
+Cell[17127, 434, 753, 17, 41, "Print"],
+Cell[17883, 453, 600, 11, 41, "Print"],
+Cell[18486, 466, 317, 5, 41, "Print"],
+Cell[18806, 473, 460, 10, 41, "Print"],
+Cell[19269, 485, 685, 15, 41, "Print"],
+Cell[19957, 502, 297, 5, 41, "Print"],
+Cell[20257, 509, 487, 10, 41, "Print"],
+Cell[20747, 521, 535, 11, 41, "Print"],
+Cell[21285, 534, 539, 11, 41, "Print"],
+Cell[21827, 547, 539, 11, 41, "Print"],
+Cell[22369, 560, 537, 11, 41, "Print"],
+Cell[22909, 573, 469, 10, 41, "Print"]
 }, Open  ]],
-Cell[30404, 813, 1056, 31, 130, "Output"],
-Cell[31463, 846, 422, 11, 136, "Output"]
+Cell[23393, 586, 4083, 110, 240, "Output"],
+Cell[CellGroupData[{
+Cell[27501, 700, 514, 11, 41, "Print"],
+Cell[28018, 713, 3802, 103, 808, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31869, 822, 478, 11, 196, "Input"],
+Cell[CellGroupData[{
+Cell[32372, 837, 229, 4, 41, "Print"],
+Cell[32604, 843, 440, 9, 41, "Print"],
+Cell[33047, 854, 467, 10, 41, "Print"],
+Cell[33517, 866, 399, 9, 41, "Print"],
+Cell[33919, 877, 229, 4, 41, "Print"],
+Cell[34151, 883, 437, 9, 41, "Print"],
+Cell[34591, 894, 226, 4, 41, "Print"],
+Cell[34820, 900, 231, 4, 41, "Print"]
+}, Open  ]],
+Cell[35066, 907, 1106, 32, 96, "Output"],
+Cell[36175, 941, 470, 12, 96, "Output"],
+Cell[36648, 955, 446, 13, 130, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
