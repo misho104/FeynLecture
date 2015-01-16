@@ -3,7 +3,7 @@
 Exit[];
 
 
-SetDirectory[FileNameJoin[{$HomeDirectory,"Documents","Dropbox","FeynLecture"}]]
+SetDirectory[FileNameJoin[{$HomeDirectory,"FeynLecture"}]]
 <<FeynRules`;
 LoadModel["phi4.fr"];
 
@@ -19,10 +19,13 @@ CheckDiagonalQuadraticTerms[Lagrangian]
 Exit[];
 
 
-SetDirectory[ToFileName[{$HomeDirectory,"Documents","Dropbox","FeynLecture"}]]
+SetDirectory[ToFileName[{$HomeDirectory,"FeynLecture"}]]
 <<FeynRules`;
 LoadModel["phi4.fr"];
 WriteFeynArtsOutput[Lagrangian];
+
+
+
 
 
 
