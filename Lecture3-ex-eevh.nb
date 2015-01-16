@@ -1,0 +1,204 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      7172,        195]
+NotebookOptionsPosition[      6103,        156]
+NotebookOutlinePosition[      6521,        172]
+CellTagsIndexPosition[      6478,        169]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", "+"], TraditionalForm]], "None"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", "-"], TraditionalForm]], "None"],
+ " \[Rule] h \[Gamma] / h Z (exercise)"
+}], "Title",
+ CellChangeTimes->{{3.536036981997404*^9, 3.536037029033853*^9}, {
+  3.536052257002532*^9, 3.5360522778477297`*^9}, {3.537864100650713*^9, 
+  3.537864140768935*^9}, {3.5378641826789513`*^9, 3.537864185426886*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.5360374730944557`*^9, 3.536037479508855*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Exit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.5378640755758047`*^9, 3.537864076705926*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"$Language", "=", "\"\<English\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"SetDirectory", "[", 
+  RowBox[{"NotebookDirectory", "[", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "FeynArts`"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "FormCalc`"}]}], "Input",
+ CellChangeTimes->{{3.5360373787170563`*^9, 3.536037381121767*^9}, {
+  3.5360374895751467`*^9, 3.536037548333282*^9}, {3.536037650722055*^9, 
+  3.536037657410592*^9}, {3.5360379743666153`*^9, 3.5360380215197287`*^9}, {
+  3.536038063766507*^9, 3.536038183907959*^9}, {3.536038388610857*^9, 
+  3.53603838940345*^9}, {3.536045708094194*^9, 3.536045714062668*^9}, {
+  3.536052625049251*^9, 3.536052625325549*^9}, {3.536053272279801*^9, 
+  3.536053273111397*^9}, {3.537784130725206*^9, 3.537784143641768*^9}, {
+  3.537864058212762*^9, 3.537864071519405*^9}}],
+
+Cell[BoxData["\<\"/Users/misho/Documents/Dropbox/FeynLecture\"\>"], "Output",
+ CellChangeTimes->{3.537864071951582*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.537864071955119*^9}],
+
+Cell[BoxData["\<\"FeynArts 3.7\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.537864071956706*^9}],
+
+Cell[BoxData["\<\"by Hagen Eck, Sepp Kueblbeck, and Thomas Hahn\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.537864071959847*^9}],
+
+Cell[BoxData["\<\"last revised 4 Jan 12\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.537864071962925*^9}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.537864072085018*^9}],
+
+Cell[BoxData["\<\"FormCalc 7.3\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.537864072088213*^9}],
+
+Cell[BoxData["\<\"by Thomas Hahn\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.5378640720912867`*^9}],
+
+Cell[BoxData["\<\"last revised 12 Jan 12\"\>"], "Print",
+ CellChangeTimes->{{3.5377862441687326`*^9, 3.537786251671904*^9}, 
+   3.537786727986231*^9, {3.5377871171519527`*^9, 3.537787145851059*^9}, 
+   3.537844174056081*^9, 3.5378444756705008`*^9, 3.5378447337276897`*^9, 
+   3.5378458668079453`*^9, 3.537864072094323*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox[Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", "+"], TraditionalForm]], "Subtitle"], "Subtitle"],
+ StyleBox[" ", "Subtitle"],
+ StyleBox[Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", "-"], TraditionalForm]], "Subtitle"], "Subtitle"],
+ StyleBox[" \[Rule] h \[Gamma]", "Subtitle"]
+}], "Title",
+ CellChangeTimes->{{3.5360399097567263`*^9, 3.536039928076377*^9}, {
+  3.536053291836194*^9, 3.536053298771755*^9}, {3.537784161522317*^9, 
+  3.537784174196563*^9}}],
+
+Cell[TextData[{
+ StyleBox[Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", "+"], TraditionalForm]], "Subtitle"], "Subtitle"],
+ StyleBox[" ", "Subtitle"],
+ StyleBox[Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", "-"], TraditionalForm]], "Subtitle"], "Subtitle"],
+ StyleBox[" \[Rule] h Z", "Subtitle"]
+}], "Title",
+ CellChangeTimes->{{3.5360399097567263`*^9, 3.536039928076377*^9}, {
+   3.536053291836194*^9, 3.536053298771755*^9}, {3.537784161522317*^9, 
+   3.537784174196563*^9}, 3.537864214455649*^9}],
+
+Cell["Check that the 1-loop level yields about 10% correction.", \
+"Subsubsection",
+ CellChangeTimes->{{3.537864222021389*^9, 3.5378642510312147`*^9}}]
+}, Open  ]]
+},
+WindowSize->{1280, 752},
+WindowMargins->{{9, Automatic}, {Automatic, 0}},
+FrontEndVersion->"7.0 for Mac OS X x86 (32-bit) (2009\:5e744\:670823\:65e5)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 454, 12, 77, "Title"],
+Cell[CellGroupData[{
+Cell[1046, 38, 104, 1, 22, "Subsection"],
+Cell[1153, 41, 138, 3, 36, "Input"],
+Cell[CellGroupData[{
+Cell[1316, 48, 858, 14, 82, "Input"],
+Cell[2177, 64, 119, 1, 36, "Output"],
+Cell[CellGroupData[{
+Cell[2321, 69, 300, 4, 20, "Print"],
+Cell[2624, 75, 312, 4, 20, "Print"],
+Cell[2939, 81, 345, 4, 20, "Print"],
+Cell[3287, 87, 321, 4, 20, "Print"],
+Cell[3611, 93, 300, 4, 20, "Print"],
+Cell[3914, 99, 312, 4, 20, "Print"],
+Cell[4229, 105, 316, 4, 20, "Print"],
+Cell[4548, 111, 322, 4, 20, "Print"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4943, 123, 485, 12, 66, "Title"],
+Cell[5431, 137, 502, 12, 66, "Title"],
+Cell[5936, 151, 151, 2, 20, "Subsubsection"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

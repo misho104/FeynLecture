@@ -1,0 +1,907 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     32053,        898]
+NotebookOptionsPosition[     29475,        815]
+NotebookOutlinePosition[     29895,        831]
+CellTagsIndexPosition[     29852,        828]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["\[Phi]", "4"], TraditionalForm]], "None"],
+ " theory"
+}], "Title",
+ CellChangeTimes->{{3.537755556453061*^9, 3.53775556929044*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.5360374730944557`*^9, 3.536037479508855*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Exit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.5360382549509077`*^9, 3.536038276342574*^9}, 
+   3.53603834277113*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{
+     "$HomeDirectory", ",", "\"\<Documents\>\"", ",", "\"\<Dropbox\>\"", ",", 
+      "\"\<FeynLecture\>\""}], "}"}], "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"model", "=", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<phi_to_four_theory_FA\>\"", ",", "\"\<phi_to_four_theory_FA\>\""}], 
+     "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "FeynArts`"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "FormCalc`"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{"InsertFields", ",", 
+    RowBox[{"Model", "\[Rule]", "model"}], ",", 
+    RowBox[{"GenericModel", "\[Rule]", "model"}], ",", 
+    RowBox[{"InsertionLevel", "\[Rule]", 
+     RowBox[{"{", "Classes", "}"}]}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"_Hel", "=", "0"}], ";"}], "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.5360373787170563`*^9, 3.536037381121767*^9}, {
+  3.5360374895751467`*^9, 3.536037548333282*^9}, {3.536037650722055*^9, 
+  3.536037657410592*^9}, {3.5360379743666153`*^9, 3.5360380215197287`*^9}, {
+  3.536038063766507*^9, 3.536038183907959*^9}, {3.536038388610857*^9, 
+  3.53603838940345*^9}, {3.536045708094194*^9, 3.536045714062668*^9}, {
+  3.536052625049251*^9, 3.536052625325549*^9}, {3.536053272279801*^9, 
+  3.536053273111397*^9}, {3.5363028962875032`*^9, 3.536302959580532*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.537861521368989*^9}],
+
+Cell[BoxData["\<\"FeynArts 3.7\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.537861521372552*^9}],
+
+Cell[BoxData["\<\"by Hagen Eck, Sepp Kueblbeck, and Thomas Hahn\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.537861521374848*^9}],
+
+Cell[BoxData["\<\"last revised 4 Jan 12\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.53786152137705*^9}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.5378615214438763`*^9}],
+
+Cell[BoxData["\<\"FormCalc 7.3\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.537861521446203*^9}],
+
+Cell[BoxData["\<\"by Thomas Hahn\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.537861521448533*^9}],
+
+Cell[BoxData["\<\"last revised 12 Jan 12\"\>"], "Print",
+ CellChangeTimes->{3.536302960180992*^9, 3.537755593946958*^9, 
+  3.537755682506302*^9, 3.537861521450934*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Create Topology (and also ignore helicities)", "Subsection",
+ CellChangeTimes->{{3.5360398319912243`*^9, 3.5360398413102627`*^9}, {
+  3.536039916228428*^9, 3.53603992045197*^9}, {3.536053280853504*^9, 
+  3.536053289164153*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"topo", "=", 
+   RowBox[{"CreateTopologies", "[", 
+    RowBox[{"0", ",", 
+     RowBox[{"2", "\[Rule]", "2"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Paint", "[", "topo", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"diag", "=", 
+  RowBox[{"InsertFields", "[", 
+   RowBox[{"topo", ",", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"S", "[", "1", "]"}], ",", 
+       RowBox[{"S", "[", "1", "]"}]}], "}"}], "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"S", "[", "1", "]"}], ",", 
+       RowBox[{"S", "[", "1", "]"}]}], "}"}]}], ",", 
+    RowBox[{"InsertionLevel", "\[Rule]", 
+     RowBox[{"{", "Classes", "}"}]}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Paint", "[", "diag", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.5360398433189297`*^9, 3.536039858887414*^9}, {
+  3.5360398916549*^9, 3.53603989217457*^9}, {3.5360457214194193`*^9, 
+  3.536045731074902*^9}, {3.536052641845634*^9, 3.536052642668128*^9}, {
+  3.5360532647260027`*^9, 3.5360532794224253`*^9}, {3.536302964932878*^9, 
+  3.536303076163979*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"1 diagram\"\>"}],
+  SequenceForm["> Top. ", 1, ": ", "1 diagram"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.5378615231622543`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"1 diagram\"\>"}],
+  SequenceForm["> Top. ", 2, ": ", "1 diagram"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523164123*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"1 diagram\"\>"}],
+  SequenceForm["> Top. ", 3, ": ", "1 diagram"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523166658*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "4", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"1 diagram\"\>"}],
+  SequenceForm["> Top. ", 4, ": ", "1 diagram"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.5378615231693897`*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{InsetBox[
+    GraphicsBox[
+     {Thickness[0.005], 
+      LineBox[{{-9.094947017729282*^-12, 15.000000000003638`}, {
+       9.999999999983629, 10.000000000007276`}}], 
+      LineBox[{{-7.275957614183426*^-12, 4.999999999996362}, {
+       9.999999999985448, 9.999999999989086}}], 
+      LineBox[{{20.000000000007276`, 15.000000000003638`}, {
+       10.000000000007276`, 10.000000000003638`}}], 
+      LineBox[{{20., 5.}, {10., 10.}}], 
+      {PointSize[0.04], PointBox[{10., 10.}]}, InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"T1\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->7.997355371900827],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         7.997355371900827]& ], {10., -0.5}, {0, -1}]},
+     AspectRatio->1,
+     PlotRange->{{-1, 21}, {-1, 21}}], {0, 44}, {0, 0}, {22, 22}], InsetBox[
+    GraphicsBox[
+     {Thickness[0.005], 
+      LineBox[{{-5.4569682106375694`*^-12, 15.000000000005457`}, {
+       5.999999999996362, 10.000000000003638`}}], 
+      LineBox[{{-1.0913936421275139`*^-11, 4.999999999989086}, {
+       5.999999999990905, 9.999999999990905}}], 
+      LineBox[{{20.000000000005457`, 15.000000000005457`}, {
+       14.000000000003638`, 10.000000000003638`}}], 
+      LineBox[{{20., 4.999999999998181}, {13.999999999998181`, 10.}}], 
+      LineBox[{{5.999999999990206, 10.}, {13.999999999982224`, 10.}}], 
+      {PointSize[0.04], PointBox[{6., 10.}], 
+       PointBox[{13.99999999999999, 10.}]}, InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"T2\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->7.997355371900827],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         7.997355371900827]& ], {10., -0.5}, {0, -1}]},
+     AspectRatio->1,
+     PlotRange->{{-1, 21}, {-1, 21}}], {22, 44}, {0, 0}, {22, 22}], InsetBox[
+    GraphicsBox[
+     {Thickness[0.005], 
+      LineBox[{{6.139089236967266*^-12, 15.000000000003638`}, {
+       10.000000000002046`, 14.000000000003638`}}], 
+      LineBox[{{-7.503331289626658*^-12, 5.000000000003638}, {
+       9.999999999988404, 6.}}], 
+      LineBox[{{20.00000000000273, 15.}, {10.000000000002274`, 14.}}], 
+      LineBox[{{19.999999999997726`, 4.999999999996362}, {9.999999999997272, 
+       5.999999999996362}}], 
+      LineBox[{{10., 14.000000000000902`}, {10., 6.000000000000003}}], 
+      {PointSize[0.04], PointBox[{10., 13.99999999999999}], 
+       PointBox[{10., 6.}]}, InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"T3\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->7.997355371900827],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         7.997355371900827]& ], {10., -0.5}, {0, -1}]},
+     AspectRatio->1,
+     PlotRange->{{-1, 21}, {-1, 21}}], {44, 44}, {0, 0}, {22, 22}], InsetBox[
+    GraphicsBox[
+     {Thickness[0.005], 
+      LineBox[{{6.139089236967266*^-12, 15.000000000003638`}, {
+       10.000000000002046`, 14.000000000003638`}}], 
+      LineBox[{{-7.503331289626658*^-12, 5.000000000003638}, {
+       9.999999999988404, 6.}}], 
+      LineBox[{{20.00000000000182, 15.000000000001819`}, {10., 
+       6.000000000001819}}], 
+      LineBox[{{20.00000000000182, 5.}, {10.000000000001819`, 14.}}], 
+      LineBox[{{10., 14.000000000000902`}, {10., 6.000000000000003}}], 
+      {PointSize[0.04], PointBox[{10., 13.99999999999999}], 
+       PointBox[{10., 6.}]}, InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"T4\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->7.997355371900827],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         7.997355371900827]& ], {10., -0.5}, {0, -1}]},
+     AspectRatio->1,
+     PlotRange->{{-1, 21}, {-1, 21}}], {0, 22}, {0, 0}, {22, 22}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"2\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {28.5, 69.96}, {0, 0}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"\[RightArrow]\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {33., 69.96}, {0, 0}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"2\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {37.5, 69.96}, {0, 0}]},
+  AspectRatio->1.0999999999999999`,
+  PlotRange->{{0, 66}, {0, 72.6}}]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523359653*^9}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523394432*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\"\>", "\[InvisibleSpace]", "\<\"loading \"\>", 
+   "\[InvisibleSpace]", "\<\"generic\"\>", 
+   "\[InvisibleSpace]", "\<\" model file \"\>", 
+   "\[InvisibleSpace]", \
+"\<\"/Users/misho/Documents/Dropbox/FeynLecture/phi_to_four_theory_FA/phi_to_\
+four_theory_FA.gen\"\>"}],
+  SequenceForm[
+  "", "loading ", "generic", " model file ", 
+   "/Users/misho/Documents/Dropbox/FeynLecture/phi_to_four_theory_FA/phi_to_\
+four_theory_FA.gen"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523444278*^9}],
+
+Cell[BoxData["\<\"> $SVMixing is OFF\"\>"], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523496331*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"generic model \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}], 
+   "\[InvisibleSpace]", "\<\" initialized\"\>"}],
+  SequenceForm[
+  "generic model ", {"phi_to_four_theory_FA/phi_to_four_theory_FA"}, 
+   " initialized"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523538759*^9}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523595948*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\"\>", "\[InvisibleSpace]", "\<\"loading \"\>", 
+   "\[InvisibleSpace]", "\<\"classes\"\>", 
+   "\[InvisibleSpace]", "\<\" model file \"\>", 
+   "\[InvisibleSpace]", \
+"\<\"/Users/misho/Documents/Dropbox/FeynLecture/phi_to_four_theory_FA/phi_to_\
+four_theory_FA.mod\"\>"}],
+  SequenceForm[
+  "", "loading ", "classes", " model file ", 
+   "/Users/misho/Documents/Dropbox/FeynLecture/phi_to_four_theory_FA/phi_to_\
+four_theory_FA.mod"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.5378615236434193`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" particles (incl. antiparticles) in \"\>", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\" classes\"\>"}],
+  SequenceForm["> ", 1, " particles (incl. antiparticles) in ", 1, " classes"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.53786152369621*^9}],
+
+Cell[BoxData["\<\"> $CounterTerms are ON\"\>"], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523738963*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\" vertices\"\>"}],
+  SequenceForm["> ", 1, " vertices"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523779745*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"classes model \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}], 
+   "\[InvisibleSpace]", "\<\" initialized\"\>"}],
+  SequenceForm[
+  "classes model ", {"phi_to_four_theory_FA/phi_to_four_theory_FA"}, 
+   " initialized"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.5378615238805723`*^9}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.5378615239025593`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"inserting at level(s) \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "Classes", "}"}]}],
+  SequenceForm["inserting at level(s) ", {FeynArts`Classes}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523942418*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"1 Classes insertion\"\>"}],
+  SequenceForm["> Top. ", 1, ": ", "1 Classes insertion"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861523986092*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"0 Classes insertions\"\>"}],
+  SequenceForm["> Top. ", 2, ": ", "0 Classes insertions"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.5378615240203743`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"0 Classes insertions\"\>"}],
+  SequenceForm["> Top. ", 3, ": ", "0 Classes insertions"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861524054309*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "4", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"0 Classes insertions\"\>"}],
+  SequenceForm["> Top. ", 4, ": ", "0 Classes insertions"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861524095675*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"in total: \"\>", 
+   "\[InvisibleSpace]", "\<\"1 Classes insertion\"\>"}],
+  SequenceForm["in total: ", "1 Classes insertion"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861524138279*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TopologyList", "[", 
+   RowBox[{
+    RowBox[{"Process", "\[Rule]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"S", "[", "1", "]"}], ",", 
+        RowBox[{"S", "[", "1", "]"}]}], "}"}], "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"S", "[", "1", "]"}], ",", 
+        RowBox[{"S", "[", "1", "]"}]}], "}"}]}]}], ",", 
+    RowBox[{"Model", "\[Rule]", 
+     RowBox[{
+     "{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}]}], ",", 
+    RowBox[{"GenericModel", "\[Rule]", 
+     RowBox[{
+     "{", "\<\"phi_to_four_theory_FA/phi_to_four_theory_FA\"\>", "}"}]}], ",", 
+    RowBox[{"InsertionLevel", "\[Rule]", 
+     RowBox[{"{", "Classes", "}"}]}], ",", 
+    RowBox[{"ExcludeParticles", "\[Rule]", 
+     RowBox[{"{", "}"}]}], ",", 
+    RowBox[{"ExcludeFieldPoints", "\[Rule]", 
+     RowBox[{"{", "}"}]}], ",", 
+    RowBox[{"LastSelections", "\[Rule]", 
+     RowBox[{"{", "}"}]}]}], "]"}], "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Topology", "[", "1", "]"}], "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Propagator", "[", "Incoming", "]"}], "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Vertex", "[", "1", "]"}], "[", "1", "]"}], ",", 
+       RowBox[{
+        RowBox[{"Vertex", "[", "4", "]"}], "[", "5", "]"}], ",", 
+       RowBox[{"Field", "[", "1", "]"}]}], "]"}], ",", 
+     RowBox[{
+      RowBox[{"Propagator", "[", "Incoming", "]"}], "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Vertex", "[", "1", "]"}], "[", "2", "]"}], ",", 
+       RowBox[{
+        RowBox[{"Vertex", "[", "4", "]"}], "[", "5", "]"}], ",", 
+       RowBox[{"Field", "[", "2", "]"}]}], "]"}], ",", 
+     RowBox[{
+      RowBox[{"Propagator", "[", "Outgoing", "]"}], "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Vertex", "[", "1", "]"}], "[", "3", "]"}], ",", 
+       RowBox[{
+        RowBox[{"Vertex", "[", "4", "]"}], "[", "5", "]"}], ",", 
+       RowBox[{"Field", "[", "3", "]"}]}], "]"}], ",", 
+     RowBox[{
+      RowBox[{"Propagator", "[", "Outgoing", "]"}], "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Vertex", "[", "1", "]"}], "[", "4", "]"}], ",", 
+       RowBox[{
+        RowBox[{"Vertex", "[", "4", "]"}], "[", "5", "]"}], ",", 
+       RowBox[{"Field", "[", "4", "]"}]}], "]"}]}], "]"}], "\[Rule]", 
+   RowBox[{
+    RowBox[{"Insertions", "[", "Generic", "]"}], "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"FeynmanGraph", "[", 
+       RowBox[{"1", ",", 
+        RowBox[{"Generic", "\[Equal]", "1"}]}], "]"}], "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Field", "[", "1", "]"}], "\[Rule]", 
+        RowBox[{"S", "[", "1", "]"}]}], ",", 
+       RowBox[{
+        RowBox[{"Field", "[", "2", "]"}], "\[Rule]", 
+        RowBox[{"S", "[", "1", "]"}]}], ",", 
+       RowBox[{
+        RowBox[{"Field", "[", "3", "]"}], "\[Rule]", 
+        RowBox[{"S", "[", "1", "]"}]}], ",", 
+       RowBox[{
+        RowBox[{"Field", "[", "4", "]"}], "\[Rule]", 
+        RowBox[{"S", "[", "1", "]"}]}]}], "]"}], "\[Rule]", 
+     RowBox[{
+      RowBox[{"Insertions", "[", "Classes", "]"}], "[", 
+      RowBox[{
+       RowBox[{"FeynmanGraph", "[", 
+        RowBox[{"1", ",", 
+         RowBox[{"Classes", "\[Equal]", "1"}]}], "]"}], "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Field", "[", "1", "]"}], "\[Rule]", 
+         RowBox[{"S", "[", "1", "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"Field", "[", "2", "]"}], "\[Rule]", 
+         RowBox[{"S", "[", "1", "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"Field", "[", "3", "]"}], "\[Rule]", 
+         RowBox[{"S", "[", "1", "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"Field", "[", "4", "]"}], "\[Rule]", 
+         RowBox[{"S", "[", "1", "]"}]}]}], "]"}], "]"}]}], "]"}]}], 
+  "]"}]], "Output",
+ CellChangeTimes->{
+  3.536303015740984*^9, {3.536303050109687*^9, 3.536303076786826*^9}, 
+   3.53775568442761*^9, 3.537861524172722*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"1 diagram\"\>"}],
+  SequenceForm["> Top. ", 1, ": ", "1 diagram"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861524211732*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{InsetBox[
+    GraphicsBox[
+     {Thickness[0.005], 
+      LineBox[{{-9.094947017729282*^-12, 15.000000000003638`}, {
+       9.999999999983629, 10.000000000007276`}}], InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"phi\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->9.996694214876033],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         9.996694214876033]& ], {5.0234223258500545`, 11.942044651700108`}, \
+{1, 1}], LineBox[{{-7.275957614183426*^-12, 4.999999999996362}, {
+       9.999999999985448, 9.999999999989086}}], InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"phi\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->9.996694214876033],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         9.996694214876033]& ], {4.9765776741499455`, 6.942044651700109}, \
+{-1, 1}], 
+      LineBox[{{20.000000000007276`, 15.000000000003638`}, {
+       10.000000000007276`, 10.000000000003638`}}], InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"phi\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->9.996694214876033],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         9.996694214876033]& ], {15.023422325850053`, 13.057955348299892`}, \
+{1, -1}], LineBox[{{20., 5.}, {10., 10.}}], InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"phi\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->9.996694214876033],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         9.996694214876033]& ], {14.976577674149944`, 8.057955348299892}, \
+{-1, -1}], 
+      {PointSize[0.04], PointBox[{10., 10.}]}, InsetBox[
+       TagBox[
+        StyleBox[
+         TagBox["\<\"T1 C1 N1\"\>",
+          DisplayForm],
+         FontFamily->"Helvetica",
+         FontSize->7.997355371900827],
+        StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+         7.997355371900827]& ], {10., -0.5}, {0, -1}]},
+     AspectRatio->1,
+     PlotRange->{{-1, 21}, {-1, 21}}], {0, 44}, {0, 0}, {22, 22}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"phi\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {24., 69.96}, {0, 0}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"phi\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {28.5, 69.96}, {0, 0}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"\[RightArrow]\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {33., 69.96}, {0, 0}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"phi\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {37.5, 69.96}, {0, 0}], InsetBox[
+    TagBox[
+     StyleBox[
+      TagBox["\<\"phi\"\>",
+       DisplayForm],
+      FontFamily->"Helvetica",
+      FontSize->11.996033057851239`],
+     StyleForm[#, FontFamily -> "Helvetica", FontSize -> 
+      11.996033057851239`]& ], {42., 69.96}, {0, 0}]},
+  AspectRatio->1.0999999999999999`,
+  PlotRange->{{0, 66}, {0, 72.6}}]], "Print",
+ CellChangeTimes->{
+  3.536303014900371*^9, {3.536303049773774*^9, 3.536303076500031*^9}, 
+   3.537755683760273*^9, 3.537861524326729*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearProcess", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"amp", "=", 
+  RowBox[{"CalcFeynAmp", "[", 
+   RowBox[{
+    RowBox[{"CreateFeynAmp", "[", "diag", "]"}], ",", 
+    RowBox[{"FermionChains", "\[Rule]", "VA"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"SquaredME", "[", "amp", "]"}]}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.537861525900263*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"creating amplitudes at level(s) \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "Classes", "}"}]}],
+  SequenceForm["creating amplitudes at level(s) ", {FeynArts`Classes}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.537861525931266*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"> Top. \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\": \"\>", 
+   "\[InvisibleSpace]", "\<\"1 Classes amplitude\"\>"}],
+  SequenceForm["> Top. ", 1, ": ", "1 Classes amplitude"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.5378615259610157`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"in total: \"\>", 
+   "\[InvisibleSpace]", "\<\"1 Classes amplitude\"\>"}],
+  SequenceForm["in total: ", "1 Classes amplitude"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.537861526004781*^9}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.537861526056037*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"preparing FORM code in \"\>", 
+   "\[InvisibleSpace]", \
+"\<\"/Users/misho/Documents/Dropbox/FeynLecture/fc1.frm\"\>"}],
+  SequenceForm[
+  "preparing FORM code in ", 
+   "/Users/misho/Documents/Dropbox/FeynLecture/fc1.frm"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.537861526101386*^9}],
+
+Cell["running FORM... ", "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.537861526142652*^9}],
+
+Cell[BoxData["\<\"ok\"\>"], "Print",
+ CellChangeTimes->{3.5363030788531427`*^9, 3.537755688632115*^9, 
+  3.537861526287498*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Amp", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"mmm", ",", "mmm"}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"mmm", ",", "mmm"}], "}"}]}], "]"}], "[", 
+  RowBox[{"-", "lambda"}], "]"}]], "Output",
+ CellChangeTimes->{3.536303079163224*^9, 3.53775568979605*^9, 
+  3.537861526311384*^9}],
+
+Cell[BoxData[
+ RowBox[{"lambda", " ", 
+  RowBox[{"(", 
+   InterpretationBox[
+    RowBox[{"lambda", "\[InvisibleSpace]", 
+     RowBox[{"Superscript", "[", "\<\"*\"\>", "]"}]}],
+    SequenceForm[$CellContext`lambda, 
+     Superscript["*"]],
+    Editable->False], ")"}]}]], "Output",
+ CellChangeTimes->{3.536303079163224*^9, 3.53775568979605*^9, 
+  3.537861526348689*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1440, 852},
+WindowMargins->{{-16, Automatic}, {Automatic, 0}},
+FrontEndVersion->"7.0 for Mac OS X x86 (32-bit) (2009\:5e744\:670823\:65e5)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 192, 6, 81, "Title"],
+Cell[CellGroupData[{
+Cell[784, 32, 104, 1, 22, "Subsection"],
+Cell[891, 35, 163, 4, 36, "Input"],
+Cell[CellGroupData[{
+Cell[1079, 43, 1529, 35, 112, "Input"],
+Cell[CellGroupData[{
+Cell[2633, 82, 145, 2, 20, "Print"],
+Cell[2781, 86, 157, 2, 20, "Print"],
+Cell[2941, 90, 190, 2, 20, "Print"],
+Cell[3134, 94, 165, 2, 20, "Print"],
+Cell[3302, 98, 147, 2, 20, "Print"],
+Cell[3452, 102, 157, 2, 20, "Print"],
+Cell[3612, 106, 159, 2, 20, "Print"],
+Cell[3774, 110, 167, 2, 20, "Print"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4002, 119, 233, 3, 22, "Subsection"],
+Cell[CellGroupData[{
+Cell[4260, 126, 1120, 28, 82, "Input"],
+Cell[CellGroupData[{
+Cell[5405, 158, 395, 9, 20, "Print"],
+Cell[5803, 169, 393, 9, 20, "Print"],
+Cell[6199, 180, 393, 9, 20, "Print"],
+Cell[6595, 191, 395, 9, 20, "Print"],
+Cell[6993, 202, 4875, 116, 404, "Print"],
+Cell[11871, 320, 173, 3, 20, "Print"],
+Cell[12047, 325, 653, 15, 20, "Print"],
+Cell[12703, 342, 191, 3, 20, "Print"],
+Cell[12897, 347, 495, 11, 20, "Print"],
+Cell[13395, 360, 173, 3, 20, "Print"],
+Cell[13571, 365, 655, 15, 20, "Print"],
+Cell[14229, 382, 477, 9, 20, "Print"],
+Cell[14709, 393, 195, 3, 20, "Print"],
+Cell[14907, 398, 338, 8, 20, "Print"],
+Cell[15248, 408, 497, 11, 20, "Print"],
+Cell[15748, 421, 175, 3, 20, "Print"],
+Cell[15926, 426, 366, 8, 20, "Print"],
+Cell[16295, 436, 413, 9, 20, "Print"],
+Cell[16711, 447, 417, 9, 20, "Print"],
+Cell[17131, 458, 415, 9, 20, "Print"],
+Cell[17549, 469, 415, 9, 20, "Print"],
+Cell[17967, 480, 345, 8, 20, "Print"]
+}, Open  ]],
+Cell[18327, 491, 3900, 106, 112, "Output"],
+Cell[CellGroupData[{
+Cell[22252, 601, 393, 9, 20, "Print"],
+Cell[22648, 612, 3721, 100, 404, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26418, 718, 352, 9, 67, "Input"],
+Cell[CellGroupData[{
+Cell[26795, 731, 125, 2, 20, "Print"],
+Cell[26923, 735, 338, 7, 20, "Print"],
+Cell[27264, 744, 367, 8, 20, "Print"],
+Cell[27634, 754, 297, 7, 20, "Print"],
+Cell[27934, 763, 125, 2, 20, "Print"],
+Cell[28062, 767, 394, 10, 20, "Print"],
+Cell[28459, 779, 124, 2, 20, "Print"],
+Cell[28586, 783, 127, 2, 20, "Print"]
+}, Open  ]],
+Cell[28728, 788, 336, 10, 36, "Output"],
+Cell[29067, 800, 368, 10, 36, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,93 @@
+(* THE VERY BASIC (1) *)
+
+5/6
+3+4
+9^2
+E^(I Pi)
+Pi
+N[Pi]
+
+(* THE VERY BASIC (2) *)
+
+3 + 4
+%/2
+N[%]
+10*10 == 100
+10 < Exp[10]
+10 < Log[10]
+
+(* THE VERY BASIC (3) *)
+
+(x - 1) (x + 1)
+Simplify[%] 
+
+(x + 1) (x + 2) (x + 3)
+Expand[%]
+
+x^10 - 1
+Factor[%]
+
+=============================================================================
+
+(* DEFINITION *)
+
+a = 1
+b = 2
+a + b
+a*b
+y = Sin[x]
+Plot[y, {x, -Pi, Pi}]
+
+(* In the last case, you should instead "define a function". *)
+
+f[x_] := Cos[x]
+f[Pi]
+f[Pi/2]
+Plot[f[x], {x, -Pi, Pi}]
+
+=============================================================================
+
+(* Substitution (VERY IMPORTANT!) *)
+
+y = Sin[x] + Cos[x]
+y /. {x -> 4}
+y /. Sin -> Tan
+y /. {Sin -> Exp, x -> 4}
+ReplaceAll[y, x -> 4]
+
+(* REPEATED substitution *)
+
+energy = m*gamma
+ReplaceAll[energy, {gamma -> 1/Sqrt[1 - beta^2], beta -> v/c}]
+
+ReplaceRepeated[energy, {gamma -> 1/Sqrt[1 - beta^2], beta -> v/c}]
+
+(* Or *)
+energy //. {gamma -> 1/Sqrt[1 - beta^2], beta -> v/c}
+
+=============================================================================
+
+(* EMERGENCY EXIT *)
+
+(* ALT (or command)+period if you want to stop evaluation. *)
+(* You can stop evaluation from the menu: Evaluation>Abort Evaluation. *)
+
+Integrate[(Sin[x] + Tan[x])^100, x]
+
+(* This is important when you induce an infinite-evaluation. *)
+
+Sin[x] /. x -> Sin[x]
+Sin[x] //. x -> Sin[x]
+
+=============================================================================
+
+(* THAT'S MATHEMATICA BASIC. *)
+(* Now Let's forget all == ABORT THE KERNEL. *)
+
+energy
+
+Exit[]
+(* Now the kernel has been initialized. *)
+
+energy
+(* is now undefined. *)

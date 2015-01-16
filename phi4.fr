@@ -1,0 +1,54 @@
+(* ::Package:: *)
+
+M$ModelName = "phi to four theory";
+M$Information = {
+              Authors -> "Sho Iwamoto",
+              Version -> "0.1",
+              Date    -> "Feb. 9, 2011",
+              Institutions -> "The University of Tokyo",
+              Emails  -> "iwamoto@hep-th.phys.s.u-tokyo.ac.jp",
+              URLs    -> "http://www.misho-web.com/"
+              };
+
+
+
+M$Parameters = {
+  lambda == {
+         ParameterType -> External,
+         BlockName     -> HOGE,
+         OrderBlock    -> {1},
+         Value         -> 0.1,
+         Description   -> "Scalar 4-point coupling"},
+(*
+  kappa  == {
+         ParameterType -> External,
+         BlockName     -> HOGE,
+         OrderBlock    -> {2},
+         Value         -> 0.1,
+         Description   -> "Scalar 3-point coupling"}, (* where is the vacuum? *)
+*)
+  mmm    == {
+         ParameterType -> External,
+         BlockName     -> HOGE,
+         OrderBlock    -> {3},
+         Value         -> 100,
+         Description   -> "Scalar 2-point coupling"}
+};
+
+
+
+
+M$ClassesDescription = {
+  S[1] == {
+        ClassName -> phi,
+        SelfConjugate -> True,
+        Mass -> {mmm, Internal},
+        Width -> 0,
+        PropagatorLabel -> phi,
+        PropagatorType -> S,
+	    PropagatorArrow -> None,
+        FullName -> "Scalar"}
+};
+
+Lagrangian = del[phi,mu]del[phi,mu]/2-(lambda/24) phi^4 - (mmm^2/2) phi^2;
+
