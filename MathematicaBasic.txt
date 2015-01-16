@@ -38,7 +38,7 @@ a*b
 y = Sin[x]
 Plot[y, {x, -Pi, Pi}]
 
-(* In the last case, you should instead "define a function". *)
+(* The last command (Plot[y,{x,-Pi,Pi}]) is not recommended. Instead, you should define a function. *)
 
 f[x_] := Cos[x]
 f[Pi]
@@ -55,6 +55,8 @@ y /. Sin -> Tan
 y /. {Sin -> Exp, x -> 4}
 ReplaceAll[y, x -> 4]
 
+(* /. is a syntax suger of ReplaceAll. *)
+
 (* REPEATED substitution *)
 
 energy = m*gamma
@@ -62,7 +64,7 @@ ReplaceAll[energy, {gamma -> 1/Sqrt[1 - beta^2], beta -> v/c}]
 
 ReplaceRepeated[energy, {gamma -> 1/Sqrt[1 - beta^2], beta -> v/c}]
 
-(* Or *)
+(* ReplaceRepeated has a syntax sugar //. *)
 energy //. {gamma -> 1/Sqrt[1 - beta^2], beta -> v/c}
 
 =============================================================================
@@ -87,7 +89,19 @@ Sin[x] //. x -> Sin[x]
 energy
 
 Exit[]
-(* Now the kernel has been initialized. *)
+(* Now the kernel has been initialized. Everything is now cleared. *)
 
 energy
 (* is now undefined. *)
+
+(* Note that you can clear a variable with Clear *)
+abc = a + b + c
+{a, b, c} = {1, 2, 3}
+abc
+
+Clear[a]
+abc
+
+Clear[b,c]
+abc
+
