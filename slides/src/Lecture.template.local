@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>%TITLE%</title>
+    <meta charset="utf-8">
+    <style>@import 'assets/Lecture.css';</style>
+    <script src="remote/jquery.min_3.1.0.js"></script>
+    <script src="remote/remark-latest.min.js"></script>
+    <script src="assets/Lecture.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+    </textarea>
+    <script>
+      var slideshow = remark.create(%SOURCE%);
+    </script>
+  </body>
+</html>

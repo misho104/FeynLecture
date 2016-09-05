@@ -1,0 +1,61 @@
+body {
+  font-family: 'Roboto Slab', serif;
+}
+h1, h2, h3, h4, h5 { font-family: 'Open Sans', sans-serif; }
+h1, h2, h3, h4     { font-weight: bold; }
+
+.remark-slide-content h2 { font-size: 36px; }
+.remark-slide-content h3 { font-size: 30px; text-decoration: underline; }
+.remark-slide-content h4 { font-size: 24px; }
+.remark-slide-content h5 { font-size: 20px; text-decoration: underline; }
+
+.remark-slide-content h1                { margin-top: 20%; font-size: 42px; }
+.remark-slide-content div.author        { margin-top: 10%; font-size: 30px; font-weight: bold; }
+.remark-slide-content div.location      { margin-top: 10%;  font-size: 24px; line-height: 36px; }
+.remark-slide-content div.copyright     { position: fixed; bottom: 5%; font-size: 13px; color: gray; line-height: 13px; margin-top: 0; }
+.remark-slide-content div.logo img      { position: fixed; top: 5%;  right: 5%; width: 30%;  }
+.remark-slide-content div.copyright img { position: fixed; top: 7%; left: 9%; width: 13%; }
+
+/* blocks */
+.remark-slide-content div.note { position: relative; background-color: #f0f0f0; font-size: 16px; margin-left: 4em; }
+.remark-slide-content div.note::before { content: "Note:"; position: absolute; left: -3.2em; width: 3.2em; background-color: #f0f0f0; }
+.remark-slide-content div.notes { font-size: 16px; }
+
+div.quiz, div.exquiz { margin-left: 3.3em; }
+div.quiz::before, div.exquiz::before { position: absolute; left: 4em; color: #a00; font-weight: bold; font-style: italic; font-family: sans-serif; }
+div.quiz::before { content: "Quiz: "; }
+div.exquiz::before { content: "Extra Quiz: "; }
+div.note div.quiz::before, div.note div.exquiz::before { left: 0em; }
+div.exquiz p:first-child { text-indent: 3em; }
+
+.remark-inline-code { font-size: 90%;  font-family: 'Roboto Mono', monospace;  background: #f0f0f0; }
+.remark-slide-content pre code { font-size: 14px; font-family: 'Roboto Mono', monospace;  background: #f0f0f0; }
+.remark-slide-content pre code.output { background: #e0e0e0; }
+.remark-slide-content div.note pre code.output { background: #d2d2d2; }
+
+.remark-slide-content pre { margin: 14px 0px 14px 0px; }
+.remark-slide-content h6.code_title { margin-bottom: 0; padding-left: 1em; background: #d0d0d0; font-size: 14px; font-family: monospace; font-weight: bold; }
+.remark-slide-content h6.code_title + pre { margin-top: 0; }
+.remark-slide-content pre + pre code.output { margin-top: -14px; }
+
+span.code-prompt::after { content: ">"; color: #aaa; margin-right: 0.5em; }
+code.shlarge  span.code-prompt::after,
+code.sh       span.code-prompt::after { content: "$"; }
+code.mg5      span.code-prompt::after,
+code.mg5large span.code-prompt::after { content: "MG5_aMC>"; }
+code.root     span.code-prompt::after { content: "root []"; }
+code.mathematica span.code-prompt::after { content: "In[]:="; }
+
+
+
+.remark-slide-content blockquote { background-color: #f6dbe4; }
+
+
+.remark-slide-content .topright img { float: right; padding: 0 0 1em 1em; }
+.remark-slide-content .clear { clear: both; }
+
+.remark-slide-content em { font-weight: bold; font-style: normal; }
+.remark-slide-content strong { color: #ff4584; }
+.remark-slide-content span.arxiv_link { color: #888; font-size: 14px; font-family: monospace; }
+.remark-slide-content span.arxiv_link::before { content: "["; }
+.remark-slide-content span.arxiv_link::after { content: "]";  }
