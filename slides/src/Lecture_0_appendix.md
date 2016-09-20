@@ -64,7 +64,7 @@ AppendTo[$Path, "~/codes/FeynArts"]
 AppendTo[$Path, "~/codes/FormCalc"]
 AppendTo[$Path, "~/codes/LoopTools"]
 
-$FeynRulesPath = "~/codes/FeynArts";
+$FeynRulesPath = "~/codes/FeynRules";
 AppendTo[$Path, $FeynRulesPath]
 ```
 
