@@ -61,4 +61,3 @@ CheckKineticTermNormalisation[LSM, FlavorExpand->True]
 
 
 CheckDiagonalQuadraticTerms[LSM]
-

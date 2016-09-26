@@ -371,3 +371,13 @@ Readers or referees may ask you to provide detailed information about your "expe
 You should be ready to give them the scripts, which will tell them how you did your experiments.
 Without such scripts your work will not be justified.
 ]
+
+---
+name: small_quizzes
+
+### 4. Small Quizzes
+.quiz[
+  (For Lecture A-2)
+  You know the Standard Model, so you can read the Standard Model file for FeynRules.
+  Open `$FeynRulespath/Models/SM/SM.fr` and read it.
+  What is written there?]

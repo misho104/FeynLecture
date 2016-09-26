@@ -1,4 +1,4 @@
-# Tools for BSM Physics: Appendix
+# Tools for BSM Physics: Appendices
 
 .author[
   [Sho Iwamoto](http://www.misho-web.com)
@@ -28,7 +28,7 @@
 ---
 name: organize_codes
 
-### Appendix:<br> How should we organize the codes?
+### Appendix I:<br> How should we organize the codes?
 
 .note[
     This appendix is written for experts with deep knowledge of shell, scripts, and tools, and aims to give them several notions for better installation of the packages.
@@ -109,3 +109,111 @@ To be more careful, you can store the package files together with the project da
 
 .note[
   `git` users can manage the external packages with `git-submodule`.]
+
+---
+name: feynrules_sm_validation
+
+### Appendix II:<br> Validation of SM.fr in FeynRules
+
+[When we check `SM.fr` in Lecture A](Lecture_A.html#feynrules_sm_validation), we have found the code raises several warnings:
+![:code_title](models/SM/SM.wl)
+```mathematica
+(* Execute this block to check the validity of the input *)
+SetDirectory[NotebookDirectory[]];
+<<FeynRules`;
+FR$Parallelize = False;
+LoadModel["SM.fr"];
+FeynmanGauge = False;
+
+CheckKineticTermNormalisation[LSM, FlavorExpand->True]
+```
+```output
+Neglecting all terms with more than 2 particles.
+All kinetic terms are diagonal.
+Warning: Kinetic term for {ve, vebar} seems not to be correctly normalized.
+Warning: Kinetic term for {vm, vmbar} seems not to be correctly normalized.
+Warning: Kinetic term for {vt, vtbar} seems not to be correctly normalized.
+```
+These are warnings, not errors, so we have to go further to check this is critical or false-positive.
+
+---
+To this end, we narrow the expressions:
+```mathematica
+Lneutrinos = ExpandIndices[LSM, FlavorExpand->True, Contains->vebar|vmbar|vtbar]
+```
+(Consult `ExpandIndices` and available options in the manual.)
+
+Now you can read the terms by your eyes; you may find the kinetic terms are correctly normalized.
+
+---
+When you check the model in Feymnan gauge, you may see other messages.
+First,
+```mathematica
+SetDirectory[NotebookDirectory[]];
+<<FeynRules`;
+FR$Parallelize = False;
+LoadModel["SM.fr"];
+FeynmanGauge = True;
+```
+```mathematica
+> CheckDiagonalKineticTerms[LSM]
+```
+```output
+Non diagonal kinetic term found: $\mathrm{c_w s_w ghA^\dagger.\partial_{mu}[\partial_{mu}[ghZ]]}$
+Non diagonal kinetic term found: $\mathrm{c_w s_w ghZ^\dagger.\partial_{mu}[\partial_{mu}[ghA]]}$
+```
+This looks incorrect; to investigate, we narrow the terms.
+As we know ghosts are only in `LGhost`,
+```mathematica
+> CheckDiagonalKineticTerms[LGhost]
+```
+but the same errors are shown.
+So we will check `LGhost` by eyes.
+
+---
+If you are very careful, you may find `ghWi` in `LGhost`, and remember that they are unphysical fields and should have been expanded to `ghZ`, `ghWp` and `ghWm`.
+However it is not expanded.
+This may be a bug in the `FeynRules` code; it may be not easy to solve.
+
+Instead, we fix the model files.
+It comes from
+![:code_title](models/SM/SM.fr)
+```mathematica
+  LGhw = -ghWibar.del[DC[ghWi,mu],mu];
+```
+So we replace it by
+```mathematica
+  LGhw = Sum[-ghWibar[i].del[DC[ghWi[i],mu],mu], {i, 1, 3}]
+```
+Then you will see
+```mathematica
+> CheckDiagonalKineticTerms[LSM]
+```
+```output
+Neglecting all terms with more than 2 particles.
+All kinetic terms are diagonal.
+```
+
+---
+You will see another message:
+```mathematica
+> CheckDiagonalQuadraticTerms[LSM]
+```
+```output
+Neglecting all terms with less than 2 particles.
+Non diagonal quadratic term found: $\mathrm{e\ vev\ \partial_{mu}[GP^\dagger]W_{mu}}/2s_w$
+...
+```
+This term should have been eliminated by gauge fixing.
+Open `SM.fr` and check that the gauge-fixing terms are provided; you will find `SM.fr` lacks the gauge-fixing terms.
+
+.note[
+  I found this problem when I was preparing this lecture slides; I did not have enough time to fix this problem, and just sent an e-mail to one of the authors.
+  So...]
+
+.exquiz[
+  Fix this problem.]
+
+We just have learned the importance of validation (and being careful).
+I hope that you also learn that we have to understand the underlying physics very well before using tools.
+

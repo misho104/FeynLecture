@@ -18,7 +18,8 @@ if(window.MathJax){
         fb: ["\\unit{fb}"],
         pb: ["\\unit{pb}"],
         w: ["_{\\mathrm{#1}}", 1],
-        sub: ["_"]
+        sub: ["_"],
+        conj: ["^*"]
       }
     }
   });

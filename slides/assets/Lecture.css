@@ -29,9 +29,10 @@ div.note div.quiz::before, div.note div.exquiz::before { left: 0em; }
 div.exquiz p:first-child { text-indent: 3em; }
 
 .remark-inline-code { font-size: 90%;  font-family: 'Roboto Mono', monospace;  background: #f0f0f0; }
-.remark-slide-content pre code { font-size: 14px; font-family: 'Roboto Mono', monospace;  background: #f0f0f0; }
-.remark-slide-content pre code.output { background: #e0e0e0; }
-.remark-slide-content div.note pre code.output { background: #d2d2d2; }
+.remark-slide-content code.remark-code { font-size: 14px; font-family: 'Roboto Mono', monospace;  background: #f0f0f0; }
+.remark-slide-content code.output { background: #e0e0e0; }
+.remark-slide-content div.note code,
+.remark-slide-content div.note code.output { background: #d2d2d2; }
 
 .remark-slide-content pre { margin: 14px 0px 14px 0px; }
 .remark-slide-content h6.code_title { margin-bottom: 0; padding-left: 1em; background: #d0d0d0; font-size: 14px; font-family: monospace; font-weight: bold; }
@@ -48,7 +49,7 @@ code.mathematica span.code-prompt::after { content: "In[]:="; }
 
 
 
-.remark-slide-content blockquote { background-color: #f6dbe4; }
+.remark-slide-content blockquote { color: #444; font-style: italic; font-size: 18px; }
 
 
 .remark-slide-content .topright img { float: right; padding: 0 0 1em 1em; }
