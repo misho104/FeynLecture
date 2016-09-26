@@ -6,19 +6,20 @@ template_local := src/Lecture.template.local # template without remote assets
 sources = $(notdir $(wildcard $(md_dir)/*.md))
 targets = $(addsuffix .html,$(basename $(sources)))
 
-.PHONY: all hot local hotlocal clean
+.PHONY: all hot cold hotlocal coldlocal clean
 
 all: $(targets)
 
-mode := cold
-hot:      mode:=hot
-hotlocal: mode:=hot
-local:    template:=$(template_local)
-hotlocal: template:=$(template_local)
+mode := hot
+hot:        mode:=hot
+cold:       mode:=cold
+hotlocal:   mode:=hot  template:=$(template_local)
+coldlocal:  mode:=cold template:=$(template_local)
 
-hot:      all
-local:    all
-hotlocal: all
+hot:       all
+cold:      all
+hotlocal:  all
+coldlocal: all
 
 clean:
 	@rm -f $(targets) $(targets_for_chrome)
@@ -32,6 +33,6 @@ clean:
 
 .PHONY: archive
 archive: slides.zip
-slides.zip: clean local
+slides.zip: clean cold
 	zip slides.zip -r $(targets) assets remote index.html
 
