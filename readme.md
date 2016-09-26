@@ -77,8 +77,10 @@ On the packages, see the manuals:
 
 ### Lisense
 
-  * Program codes are licensed under MIT license (`*.nb`, `*.fr`, `and MathematicaBasic.*`)
-  * Lecture notes are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
+Program codes are licensed under MIT license (`*.nb`, `*.fr`, `and MathematicaBasic.*`), except for
+  - models/SM/*.rst, models/SM/SM.fr, which are taken from FeynRules package.
+
+Lecture notes are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
 
 Permissions beyond the scope of this license may be available; see http://www.misho-web.com/ to contact them.
 
