@@ -27,10 +27,11 @@
 
 ---
 ## Lecture 0: <br> Pre-course work
-  1. [Installation : FeynArts+FormCalc+LoopTools and FeynRules](#install_feyn)
-  2. [Installation : MadGraph_aMC@NLO](#install_mg5)
-  3. [Built-in Tutorial of MadGraph_aMC@NLO](#mg5_tutorial)
-
+  1. [Mathematica basic](#mathematica_basic)
+  2. [Installation : FeynArts+FormCalc+LoopTools and FeynRules](#install_feyn)
+  3. [Installation : MadGraph_aMC@NLO](#install_mg5)
+  4. [Built-in Tutorial of MadGraph_aMC@NLO](#mg5_tutorial)
+  5. [Small Quizzes](#small_quizzes)
 ---
 .note[
   This lecture slides have several "notes" like this.
@@ -51,9 +52,20 @@
   (You will see a solution in Lecture B-1.)]
 
 ---
+name: mathematica_basic
+
+### 1. Mathematica basic
+.quiz[
+  In this course we will use many Mathematica built-in functions, some of which you may be unfamiliar with.
+  Not to be trapped in technical aspects and concepts, some of *Mathematica basic* is provided.
+
+  Open `MathematicaBasic.pdf` (or `MathematicaBasic.txt`) and execute the lines one-by-one.
+  Try to understand what is being done, and prepare your questions if you have.]
+
+---
 name: install_feyn
 
-### 1. Installation : FA+FC+LT and FR
+### 2. Installation : FA+FC+LT and FR
 
 * Requires:
   - Mathematica
@@ -249,7 +261,7 @@ Note that the path should be set to `$FeynRulesPath`, in addition to being appen
 ---
 name: install_mg5
 
-### 2. Installation : MadGraph_aMC@NLO
+### 3. Installation : MadGraph_aMC@NLO
 
 * Requires
    - Python 2.6 or 2.7
@@ -303,7 +315,7 @@ You will check your installation is done properly in the next section.
 ---
 name: mg5_tutorial
 
-### 3. Built-in Tutorial of MadGraph_aMC@NLO
+### 4. Built-in Tutorial of MadGraph_aMC@NLO
 
 .quiz[
   Try to do the built-in tutorial of MadGraph_aMC@NLO.
@@ -375,7 +387,7 @@ Without such scripts your work will not be justified.
 ---
 name: small_quizzes
 
-### 4. Small Quizzes
+### 5. Small Quizzes
 .quiz[
   (For Lecture A-2)
   You know the Standard Model, so you can read the Standard Model file for FeynRules.
