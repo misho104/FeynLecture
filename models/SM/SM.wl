@@ -1,36 +1,33 @@
 (* ::Package:: *)
 
-(* Execute this block to generate UFO *)
+(* ::Subchapter:: *)
+(*Codes for output*)
+
+
+(* ::Text:: *)
+(*Quit the kernel (by Quit[] or from menu) before executing each block!*)
+
+
+(* Execute this block to generate UFO in Unitary gauge *)
 SetDirectory[NotebookDirectory[]];
 <<FeynRules`;
 FR$Parallelize = False;
 
 LoadModel["SM.fr"];
-FeynmanGauge = True;
+FeynmanGauge = False;
 (*LoadRestriction["Cabibbo.rst", "Massless.rst"]*)
-WriteUFO[LSM];
+WriteUFO[LSM, Output->"Standard_Model_UFO_Unitary"];
 
 
-(* Execute this block to generate FeynArts output in Feynman gauge *)
-SetDirectory[NotebookDirectory[]];
-<<FeynRules`;
-FR$Parallelize = False;
-
-LoadModel["SM.fr"];
-FeynmanGauge = True;
-(*LoadRestriction["Cabibbo.rst", "Massless.rst"]*)
-WriteFeynArtsOutput[LSM, FlavorExpand->SU2W]
-
-
-(* Execute this block to generate FeynArts output in unitary gauge *)
+(* Execute this block to generate FeynArts output *)
 SetDirectory[NotebookDirectory[]];
 <<FeynRules`;
 FR$Parallelize=False;
 
 LoadModel["SM.fr"];
-FeynmanGauge=False;
+FeynmanGauge = True;
 (*LoadRestriction["Cabibbo.rst", "Massless.rst"]*)
-WriteFeynArtsOutput[LGauge, LHiggs, LFermions, LYukawa, FlavorExpand->SU2W, Output->"Standard_Model_FA_Unitary"]
+WriteFeynArtsOutput[LSM, FlavorExpand->SU2W]
 
 
 (* ::Subchapter:: *)

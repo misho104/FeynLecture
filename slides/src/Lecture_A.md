@@ -803,9 +803,6 @@ In some cases indices can be omittd, but it is recommended to write all the indi
 ---
 We will skip the last part of the Lagrangian,`LGhost`.
 
-.exquiz[
-  Verify `LGhost` agrees with references, e.g., Peskin Chapter 21.]
-
 Finally the Standard Model Lagrangian is defined:
 ![:code_title](models/SM/SM.fr)
 ```mathematica
@@ -832,7 +829,7 @@ When you implement your model as a FeynRules model, you have to code
 ---
 name: feynrules_sm_validation
 
-#### How to use FeynRules
+#### How to use FeynRules (1) Validation
 
 The power of FeynRules is you can generate many formats from a single `.fr` file.
 Available formats are for
@@ -906,3 +903,107 @@ We ignore this warning now, because I know `SM.fr` in unitary gauge is valid.
   Check `SM.fr` with setting `FeynmanGauge = True`, i.e., in Feynman gauge.
   ![:answer](Answer is found in Appendix II.)]
 
+---
+name: feynrules_sm_output
+
+#### How to use FeynRules (2) Output
+
+Now the main part: generate *UFO* and *FeynArts* output.
+
+The code for output is found in the first two blocks of `models/SM/SM.wl`.
+The first block is for UFO (unitary gauge), and the second for FeynArts.
+
+.note[
+  It is strongly recommended to read Section 6 of FeynRules manual.]
+.exquiz[
+  Why is Feynman gauge chosen for FeynArts output?
+  ![:answer](Because FeynRules manual says:\n\nFormCalc only supports Feynman gauge. Therefore, FeynRules models can be ex- ported to be used with FormCalc only if they are written in Feynman gauge.)]
+
+**It is recommended to quit the kernel before each output.**
+You can quit the kernel by `Quit[]`, or from the menu: Evaluation > Quit kernel > Local (or your kernel).
+
+Sometimes, If you separate the generation codes, FeynRules goes unstable.
+For stability, it is better to execute the whole code *at once* (as well as to set`FR$Parallelize = False`).
+
+---
+![:code_title](models/SM/SM.wl)
+```mathematica
+(* Execute this block to generate UFO in Unitary gauge *)
+SetDirectory[NotebookDirectory[]];
+<<FeynRules`;
+FR$Parallelize = False;
+
+LoadModel["SM.fr"];
+FeynmanGauge = False;
+(*LoadRestriction["Cabibbo.rst", "Massless.rst"]*)
+WriteUFO[LSM, Output->"Standard_Model_UFO_Unitary"];
+```
+```output
+ - FeynRules - 
+Version: 2.3.24 ( 12 August 2016).
+Authors: A. Alloul, N. Christensen, C. Degrande, C. Duhr, B. Fuks
+...
+This model implementation was created by
+N. Christensen
+C. Duhr
+B. Fuks
+Model Version: 1.4.6
+...
+
+Model Standard Model loaded.
+ --- Universal FeynRules Output (UFO) v 1.1 ---
+Starting Feynman rule calculation.
+Expanding the Lagrangian...
+Collecting the different structures that enter the vertex.
+36 possible non-zero vertices have been found -> starting the computation: 36 / 36.
+31 vertices obtained.
+Flavor expansion of the vertices: 31 / 31
+   - Saved vertices in InterfaceRun[ 1 ].
+Computing the squared matrix elements relevant for the 1->2 decays: 
+48 / 48
+Squared matrix elent compute in 1.54369 seconds.
+Decay widths computed in 0.020233 seconds.
+Preparing Python output.
+    - Splitting vertices into building blocks.
+    - Optimizing: 75/75 .
+    - Writing files.
+Done!
+```
+
+---
+Now UFO files are generated in a directory `Standard_Model_UFO_Unitary`, which you can find in `models/SM`, i.e., the current directory set by `SetDirectory`.
+
+```output
+CT_couplings.py    Standard_Model_UFO_Unitary.log        __init__.py    coupling_orders.py
+couplings.py       decays.py       function_library.py   lorentz.py     object_library.py
+parameters.py      particles.py    propagators.py        vertices.py    write_param_card.py
+```
+Read the log file if some of the files are missing.
+
+.exquiz[
+  Open the files and try to understand what is written.]
+
+---
+Similarly, when you execute the code for FeynArts output,
+```output
+...
+
+ - - - FeynRules interface to FeynArts - - -
+      C. Degrande C. Duhr, 2013
+      Counterterms: B. Fuks, 2012
+Creating output directory: Standard_Model_FA
+Calculating Feynman rules for L1
+Starting Feynman rules calculation for L1.
+Expanding the Lagrangian...
+Collecting the different structures that enter the vertex.
+98 possible non-zero vertices have been found -> starting the computation: 98 / 98.
+93 vertices obtained.
+Writing FeynArts model file into directory Standard_Model_FA
+Writing FeynArts generic file on Standard_Model_FA.gen.
+```
+and you will find three files in a directory `Standard_Model_FA`.
+```output
+Standard_Model_FA.gen    Standard_Model_FA.mod    Standard_Model_FA.pars
+```
+.exquiz[
+  Open the files and try to understand what is written.]
