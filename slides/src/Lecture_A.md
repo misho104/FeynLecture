@@ -941,7 +941,6 @@ WriteUFO[LSM, Output->"Standard_Model_UFO_Unitary"];
 ```output
  - FeynRules - 
 Version: 2.3.24 ( 12 August 2016).
-Authors: A. Alloul, N. Christensen, C. Degrande, C. Duhr, B. Fuks
 ...
 This model implementation was created by
 N. Christensen
@@ -949,7 +948,6 @@ C. Duhr
 B. Fuks
 Model Version: 1.4.6
 ...
-
 Model Standard Model loaded.
  --- Universal FeynRules Output (UFO) v 1.1 ---
 Starting Feynman rule calculation.
