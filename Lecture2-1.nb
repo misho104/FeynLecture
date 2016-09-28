@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       145,          7]
-NotebookDataLength[      6670,        203]
-NotebookOptionsPosition[      5247,        149]
-NotebookOutlinePosition[      5665,        165]
-CellTagsIndexPosition[      5622,        162]
+NotebookDataLength[      8509,        263]
+NotebookOptionsPosition[      6712,        196]
+NotebookOutlinePosition[      7138,        213]
+CellTagsIndexPosition[      7095,        210]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -26,12 +26,56 @@ Cell["Create your own model by FeynRules", "Title",
 
 Cell[CellGroupData[{
 
+Cell["FeynRules", "Section",
+ CellChangeTimes->{{3.684012063023059*^9, 3.684012096157844*^9}}],
+
+Cell[TextData[{
+ StyleBox["Single",
+  FontWeight->"Bold"],
+ " model file (.fr) \[Rule] files for multiple HEP tools"
+}], "Text",
+ CellChangeTimes->{{3.6840120989751387`*^9, 3.684012201712191*^9}, 
+   3.6840123972934513`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["CalcHep / CompHep", "Item",
+ CellChangeTimes->{{3.536231501443287*^9, 3.536231561369526*^9}, {
+  3.684012205592032*^9, 3.684012220615147*^9}}],
+
+Cell["FeynArts / FormCalc", "Item",
+ CellChangeTimes->{{3.536231501443287*^9, 3.536231561369526*^9}, {
+  3.684012205592032*^9, 3.6840122275736*^9}}],
+
+Cell["Sherpa", "Item",
+ CellChangeTimes->{{3.536231501443287*^9, 3.536231561369526*^9}, {
+  3.684012205592032*^9, 3.68401222957806*^9}}],
+
+Cell["Universal FeynRules Output (for MadGraph5_aMC@NLO)", "Item",
+ CellChangeTimes->{{3.536231501443287*^9, 3.536231561369526*^9}, {
+  3.684012205592032*^9, 3.684012246132505*^9}}],
+
+Cell["Whizard / Omega", "Item",
+ CellChangeTimes->{{3.536231501443287*^9, 3.536231561369526*^9}, {
+  3.684012205592032*^9, 3.6840122511962*^9}}]
+}, Open  ]],
+
+Cell["\<\
+Thus model files has a lot of information and should be carefully made.\
+\>", "Text",
+ CellChangeTimes->{{3.684012403685111*^9, 3.68401244057903*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["How to create a new \"Model\" file?", "Section",
  CellChangeTimes->{{3.536037131534835*^9, 3.5360372263613586`*^9}, {
   3.536037424335751*^9, 3.5360374299097357`*^9}, {3.5360374678636017`*^9, 
-  3.536037467995038*^9}, {3.536231378367947*^9, 3.536231443279554*^9}}],
+  3.536037467995038*^9}, {3.536231378367947*^9, 3.536231443279554*^9}, {
+  3.684012054185601*^9, 3.68401206216199*^9}}],
 
-Cell["Do not create a model by your own!", "Text",
+Cell[TextData[StyleBox["Do not create a model by your own!",
+ FontWeight->"Bold"]], "Text",
  CellChangeTimes->{{3.53623144403283*^9, 3.536231495862995*^9}}],
 
 Cell[CellGroupData[{
@@ -58,9 +102,12 @@ Cell["many many many many parameters,", "Subitem",
   3.536231620253977*^9, 3.536231659221607*^9}}]
 }, Open  ]],
 
-Cell["\<\
-which you have to input CORRECTLY........ Painful and Boring.\
-\>", "Item",
+Cell[TextData[{
+ "which you have to input CORRECTLY........ ",
+ StyleBox["Painful and Boring",
+  FontWeight->"Bold"],
+ "."
+}], "Item",
  CellChangeTimes->{{3.536231696013741*^9, 3.5362316974694443`*^9}}]
 }, Open  ]]
 }, Open  ]],
@@ -149,7 +196,8 @@ Cell["Lagrangian", "Subitem",
 },
 WindowSize->{1440, 852},
 WindowMargins->{{4, Automatic}, {Automatic, 0}},
-FrontEndVersion->"7.0 for Mac OS X x86 (32-bit) (2009\:5e744\:670823\:65e5)",
+FrontEndVersion->"10.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 9, \
+2015)",
 StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
   CharacterEncoding -> "UTF-8"]
 ]
@@ -165,42 +213,54 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[567, 22, 170, 2, 74, "Title"],
+Cell[567, 22, 170, 2, 289, "Title"],
 Cell[CellGroupData[{
-Cell[762, 28, 270, 3, 69, "Section"],
-Cell[1035, 33, 115, 1, 26, "Text"],
+Cell[762, 28, 94, 1, 131, "Section"],
+Cell[859, 31, 224, 6, 57, "Text"],
 Cell[CellGroupData[{
-Cell[1175, 38, 98, 1, 20, "Item"],
-Cell[CellGroupData[{
-Cell[1298, 43, 150, 2, 20, "Subitem"],
-Cell[1451, 47, 156, 2, 20, "Subitem"],
-Cell[1610, 51, 162, 2, 20, "Subitem"],
-Cell[1775, 55, 167, 2, 20, "Subitem"]
+Cell[1108, 41, 148, 2, 46, "Item"],
+Cell[1259, 45, 148, 2, 46, "Item"],
+Cell[1410, 49, 136, 2, 46, "Item"],
+Cell[1549, 53, 181, 2, 46, "Item"],
+Cell[1733, 57, 144, 2, 46, "Item"]
 }, Open  ]],
-Cell[1957, 60, 153, 3, 20, "Item"]
+Cell[1892, 62, 160, 3, 57, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2089, 70, 318, 4, 131, "Section"],
+Cell[2410, 76, 156, 2, 57, "Text"],
+Cell[CellGroupData[{
+Cell[2591, 82, 98, 1, 46, "Item"],
+Cell[CellGroupData[{
+Cell[2714, 87, 150, 2, 45, "Subitem"],
+Cell[2867, 91, 156, 2, 45, "Subitem"],
+Cell[3026, 95, 162, 2, 45, "Subitem"],
+Cell[3191, 99, 167, 2, 45, "Subitem"]
+}, Open  ]],
+Cell[3373, 104, 202, 6, 46, "Item"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2159, 69, 342, 5, 69, "Section"],
+Cell[3624, 116, 342, 5, 131, "Section"],
 Cell[CellGroupData[{
-Cell[2526, 78, 176, 2, 20, "Item"],
-Cell[2705, 82, 154, 2, 20, "Item"],
+Cell[3991, 125, 176, 2, 46, "Item"],
+Cell[4170, 129, 154, 2, 46, "Item"],
 Cell[CellGroupData[{
-Cell[2884, 88, 226, 3, 20, "Subitem"],
-Cell[3113, 93, 269, 5, 20, "Subitem"]
+Cell[4349, 135, 226, 3, 45, "Subitem"],
+Cell[4578, 140, 269, 5, 45, "Subitem"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3443, 105, 145, 1, 69, "Section"],
+Cell[4908, 152, 145, 1, 200, "Section"],
 Cell[CellGroupData[{
-Cell[3613, 110, 200, 3, 20, "Item"],
+Cell[5078, 157, 200, 3, 46, "Item"],
 Cell[CellGroupData[{
-Cell[3838, 117, 317, 4, 20, "Subitem"],
-Cell[4158, 123, 275, 4, 20, "Subitem"],
-Cell[4436, 129, 269, 4, 20, "Subitem"],
-Cell[4708, 135, 243, 3, 20, "Subitem"],
-Cell[4954, 140, 241, 3, 20, "Subitem"]
+Cell[5303, 164, 317, 4, 45, "Subitem"],
+Cell[5623, 170, 275, 4, 45, "Subitem"],
+Cell[5901, 176, 269, 4, 45, "Subitem"],
+Cell[6173, 182, 243, 3, 45, "Subitem"],
+Cell[6419, 187, 241, 3, 45, "Subitem"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
