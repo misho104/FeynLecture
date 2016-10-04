@@ -176,6 +176,8 @@ Now we treat external vector fields.
 
 
 ---
+name: QCD_amplitudes
+
 #### `Lecture1-4.nb` : QCD amplitudes
 
 The last skill of tree-level calculation is to evaluate the color structure with `ColourME`.
@@ -242,7 +244,8 @@ It is perhaps a good time to read the manual again.
 ---
 ### 2. Create your own model by FeynRules
 
-`FeynRules` : Read a Lagrangian from "FeynRules files" (`*.fr`), and output files for
+#### `Lecture2-1.nb`: FeynRules
+FeynRules reads a Lagrangian in "FeynRules files" (`*.fr`) and generates files for
   - CalcHep/CompHep,
   - *FeynArts/FormCalc*,
   - Sherpa,
@@ -1005,3 +1008,28 @@ Standard_Model_FA.gen    Standard_Model_FA.mod    Standard_Model_FA.pars
 ```
 .exquiz[
   Open the files and try to understand what is written.]
+
+---
+.note[
+  You may have noticed a line is commented-out: `(*LoadRestriction["Cabibbo.rst", "Massless.rst"]*)`.
+  The files `*.rst` are called *restriction files*, which simplify the model parameters **in order to reduce computation time**.]
+
+ .exquiz[
+   Open `Massless.rst` and try to find what it does.]
+
+ .exquiz[
+   Generate FeynArts output with restrictions `Cabibbo.rst` and `Massless.rst`.
+   What is the difference between this restricted output and the previous one? Especially, which files are different?
+   ![:answer](In FeynArts output, only the \'pars\' file is affected. Many parameters such as ymup or CKM3x3 are removed in the restricted output.)]
+
+---
+#### How to use FeynRules (3) Use in FeynArts/FormCalc (`Lecture2-2.nb`)
+
+To learn how to use the FeynArts output `Standard_Model_FA`, let us calculate the QCD two-jet cross section, which [we calculated in `Lecture1-4.nb`](#QCD_amplitudes), again.
+
+.quiz[
+  Open `Lecture2-2.nb`, in which we calculate $\sigma(qq'\to qq')$ with `Standard_Model_FA` output files instead of the built-in SM files.
+  Evaluate the lines one by one and check whether the same result is obtained.]
+
+---
+#### `Lecture2-3.nb`: $\phi^4$ theory
