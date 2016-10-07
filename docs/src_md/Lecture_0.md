@@ -427,6 +427,7 @@ Without such scripts your work will not be justified.
 
 ---
 name: install_checkmate
+
 ### 5. Installation : CheckMATE
 
 * Requires

@@ -11,7 +11,7 @@
 
 
 .location[
-  XX Oct 2016 <br>
+  11&ndash;14 Oct 2016 <br>
   Yonsei University
 ]
 
@@ -242,585 +242,40 @@ It is perhaps a good time to read the manual again.
    - 4.5 Selecting Insertions]
 
 ---
+name: feynrules
+
 ### 2. Create your own model by FeynRules
 
 #### `Lecture2-1.nb`: FeynRules
-FeynRules reads a Lagrangian in "FeynRules files" (`*.fr`) and generates files for
-  - CalcHep/CompHep,
-  - *FeynArts/FormCalc*,
-  - Sherpa,
-  - *UFO (Universal FeynRules Output)* (for mg5),
-  - Whizard/Omega
+FeynRules: **single file for many packages**.
 
-
-##### Strategy
- * Do not create a model file by your own! : Risk of bugs.
-   - You have to imprement so many things (esp. mixing).
-   - The grammar is not simple.
- * Use pre-installed models; they are made by professionals.
- * Append your particles/interaction to those pre-installed models.
-   - Do not append everything. Physically interesting particles only.
- * If you write from scratch, you need to verify the files carefully.
+ * Input: "FeynRules files" (*.fr), which contains Lagrangian.
+ * Output:
+  - *FeynArts / FormCalc*
+  - Universal FeynRules Output (for *MadGraph5_aMC@NLO* etc.)
+  - CalcHep / CompHep
+  - ASperGe
+  - Sherpa
+  - Whizard
+  - TeX
 
 ---
-#### Let's read the pre-installed Standard Model file
+#### FeynRules input file
 
-.quiz[
-  Open `Models/SM/SM.fr` and read it.
-  What does a model file have?]
+Open `Models/SM/SM.fr`.
+You can see that the input file has
 
----
-A model file has
-
-  - Gauge symmetries,
-  - Indices (labels of color, generation, etc.),
-  - Particle classes,
-  - Parameters,
+  - 3 gauge symmetries,
+  - 5 indices (labels of color, generation, etc.),
+  - 26 particle classes,
+    - unphysical fields (gauge eigenstates)
+    - physical fields (mass eigenstates)
+  - 29 parameters,
   - Interactions (embedded in a Lagrangian),
   - etc.
 
----
-The file `models/SM/SM.fr` stars with "Information."
-
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* *****  Information   ***** *)
-(* ************************** *)
-M$ModelName = "Standard Model";
-
-M$Information = {
-  Authors      -> {"N. Christensen", "C. Duhr", "B. Fuks"}, 
-  Version      -> "1.4.6",
-  Date         -> "15. 04. 2014",
-  Institutions -> {"Michigan State University", "Universite catholique de Louvain (CP3)",
-                   "IPHC Strasbourg / University of Strasbourg"},
-  Emails       -> {"neil@pa.msu.edu", "claude.duhr@uclouvain.be", "benjamin.fuks@cnrs.in2p3.fr"},
-  URLs         -> "http://feynrules.phys.ucl.ac.be/view/Main/StandardModel"
-};
-```
-
-.note[
-  This information tells you that you must write to them when you find bugs or suspicious codes.]
-
-.note[
-  Some variables has `FR$` or `M$` in its name.
-  `M$`-type variables are the model information, and expected to be read by FeynRules.
-  `FR$`-variables are FeynRules-internal variables; they are modified by `SM.fr`.
-  All variables can be accessible from your Mathematica terminal.]
-
-Note the positions of commas (`,`):
-```mathematica
-  list = {a, b, c, d, } (* is not allowed; interpreted as {a, b, c, d, Null} *)
-  list = {a, b, c, d }  (* is the proper way. *)
-```
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* Choose whether Feynman gauge is desired.                                                         ****)
-(* If set to False, unitary gauge is assumed.                                                         **)
-(* Feynman gauge is especially useful for CalcHEP/CompHEP where the calculation is 10-100 times faster.*)
-(* Feynman gauge is not supported in MadGraph and Sherpa.                                             **)
-
-FeynmanGauge = True;
-```
-This looks an important switch.
-Let us keep it in mind.
-
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* ***** NLO Variables ****** *)
-(******************************)
-
-FR$LoopSwitches = {{Gf, MW}};
-FR$RmDblExt = { ymb -> MB, ymc -> MC, ymdo -> MD, yme -> Me, 
-   ymm -> MMU, yms -> MS, ymt -> MT, ymtau -> MTA, ymup -> MU};
-```
-This is for NLO calculation, so we ignore for now.
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* *****      vevs      ***** *)
-(* ************************** *)
-M$vevs = { {Phi[2],vev} };
-```
-
-This lists the VEVs of the model.
-Here the second element of `Phi` is declared to have a `vev`.
-For now we skip this for simplicity, but we should consult the manual (or source code) when our model has another VEV.
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* *****  Gauge groups  ***** *)
-(* ************************** *)
-M$GaugeGroups = {
-  U1Y  == { 
-    Abelian          -> True,  
-    CouplingConstant -> g1, 
-    GaugeBoson       -> B, 
-    Charge           -> Y },
-  SU2L == {
-    ...
-    Representations -> {Ta,SU2D}, 
-    Definitions     -> {Ta[a_,b_,c_]->PauliSigma[a,b,c]/2, FSU2L[i_,j_,k_]:> I Eps[i,j,k]}
-  },
-  SU3C == { 
-    ...
-    Representations -> {T,Colour}, 
-    SymmetricTensor -> dSUN }
-```
-Here three gauge symmetries are defined, together with corresponding gauge bosons `B`, `Wi`, `G`, coupling constants `g1`, `gw`, `gs`, etc.
-The manual says about `Representations`,
-> The first component of each pair is a symbol defining the symbol for the generator,
-> while the second one consists of the type of indices it acts on.
-
-As `SU2D` is an index for SU(2) doublet defined just below as 1&ndash;2, this code defines a generator set `Ta[a,b,c]`$=\frac12(\sigma^a)^{bc}$.
-Similarly, $(T{}^a)^{bc}$ is defined for SU(3).
-
----
-.note[
-  `Ta` is explicitly defined here, while `T` is not explicitly defined. It is internally evaluated.
-
-  For a gauge group named `aaa`, FeynRules automatically defines the symbol `Faaa` to denote its adjoint representation.
-
-  For details, see FeynRules manual
-   * 6.1.5 Definition of Standard Model parameters and gauge groups, and a table therein,
-   * 2.6.1 Gauge group declaration.
-]
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* *****    Indices     ***** *)
-(* ************************** *)
-
-IndexRange[Index[SU2W      ]] = Unfold[Range[3]]; 
-IndexRange[Index[SU2D      ]] = Unfold[Range[2]];
-IndexRange[Index[Gluon     ]] = NoUnfold[Range[8]];
-IndexRange[Index[Colour    ]] = NoUnfold[Range[3]]; 
-IndexRange[Index[Generation]] = Range[3];
-
-IndexStyle[SU2W,       j];
-IndexStyle[SU2D,       k];
-IndexStyle[Gluon,      a];
-IndexStyle[Colour,     m];
-IndexStyle[Generation, f];
-```
-`Unfold` is important: from the manual,
-> 
-> Any index that expands in terms of non-physical states must be wrapped in `Unfold`.
-> For instance, the SU(2)L indices in the SM or in the MSSM  must always be expanded in order to get the Feynman rules in terms of the physical states of the theory.
-
-Read the manual for detail.
-
-.note[
-  `IndexStyle` defines the prefix of internal variables; e.g., indices `a1`, `a2`, ... are internally generated to represent gluon indices.]
-
----
-
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* *** Interaction orders *** *)
-(* ***  (as used by mg5)  *** *)
-(* ************************** *)
-
-M$InteractionOrderHierarchy = {
-  {QCD, 1},
-  {QED, 2}
-};
-```
-We will see this later (in mg5 lecture).
-
----
-
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* **** Particle classes **** *)
-(* ************************** *)
-M$ClassesDescription = {
-
-(* Gauge bosons: physical vector fields *)
-  V[1] == { 
-    ClassName       -> A, 
-    SelfConjugate   -> True,  
-    Mass            -> 0,  
-    Width           -> 0,  
-    ParticleName    -> "a", 
-    PDG             -> 22, 
-    PropagatorLabel -> "a", 
-    PropagatorType  -> W, 
-    PropagatorArrow -> None,
-    FullName        -> "Photon"
-  },
-...
-```
-Now the particles! Vector fields are defined as `V[ (number) ]`.
-
-.quiz[
-  Which properties are physically important, and which are just for illustration? ![:answer](SelfConjugate, Mass, and Width are physically important. ClassName and PDG are also important because they are the labels. FullName, ParticleName, and styles for propagators are just for illustration.)]
-  
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-  V[2] == { 
-    ClassName       -> Z, 
-    SelfConjugate   -> True,
-    Mass            -> {MZ, 91.1876},
-    Width           -> {WZ, 2.4952},
-    PDG             -> 23, 
-  },
-  V[3] == {
-    ClassName        -> W,
-    SelfConjugate    -> False,
-    Mass             -> {MW, Internal},
-    Width            -> {WW, 2.085},
-    QuantumNumbers   -> {Q -> 1},
-    PDG              -> 24, 
-  },
-  V[4] == {
-    ClassName        -> G,
-    SelfConjugate    -> True,
-    Indices          -> {Index[Gluon]},
-    Mass             -> 0,
-    Width            -> 0,
-    PDG              -> 21,
-  },
-```
-We will discuss `QuantumNumbers` later.
-
-Note there are `Internal` parameters, and parameters with values (external).
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* Gauge bosons: unphysical vector fields *)
-  V[11] == { 
-    ClassName     -> B, 
-    Unphysical    -> True, 
-    SelfConjugate -> True, 
-    Definitions   -> { B[mu_] -> -sw Z[mu]+cw A[mu]} 
-  },
-  V[12] == { 
-    ClassName     -> Wi,
-    Unphysical    -> True,
-    SelfConjugate -> True, 
-    Indices       -> {Index[SU2W]},
-    FlavorIndex   -> SU2W,
-    Definitions   -> { Wi[mu_,1] -> (Wbar[mu]+W[mu])/Sqrt[2],
-                       Wi[mu_,2] -> (Wbar[mu]-W[mu])/(I*Sqrt[2]),
-                       Wi[mu_,3] -> cw Z[mu] + sw A[mu]}
-  },
-```
-These particles have already appeared in `GaugeBoson` of the gauge group definition, so they will appear in covariant derivatives `DC` and field strengths `FS` later.
-Note that they are `Unphysical`, and do not have `Mass` or `Width` properties but `Definitions`.
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* Fermions: physical fields *)
-  F[1] == {
-    ClassName        -> vl,
-    ClassMembers     -> {ve,vm,vt},
-    Indices          -> {Index[Generation]},
-    FlavorIndex      -> Generation,
-    SelfConjugate    -> False,
-    Mass             -> 0,
-    Width            -> 0,
-    QuantumNumbers   -> {LeptonNumber -> 1}
-  },
-  F[2] == {
-    ClassName        -> l,
-    ClassMembers     -> {e, mu, ta},
-    Indices          -> {Index[Generation]},
-    FlavorIndex      -> Generation,
-    SelfConjugate    -> False,
-    Mass             -> {Ml, {Me,5.11*^-4}, {MMU,0.10566}, {MTA,1.777}},
-    Width            -> 0,
-    QuantumNumbers   -> {Q -> -1, LeptonNumber -> 1}
-  },
-  ...
-```
-These are physical fermions, so `Mass` and `Width` are defined.
-
-
-.note[
-  As `Index[Generation]` (runs 1&ndash;3) is marked as `FlavorIndex`, these classes have three "flavors".
-  Therefore `ClassMembers` is specified and has three elements, and `Mass` etc. are with several elements (one common symbol followed by parameters for respective generations).]
-
----
-
-![:code_title](models/SM/SM.fr)
-```mathematica
-F[11] == { 
-  ClassName      -> LL, 
-  Unphysical     -> True, 
-  Indices        -> {Index[SU2D], Index[Generation]},
-  FlavorIndex    -> SU2D,
-  SelfConjugate  -> False,
-  QuantumNumbers -> {Y -> -1/2},
-  Definitions    -> {LL[sp1_, 1, ff_] :> Module[{sp2}, ProjM[sp1,sp2] vl[sp2,ff]],
-                     LL[sp1_, 2, ff_] :> Module[{sp2}, ProjM[sp1,sp2] l [sp2,ff]]} },
-```
-Lagrangian is written in terms of `Unphysical` fermions such as this `LL`, which is converted to physical fermions `vl` and `l` as defined in `Definitions`.
-
-With this description, we will obtain the proper covariant derivative `DC`:
-$$
-D\sub\mu(L)
-= \partial\sub\mu(L)
--\ii g\sub 2 T^aW^a\sub\mu L
--\ii g\sub Y(-1/2) B\sub\mu L
-$$
-because, for `LL`, an index associated to `SU2L` gauge group  and a quantum number associated to `U1Y` gauge group are specified.
-
----
-.note[
-  `Indices` associated to a (non-Abelian) gauge group are used to define the representation in the gauge symmetry.
-
-  `Indices` marked as `FlavorIndex` is used to link the class to each element in `ClassMembers`.
-
-  The other `Indices` are used just as labels.]
-
-.note[
-  `QuantumNumbers` associated to an Abelian gauge group are used to define the charge under the gauge symmetry.
-
-  `QuantumNumbers` not associated to Abelian groups are treated as a global U(1) symmetry (and its charge).
-  If an interaction breaks such a symmetry, a warning may be recorded in log files.]
-
----
-Quarks and the Higgs boson are similarly defined:
-![:code_title](models/SM/SM.fr)
-```mathematica
-F[13] == { 
-  ClassName      -> QL, 
-  Unphysical     -> True, 
-  Indices        -> {Index[SU2D], Index[Generation], Index[Colour]},
-  FlavorIndex    -> SU2D,
-  SelfConjugate  -> False,
-  QuantumNumbers -> {Y -> 1/6},
-  Definitions    -> { 
-    QL[sp1_,1,ff_,cc_] :> Module[{sp2}, ProjM[sp1,sp2] uq[sp2,ff,cc]], 
-    QL[sp1_,2,ff_,cc_] :> Module[{sp2,ff2}, CKM[ff,ff2] ProjM[sp1,sp2] dq[sp2,ff2,cc]] }
-},
-F[14] == { 
-  ClassName      -> uR, 
-  Unphysical     -> True, 
-  Indices        -> {Index[Generation], Index[Colour]},
-  FlavorIndex    -> Generation,
-  SelfConjugate  -> False,
-  QuantumNumbers -> {Y -> 2/3},
-  Definitions    -> { uR[sp1_,ff_,cc_] :> Module[{sp2}, ProjP[sp1,sp2] uq[sp2,ff,cc]] } },
-F[15] == { 
-  ClassName      -> dR, 
-  Unphysical     -> True, 
-  Indices        -> {Index[Generation], Index[Colour]},
-  FlavorIndex    -> Generation,
-  SelfConjugate  -> False,
-  QuantumNumbers -> {Y -> -1/3},
-  Definitions    -> { dR[sp1_,ff_,cc_] :> Module[{sp2}, ProjP[sp1,sp2] dq[sp2,ff,cc]] } },
-```
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* Higgs: physical scalars  *)
-  S[1] == {
-    ClassName       -> H,
-    SelfConjugate   -> True,
-    Mass            -> {MH,125},
-    Width           -> {WH,0.00407},
-  },
-(* Higgs: unphysical scalars  *)
-  S[11] == { 
-    ClassName      -> Phi, 
-    Unphysical     -> True, 
-    Indices        -> {Index[SU2D]},
-    FlavorIndex    -> SU2D,
-    SelfConjugate  -> False,
-    QuantumNumbers -> {Y -> 1/2},
-    Definitions    -> { Phi[1] -> -I GP, Phi[2] -> (vev + H + I G0)/Sqrt[2]  }
-  }
-```
-
----
-Then parameters are declared.
-
-![:code_title](models/SM/SM.fr)
-```mathematica
-(* ************************** *)
-(* *****   Parameters   ***** *)
-(* ************************** *)
-M$Parameters = {
-
-  (* External parameters *)
-  aEWM1 == { 
-    ParameterType    -> External, 
-    BlockName        -> SMINPUTS, 
-    OrderBlock       -> 1, 
-    Value            -> 127.9,
-    InteractionOrder -> {QED,-2},
-    Description      -> "Inverse of the EW coupling constant at the Z pole"
-  },
-```
-This is an `External` parameter, so `Value` is given.
-Also `BlockName` and `OrderBlock` is specified; users can input the value for `aEWM1` in the first element of `SMINPUTS` block in a SLHA parameter file.
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-  (* Internal Parameters *)
-  aEW == {
-    ParameterType    -> Internal,
-    Value            -> 1/aEWM1,
-    InteractionOrder -> {QED,2},
-    TeX              -> Subscript[\[Alpha], EW],
-    Description      -> "Electroweak coupling contant"
-  },
-  MW == { 
-    ParameterType -> Internal, 
-    Value         -> Sqrt[MZ^2/2+Sqrt[MZ^4/4-Pi/Sqrt[2]*aEW/Gf*MZ^2]], 
-    TeX           -> Subscript[M,W], 
-    Description   -> "W mass"
-  },
-```
-These are `Internal` parameters; `Value` is specified as a Mathematica expression.
-
-.exquiz[
-  Verify that the expressions for the internal parameters are correct. For example, prove
-    $$
-      M\sub{W}^2 = \frac{M\sub{Z}^2}{2} + \sqrt{\frac{M\sub{Z}^4}{4}-\frac{\pi}{\sqrt 2}\frac{\alpha\w{ew}}{G\w F}M\sub{Z}^2}.
-    $$]
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-  yd == {
-    ParameterType    -> Internal,
-    Indices          -> {Index[Generation], Index[Generation]},
-    Definitions      -> {yd[i_?NumericQ, j_?NumericQ] :> 0  /; (i =!= j)},
-    Value            -> {yd[1,1] -> Sqrt[2] ymdo/vev, yd[2,2] -> Sqrt[2] yms/vev, ...},
-    InteractionOrder -> {QED, 1},
-    ParameterName    -> {yd[1,1] -> ydo, yd[2,2] -> ys, yd[3,3] -> yb},
-    TeX              -> Superscript[y, d],
-    Description      -> "Down-type Yukawa couplings"
-  },
-(* N. B. : only Cabibbo mixing! *)
-  CKM == { 
-    ParameterType -> Internal,
-    Indices       -> {Index[Generation], Index[Generation]},
-    Unitary       -> True,
-    Value         -> {CKM[1,1] -> Cos[cabi],  CKM[1,2] -> Sin[cabi], CKM[1,3] -> 0,
-                      CKM[2,1] -> -Sin[cabi], CKM[2,2] -> Cos[cabi], CKM[2,3] -> 0,
-                      CKM[3,1] -> 0,          CKM[3,2] -> 0,         CKM[3,3] -> 1},
-    TeX         -> Superscript[V,CKM],
-    Description -> "CKM-Matrix"}
-```
-These are with `Indices`, so matrix-type parameters.
-For `yd`, both `Definitions` and `Value` are given, but they are exclusive.
-
----
-Finally the Lagrangian is described.
-The first part is
-![:code_title](models/SM/SM.fr)
-```mathematica
-LGauge := Block[{mu,nu,ii,aa}, 
-  ExpandIndices[
-    - 1/4 FS[B,mu,nu] FS[B,mu,nu]
-    - 1/4 FS[Wi,mu,nu,ii] FS[Wi,mu,nu,ii]
-    - 1/4 FS[G,mu,nu,aa] FS[G,mu,nu,aa]
-  , FlavorExpand->SU2W]];
-```
-This is easy to understand; `LGauge` is actually
-$$
-L\w{gauge} = -\frac14\left[
- B\sub{\mu\nu}B^{\mu\nu}
-+W^i\sub{\mu\nu}W^{i\mu\nu}
-+G^a\sub{\mu\nu}G^{a\mu\nu}
-\right],
-$$
-where $B\sub{\mu\nu}$ etc. are the gauge field strengths (`FS`).
-
-
-Remember that `SU2W` is defined as `Unfold[Range[3]]`, because
-> Any index that expands in terms of non-physical states must be wrapped in Unfold.
-> For instance, the SU(2)L indices in the SM or in the MSSM must always be expanded in order to get the Feynman rules in terms of the physical states of the theory.
-
-Here, as is specified in `FlavorExpand`, the index `SU2W` is expanded.
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-LFermions := Block[{mu}, ExpandIndices[
-  I*( QLbar.Ga[mu].DC[QL, mu] + LLbar.Ga[mu].DC[LL, mu] + ...
-
-LHiggs := Block[{ii,mu, feynmangaugerules},
-  feynmangaugerules = If[Not[FeynmanGauge], {G0|GP|GPbar ->0}, {}];
- 
-  ExpandIndices[
-     DC[Phibar[ii],mu] DC[Phi[ii],mu] + muH^2 Phibar[ii] Phi[ii]
-     - lam Phibar[ii] Phi[ii] Phibar[jj] Phi[jj]
-  , FlavorExpand->{SU2D,SU2W}]/.feynmangaugerules
- ];
-```
-`LFermions` and `LHiggs` are basically
-$$
-\ii \overline{Q}\gamma^\mu D\sub{\mu}Q + \cdots,
-$$
-and
-$$
-  D^\mu \Phi\conj\sub{i} D\sub{\mu}\Phi\sub{i} + \mu\sub{H}^2 \Phi\conj\sub{i}\Phi\sub{i} - \lambda \Phi\conj\sub{i}\Phi\sub{i}\Phi\conj\sub{j}\Phi\sub{j},
-$$
-respectively. In Feynman gauge, all the goldstones are removed.
-
----
-![:code_title](models/SM/SM.fr)
-```mathematica
-LYukawa := Block[{sp,ii,jj,cc,ff1,ff2,ff3,yuk,feynmangaugerules},
-  feynmangaugerules = If[Not[FeynmanGauge], {G0|GP|GPbar ->0}, {}];
- 
-  yuk = ExpandIndices[
-   -yd[ff2, ff3] CKM[ff1, ff2] QLbar[sp, ii, ff1, cc].dR [sp, ff3, cc] Phi[ii] - 
-    yl[ff1, ff3] LLbar[sp, ii, ff1].lR [sp, ff3] Phi[ii] - 
-    yu[ff1, ff2] QLbar[sp, ii, ff1, cc].uR [sp, ff2, cc] Phibar[jj] Eps[ii, jj]
-  , FlavorExpand -> SU2D
-  ];
-  yuk = yuk /. { CKM[a_, b_] Conjugate[CKM[a_, c_]] -> IndexDelta[b, c], ... };
-  yuk + HC[yuk] /. feynmangaugerules
-];
-```
-Let us focus on the indices.
-The field `QLbar` ($=Q^\dagger\gamma\sub0$) has four indices: `sp`, `ii`, `ff1`, and `cc`. The first index `sp` is for spin, and the others follow the class description of `QL` = `F[11]`:
-```mathematica
-    Indices        -> {Index[SU2D], Index[Generation], Index[Colour]}
-```
-Note that fermions, which are anticommuting, should be connected by `Dot` (`.`).
-In some cases indices can be omittd, but it is recommended to write all the indices explicitly.
-
----
-We will skip the last part of the Lagrangian,`LGhost`.
-
-Finally the Standard Model Lagrangian is defined:
-![:code_title](models/SM/SM.fr)
-```mathematica
-LSM:= LGauge + LFermions + LHiggs + LYukawa + LGhost;
-```
-
----
-##### Summary
-When you implement your model as a FeynRules model, you have to code
- * gauge symmetries
- * fields
-   - unphysical fields (gauge eigenstates)
-   - physical fields (mass eigenstates)1
- * parameters
- * Lagrangian
+*You have to write all of them if you want to implement your model.*
+**...boring, complicated, difficult grammer, and huge risk of bugs.**
 
 .note[
   There is one more key ingredient of FeynRules model file, `Mixing`; it is not used in the SM.
@@ -830,56 +285,312 @@ When you implement your model as a FeynRules model, you have to code
   FeynRules can handle superspace and superfields (but it is far beyond the scope of this lecture).]
 
 ---
-name: feynrules_sm_validation
+##### Strategy
+ * Do not create a model file by your own! : Risk of bugs.
+ * Use pre-installed models; they are made by professionals.
+ * Append your particles/interaction to those pre-installed models.
+   - Do not append everything. Physically interesting particles only.
+ * If you write from scratch, you need to verify the files carefully.
+
+---
+#### Let's read the simplest model: $\phi^4$ theory
+
+`SM.fr` is very long and difficult to read.
+In this lecture we read the model files for $\phi^4$ theory,
+$$ \mathcal L = \frac{1}{2}(\partial^\mu\phi)(\partial_\mu\phi) - \frac{\lambda}{4!}\phi^4 - \frac{m^2}{2}\phi^2.$$
+
+Open `phi4.fr` and read it.
+
+.note[
+  The file is also found in [GitHub repository](https://github.com/misho104/FeynLecture) : [phi4.fr](https://github.com/misho104/FeynLecture/blob/master/phi4.fr).]
+ 
+---
+The file starts with *Information* block.
+
+![:code_title](phi4.fr)
+```mathematica
+M$ModelName = "phi to four theory";
+M$Information = {
+              Authors -> "Sho Iwamoto",
+              Version -> "0.1",
+              Date    -> "Feb. 9, 2011",
+              Institutions -> "Technion",
+              Emails  -> "sho@physics.technion.ac.il",
+              URLs    -> "http://www.misho-web.com/"
+              };
+```
+
+This information tells you that you must write to them when you find bugs.
+
+Note the positions of commas (`,`):
+```mathematica
+  list = {a, b, c, d, } (* is not allowed; interpreted as {a, b, c, d, Null} *)
+  list = {a, b, c, d }  (* is the proper way. *)
+```
+
+.note[
+  Some variables has `FR$` or `M$` in its name.
+  `M$`-type variables are the model information, and expected to be read by FeynRules.
+  `FR$`-variables are FeynRules-internal variables; they are modified by `SM.fr`.
+  All variables can be accessible from your Mathematica terminal.]
+
+---
+Then parameters $\lambda$ and $m$ are defined.
+(3-point coupling $\kappa$ is commented-out.)
+
+![:code_title](phi4.fr)
+```mathematica
+M$Parameters = {
+  lam == {
+         ParameterType -> External,
+         BlockName     -> HOGE,
+         OrderBlock    -> {1},
+         Value         -> 0.1,
+         Description   -> "Scalar 4-point coupling"},
+  mmm    == {
+         ParameterType -> External,
+         BlockName     -> HOGE,
+         OrderBlock    -> {3},
+         Value         -> 100,
+         Description   -> "Scalar 2-point coupling"}
+};
+```
+
+Note these are `External` parameter.
+Default values are specified, but (as they are `External`) users can set the values in a SLHA parameter file, like
+```
+Block hoge
+    1 1.000000e-01 # lam
+    3 1.000000e+02 # mmm
+```
+(as specified by `BlockName` and `OrderBlock`).
+
+---
+Next, particles are declared:
+![:code_title](phi4.fr)
+```mathematica
+M$ClassesDescription = {
+  S[1] == {
+        ClassName -> phi,
+        SelfConjugate -> True,
+        Mass -> {mmm, 100},
+        Width -> 0,
+        PropagatorLabel -> phi,
+        PropagatorType -> S,
+        PropagatorArrow -> None,
+        FullName -> "Scalar"}
+};
+```
+The name `S[1]` shows it is a scalar particles.
+
+---
+Finally the interactions are defined as Lagrangian:
+![:code_title](phi4.fr)
+```mathematica
+Lagrangian = del[phi,mu]del[phi,mu]/2-(lam/24) phi^4 - (mmm^2/2) phi^2;
+```
+You may easily understand the syntax by comparing this with the Lagrangian
+$$ \mathcal L = \frac{1}{2}(\partial^\mu\phi)(\partial_\mu\phi) - \frac{\lambda}{4!}\phi^4 - \frac{m^2}{2}\phi^2.$$
+
+---
+.exquiz[
+  If you are really interested in FeynRules, you should read `SM.fr` like this.
+  Go to [Appendix II](Appendices.html#feynrules_sm_file), and try to decrypt the Standard Model file.]
+
+---
+name: feynrules_phi4_validation
 
 #### How to use FeynRules (1) Validation
 
-The power of FeynRules is you can generate many formats from a single `.fr` file.
-Available formats are for
- - *FeynArts* (and thus FormCalc or FeynCalc)
- - Universal FeynRules Output (for *MadGraph5_aMC@NLO* etc.)
- - CalcHep / CompHep
- - ASperGe
- - Sherpa
- - Whizard
+Now we are going to create *UFO* (for MG5_aMC) and *FeynArts output* of $\phi^4$ theory.
+Before creating the output, **we should validate** the model files.
 
-as well as $\TeX$ output.
-
-Now we are going to create *UFO* and *FeynArts* output from `SM.fr`, as this course includes FeynArts and MG5_aMC.
-
-Open `models/SM/SM.wl` in Mathematica; you will find four code-blocks.
+Open `phi4_feynrules.wl` in Mathematica.
 
 .note[
   Though the file has an extension `.wl` (for "Wolfram language package), it is not a package file but intended to use as an usual notebook.
   I like to use `.wl` extension for my code because `.wl` files can be read with text editors.]
 
 ---
-In the end of the file, you find a section:
-![:code_title](models/SM/SM.wl)
+The first part is for validation.
+![:code_title](phi4_feynrules.wl)
 ```mathematica
-(* Execute this block to check the validity of the input *)
 SetDirectory[NotebookDirectory[]];
 <<FeynRules`;
 FR$Parallelize = False;
-LoadModel["SM.fr"];
-FeynmanGauge = False;
+LoadModel["phi4.fr"];
 
-CheckHermiticity[LSM, FlavorExpand->True]
-CheckDiagonalMassTerms[LSM]
-CheckMassSpectrum[LSM]
-CheckDiagonalKineticTerms[LSM]
-CheckKineticTermNormalisation[LSM, FlavorExpand->True]
-CheckDiagonalQuadraticTerms[LSM]
+ExpandedLagrangian = ExpandIndices[Lagrangian, FlavorExpand->True];
+
+CheckHermiticity[ExpandedLagrangian]
+CheckDiagonalMassTerms[ExpandedLagrangian]
+CheckMassSpectrum[ExpandedLagrangian]
+CheckDiagonalKineticTerms[ExpandedLagrangian]
+CheckKineticTermNormalisation[ExpandedLagrangian]
+CheckDiagonalQuadraticTerms[ExpandedLagrangian]
 ```
-This is to validate the model; I recommend to do these validations before output.
-
-First line sets the Mathematica working directory as `NotebookDirectory[]`, which is `models/SM`.
-`FR$Parallelize` is an option to FeynRules; parallelize makes the calculation faster, but sometimes unstable.
-For simple models it can be switched off.
-Then `models/SM/SM.fr` is loaded and checked.
-Here, for simplicity, the unitary gauge is chosen by `$FeynmanGauge = False`.
+* First line sets the working directory as `NotebookDirectory[]`.
+  - Thus output files will be generated in the notebook directory.
+* Parallelize is disabled. It is good for calculation speed but sometimes unstable.
+* Then `phi4.fr` is loaded, and indices are expanded.
 
 ---
+There are 6 tests.
+You will find that
+ - `The Lagrangian is hermitian.`
+ - `All mass terms are diagonal.`
+ - Analytical values (calculated from Lagrangian) and Model-file values (`Mass -> {mmm, 100}`) of masses are in agreement.
+ - `All kinetic terms are diagonal.`
+ - `All kinetic terms are correctly normalized.`
+ - `All quadratic terms are diagonal.`
+
+The file is now validated.
+
+---
+name: feynrules_phi4_output
+
+#### How to use FeynRules (2) Output
+
+Now the main part: generate *UFO* and *FeynArts* output.
+
+In the procedure I have three recommendation:
+
+* You should **quit the kernel** before each output.
+ - You can quit the kernel by `Quit[]`, or from the menu: Evaluation > Quit kernel > Local (or your kernel).
+* You should execute the whole code *in a single block* (single execution).
+ - Otherwise sometimes FeynRules goes unstable. (I don't know why.)
+* *Disabling parallelization* (`FR$Parallelize = False`) makes the calculation slower but stable.
+
+---
+![:code_title](phi4_feynrules.wl)
+```mathematica
+SetDirectory[NotebookDirectory[]];
+<<FeynRules`;
+FR$Parallelize = False;
+LoadModel["phi4.fr"];
+WriteUFO[Lagrangian];
+```
+```output
+ - FeynRules - 
+Version: 2.3.24 ( 12 August 2016).
+Authors: A. Alloul, N. Christensen, C. Degrande, C. Duhr, B. Fuks
+...
+This model implementation was created by
+Sho Iwamoto
+...
+ --- Universal FeynRules Output (UFO) v 1.1 ---
+Warning: no electric charge defined. Putting all electric charges to zero.
+Starting Feynman rule calculation.
+Expanding the Lagrangian...
+Collecting the different structures that enter the vertex.
+1 possible non-zero vertices have been found -> starting the computation: 1 / 1.
+1 vertex obtained.
+Flavor expansion of the vertices: 1 / 1
+   - Saved vertices in InterfaceRun[ 1 ].
+Computing the squared matrix elements relevant for the 1->2 decays: 
+0 / 0
+Squared matrix elent compute in 0.000655 seconds.
+Decay widths computed in 0.000067 seconds.
+Preparing Python output.
+    - Splitting vertices into building blocks.
+    - Optimizing: 1/1 .
+    - Writing files.
+Done!
+```
+
+---
+![:code_title](phi4_feynrules.wl)
+```mathematica
+SetDirectory[NotebookDirectory[]];
+<<FeynRules`;
+FR$Parallelize = False;
+LoadModel["phi4.fr"];
+WriteFeynArtsOutput[Lagrangian];
+```
+```output
+ - FeynRules - 
+Version: 2.3.24 ( 12 August 2016).
+Authors: A. Alloul, N. Christensen, C. Degrande, C. Duhr, B. Fuks
+...
+This model implementation was created by
+Sho Iwamoto
+...
+Model phi to four theory loaded.
+
+ - - - FeynRules interface to FeynArts - - -
+      C. Degrande C. Duhr, 2013
+      Counterterms: B. Fuks, 2012
+Calculating Feynman rules for L1
+Starting Feynman rules calculation for L1.
+Expanding the Lagrangian...
+Collecting the different structures that enter the vertex.
+1 possible non-zero vertices have been found -> starting the computation: 1 / 1.
+1 vertex obtained.
+Writing FeynArts model file into directory phi_to_four_theory_FA
+Writing FeynArts generic file on phi_to_four_theory_FA.gen.
+```
+
+---
+We set the working directory as `NotebookDirectory[]`.
+So the output files are generated in the directory of `phi4_feynrules.wl`:
+ * `phi_to_four_theory_UFO`
+ * `phi_to_four_theory_FA`
+
+.quiz[
+  Read the log file for UFO, `phi_to_four_theory_UFO/phi_to_four_theory_UFO.log` and check no errors/warnings are raised.]
+
+.quiz[
+  Open and read the following files and try to find what is written:
+  - `phi_to_four_theory_FA/phi_to_four_theory_FA.mod`
+  - `phi_to_four_theory_FA/phi_to_four_theory_FA.pars`
+  - `phi_to_four_theory_UFO/particles.py`
+  - `phi_to_four_theory_UFO/parameters.py`
+  - `phi_to_four_theory_UFO/couplings.py`
+  - `phi_to_four_theory_UFO/vertices.py`
+  - `phi_to_four_theory_UFO/lorentz.py`
+]
+
+.exquiz[
+  Read the other files.]
+
+---
+#### How to use FeynRules (3) Use in FeynArts/FormCalc (`Lecture2-2.nb`)
+
+Now you can calculate the matrix element of $\phi^4$-theory.
+
+.quiz[
+  Open `Lecture2-2.nb` and try to calculate $|\mathcal M(\phi\phi\to\phi\phi)|^2$, which should be $|\lambda|^2$.
+  How is the model file specified in the notebook?]
+
+---
+In FeynArts, we can specify the model through `Model` and `GenericModel` options of `InsertFields`:
+
+```mathematica
+diag = InsertFields[topo, {S[1], S[1]} -> {S[1], S[1]}, 
+  InsertionLevel -> {Classes}, Model -> model, GenericModel -> model]
+```
+You should remember that we have defined the particle $\phi$ is defined as `S[1]`.
+
+As we do not have color, helicity, or polarization, you will easily have
+```output
+lam (lamSuperscript[*])
+```
+or in FullForm, `Times[lam, Conjugate[lam]]`, which is $|\lambda|^2$.
+
+
+---
+name: feynrules_sm_validation
+
+#### SM model file (1) Validation
+
+Now we move to `SM.fr`: validation, and creating the output.
+Note that you can choose the gauge:
+  * `FeynmanGauge = False` for unitary gauge ($\xi=\infty$),
+  * `FeynmanGauge = True` for Feynman gauge ($\xi=1$).
+
+---
+.quiz[
+  Open `models/SM/SM.wl` and validate `SM.fr` **in unitary gauge**.]
 You will find that
  - `The Lagrangian is hermitian.`
  - `All mass terms are diagonal.`
@@ -898,35 +609,36 @@ Warning: Kinetic term for {ve, vebar} seems not to be correctly normalized.
 Warning: Kinetic term for {vm, vmbar} seems not to be correctly normalized.
 Warning: Kinetic term for {vt, vtbar} seems not to be correctly normalized.
 ```
-We ignore this warning now, because I know `SM.fr` in unitary gauge is valid.
+---
+We ignore this warning for now, because **I know the file is valid** in unitary gauge :)
+
 .note[
-  If you are very motivated and *have plenty of time*, go to [Appendix II](appendices.html#feynrules_sm_validation) to learn about these warnings.]
+  A more detailed description is in [Appendix III](Appendices.html#feynrules_sm_validation).]
 
 .exquiz[
-  Check `SM.fr` with setting `FeynmanGauge = True`, i.e., in Feynman gauge.
-  ![:answer](Answer is found in Appendix II.)]
+  Do this validation of `SM.fr` in Feynman gauge.
+  Solution may be found in [Appendix III](Appendices.html#feynrules_sm_validation).]
 
 ---
 name: feynrules_sm_output
 
-#### How to use FeynRules (2) Output
+#### SM model file (2) Output
 
-Now the main part: generate *UFO* and *FeynArts* output.
-
-The code for output is found in the first two blocks of `models/SM/SM.wl`.
-The first block is for UFO (unitary gauge), and the second for FeynArts.
+Now the main part: generate the output of `SM.fr`.
 
 .note[
-  It is strongly recommended to read Section 6 of FeynRules manual.]
+  If you use FeynRules in your work, it is strongly recommended to read Section 6 of FeynRules manual.]
+
+.quiz[
+  Open `models/SM/SM.wl` and try to generate the following output:
+   * UFO in unitary gauge
+   * UFO in Feyman gauge
+   * FeynRules output in Feynman gauge
+]
+
 .exquiz[
   Why is Feynman gauge chosen for FeynArts output?
   ![:answer](Because FeynRules manual says:\n\nFormCalc only supports Feynman gauge. Therefore, FeynRules models can be ex- ported to be used with FormCalc only if they are written in Feynman gauge.)]
-
-**It is recommended to quit the kernel before each output.**
-You can quit the kernel by `Quit[]`, or from the menu: Evaluation > Quit kernel > Local (or your kernel).
-
-Sometimes, If you separate the generation codes, FeynRules goes unstable.
-For stability, it is better to execute the whole code *at once* (as well as to set`FR$Parallelize = False`).
 
 ---
 ![:code_title](models/SM/SM.wl)
@@ -972,44 +684,19 @@ Done!
 ```
 
 ---
-Now UFO files are generated in a directory `Standard_Model_UFO_Unitary`, which you can find in `models/SM`, i.e., the current directory set by `SetDirectory`.
-
+You will see UFO files generated in a directory `Standard_Model_UFO_Unitary`:
 ```output
 CT_couplings.py    Standard_Model_UFO_Unitary.log        __init__.py    coupling_orders.py
 couplings.py       decays.py       function_library.py   lorentz.py     object_library.py
 parameters.py      particles.py    propagators.py        vertices.py    write_param_card.py
 ```
-Read the log file if some of the files are missing.
-
-.exquiz[
-  Open the files and try to understand what is written.]
-
----
-Similarly, when you execute the code for FeynArts output,
-```output
-...
-
- - - - FeynRules interface to FeynArts - - -
-      C. Degrande C. Duhr, 2013
-      Counterterms: B. Fuks, 2012
-Creating output directory: Standard_Model_FA
-Calculating Feynman rules for L1
-Starting Feynman rules calculation for L1.
-Expanding the Lagrangian...
-Collecting the different structures that enter the vertex.
-98 possible non-zero vertices have been found -> starting the computation: 98 / 98.
-93 vertices obtained.
-Writing FeynArts model file into directory Standard_Model_FA
-Writing FeynArts generic file on Standard_Model_FA.gen.
-```
-and you will find three files in a directory `Standard_Model_FA`.
+and FeynArts output files in `Standard_Model_FA`.
 ```output
 Standard_Model_FA.gen    Standard_Model_FA.mod    Standard_Model_FA.pars
 ```
 .exquiz[
   Open the files and try to understand what is written.]
 
----
 .note[
   You may have noticed a line is commented-out: `(*LoadRestriction["Cabibbo.rst", "Massless.rst"]*)`.
   The files `*.rst` are called *restriction files*, which simplify the model parameters **in order to reduce computation time**.]
@@ -1023,13 +710,11 @@ Standard_Model_FA.gen    Standard_Model_FA.mod    Standard_Model_FA.pars
    ![:answer](In FeynArts output, only the \'pars\' file is affected. Many parameters such as ymup or CKM3x3 are removed in the restricted output.)]
 
 ---
-#### How to use FeynRules (3) Use in FeynArts/FormCalc (`Lecture2-2.nb`)
+#### SM model file (3) Use in FeynArts/FormCalc (`Lecture2-3.nb`)
 
 To learn how to use the FeynArts output `Standard_Model_FA`, let us calculate the QCD two-jet cross section, which [we calculated in `Lecture1-4.nb`](#QCD_amplitudes), again.
 
 .quiz[
-  Open `Lecture2-2.nb`, in which we calculate $\sigma(qq'\to qq')$ with `Standard_Model_FA` output files instead of the built-in SM files.
+  Open `Lecture2-3.nb`, in which we calculate $\sigma(qq'\to qq')$ with `Standard_Model_FA` output files instead of the built-in SM files.
   Evaluate the lines one by one and check whether the same result is obtained.]
 
----
-#### `Lecture2-3.nb`: $\phi^4$ theory
