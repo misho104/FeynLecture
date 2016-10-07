@@ -1,7 +1,7 @@
 title           = FeynLecture
-md_dir          = src
-template       := src/Lecture.template
-template_local := src/Lecture.template.local # template without remote assets
+md_dir          = src_md
+template       := _src/Lecture.template
+template_local := _src/Lecture.template.local # template without remote assets
 
 sources = $(notdir $(wildcard $(md_dir)/*.md))
 targets = $(addsuffix .html,$(basename $(sources)))
@@ -22,7 +22,7 @@ hotlocal:  all
 coldlocal: all
 
 clean:
-	@rm -f $(targets) $(targets_for_chrome)
+	@rm -f $(targets)
 
 %.html: $(md_dir)/%.md $(template)
 	@TEMPLATE=$(template) SRC="$<" make -B $*.html-$(mode)
