@@ -5,15 +5,15 @@ M$Information = {
               Authors -> "Sho Iwamoto",
               Version -> "0.1",
               Date    -> "Feb. 9, 2011",
-              Institutions -> "The University of Tokyo",
-              Emails  -> "iwamoto@hep-th.phys.s.u-tokyo.ac.jp",
+              Institutions -> "Technion",
+              Emails  -> "sho@physics.technion.ac.il",
               URLs    -> "http://www.misho-web.com/"
               };
 
 
 
 M$Parameters = {
-  lambda == {
+  lam == {
          ParameterType -> External,
          BlockName     -> HOGE,
          OrderBlock    -> {1},
@@ -50,5 +50,5 @@ M$ClassesDescription = {
         FullName -> "Scalar"}
 };
 
-Lagrangian = del[phi,mu]del[phi,mu]/2-(lambda/24) phi^4 - (mmm^2/2) phi^2;
+Lagrangian = del[phi,mu]del[phi,mu]/2-(lam/24) phi^4 - (mmm^2/2) phi^2;
 
