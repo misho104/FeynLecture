@@ -50,7 +50,7 @@ addCodePrompt = function(){
 }
 
 //if(document.addEventListener){
-  document.addEventListener('DOMContentLoaded', addCodePrompt, false);
+//  document.addEventListener('DOMContentLoaded', addCodePrompt, false);
 //}else if(windows.attachEvent){
 //  window.attachEvent('onload', addCodePrompt);
 //}else{

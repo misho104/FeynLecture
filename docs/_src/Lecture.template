@@ -14,7 +14,7 @@
     <textarea id="source">
     </textarea>
     <script>
-      var slideshow = remark.create(%SOURCE%);
+      var slideshow = remark.create(%SOURCE%, addCodePrompt);
     </script>
   </body>
 </html>
