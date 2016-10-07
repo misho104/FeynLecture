@@ -42,7 +42,7 @@ M$ClassesDescription = {
   S[1] == {
         ClassName -> phi,
         SelfConjugate -> True,
-        Mass -> {mmm, Internal},
+        Mass -> {mmm, 100},
         Width -> 0,
         PropagatorLabel -> phi,
         PropagatorType -> S,
