@@ -59,6 +59,11 @@ name: mathematica_basic
 In this course we will use many Mathematica built-in functions, some of which you may be unfamiliar with.
 Not to be trapped in technical aspects and concepts, some of *Mathematica basic* is provided.
 
+Files are available on [GitHub repository](https://github.com/misho104/FeynLecture/tree/master):
+
+   * [MathematicaBasic.txt](https://github.com/misho104/FeynLecture/raw/master/MathematicaBasic.txt)
+   * [MathematicaBasic.pdf](https://github.com/misho104/FeynLecture/raw/master/MathematicaBasic.pdf)
+
 .quiz[
   Open `MathematicaBasic.pdf` (or `MathematicaBasic.txt`) and execute the lines one-by-one.
   Try to understand what is being done, and prepare your questions if you have.]
