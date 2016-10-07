@@ -11,7 +11,7 @@
 
 
 .location[
-  XX Oct 2016 <br>
+  11&ndash;14 Oct 2016 <br>
   Yonsei University
 ]
 
@@ -31,7 +31,8 @@
   2. [Installation : FeynArts+FormCalc+LoopTools and FeynRules](#install_feyn)
   3. [Installation : MadGraph_aMC@NLO](#install_mg5)
   4. [Built-in Tutorial of MadGraph_aMC@NLO](#mg5_tutorial)
-  5. [Small Quizzes](#small_quizzes)
+  5. [Installation : CheckMATE](#install_checkmate)
+
 ---
 .note[
   This lecture slides have several "notes" like this.
@@ -55,10 +56,10 @@
 name: mathematica_basic
 
 ### 1. Mathematica basic
-.quiz[
-  In this course we will use many Mathematica built-in functions, some of which you may be unfamiliar with.
-  Not to be trapped in technical aspects and concepts, some of *Mathematica basic* is provided.
+In this course we will use many Mathematica built-in functions, some of which you may be unfamiliar with.
+Not to be trapped in technical aspects and concepts, some of *Mathematica basic* is provided.
 
+.quiz[
   Open `MathematicaBasic.pdf` (or `MathematicaBasic.txt`) and execute the lines one-by-one.
   Try to understand what is being done, and prepare your questions if you have.]
 
@@ -71,16 +72,31 @@ name: install_feyn
   - Mathematica
   - C compiler (clang, gcc, etc.) required by FormCalc and LoopTools
   - fortran compiler (gfortran etc.) required by LoopTools
-  .note[
-    For macos users it is a bit difficult to install fortran compiler.
-    If you cannot install fortran compiler, you cannot use LoopTools, but even though you can do most part of the lecture materials. ]
+
+.notes[
+  *Linux users* will easily install gcc and gfortran by
+  ```sh
+> sudo apt-get install gcc gfortran         # if you use Debian/Ubuntu
+> sudo yum install gcc-gfortran libgfortran # if you use RedHat/CentOS/Fedora 
+```
+
+  For *macOS users* it is a bit difficult to install fortran compiler.
+  You should install [Homebrew](http://brew.sh), and then install `gfortran` from Homebrew.
+  [Notes by Mihoko](http://research.kek.jp/people/nojiri/HepTools_install.pdf) might help you.
+  If you cannot install fortran compiler, you cannot use LoopTools, but even though you can do most part of the lecture materials.
+
+  I do not know how to install on *Windows*. Tell me how to if you could install FA+FC+LT and FR.
+
+  For details, **you should ask [Google](https://www.google.com) or experts around you**.
+]
+
+---
 * Download the archives from following websites:
   - FeynArts:  http://www.feynarts.de/           &nbsp; &nbsp; ([v3.9](http://www.feynarts.de/FeynArts-3.9.tar.gz))
   - FormCalc:  http://www.feynarts.de/formcalc/  &nbsp; &nbsp; ([v9.4](http://www.feynarts.de/formcalc/FormCalc-9.4.tar.gz))
   - LoopTools: http://www.feynarts.de/looptools/ &nbsp; &nbsp; ([v2.13](http://www.feynarts.de/looptools/LoopTools-2.13.tar.gz))
   - FeynRules: http://feynrules.irmp.ucl.ac.be/  &nbsp; &nbsp; ([latest](http://feynrules.irmp.ucl.ac.be/downloads/feynrules-current.tar.gz))
 
----
 .note[
   You should be careful about which version of the packages you are using.
   In fact, FA/FC/LT's versioning scheme is `vN.N-DDMMMYY` (i.e., there are several versions for vX.X labelled by date), while it is `vN.N.N` for FR. ]
@@ -204,9 +220,11 @@ After you `make`, you will see a directory "build", which contains an executable
 The path to this directory is your LoopTools path, which you tell to Mathematica as before.
 
 .note[
-  For example, if you extract LoopTools to `~/codes` and the file `LoopTools` locates in `~/codes/build/`, you will do
+  For example, if you extract LoopTools to `~/codes`, you will see the `configure` script in `~/codes/LoopTools-2.13/`.
+  After compilation, the file `LoopTools` is generated in `~/codes/LoopTools-2.13/build/`.
+  So,
   ```mathematica
-> AppendTo[$Path, "~/codes/build"]
+> AppendTo[$Path, "~/codes/LoopTools-2.13/build"]
   ```
   before you use LoopTools.]
   
@@ -268,6 +286,24 @@ name: install_mg5
    - Fortran compiler (gfortran >= 4.6 is ok)
    - ROOT 5 or 6 (for `Delphes`)
 * Download from [`https://launchpad.net/mg5amcnlo/`](https://launchpad.net/mg5amcnlo/).
+
+.notes[
+  *Linux users* will easily install gcc and gfortran by
+  ```sh
+> sudo apt-get install gcc gfortran         # if you use Debian/Ubuntu
+> sudo yum install gcc-gfortran libgfortran # if you use RedHat/CentOS/Fedora 
+```
+
+  *macOS users* now should install a fortran compiler.
+  I recommend to install [Homebrew](http://brew.sh), and then install `gfortran` from Homebrew.
+  [Notes by Mihoko](http://research.kek.jp/people/nojiri/HepTools_install.pdf) might help you.
+
+  I do not know how to install on *Windows*. Tell me how to if you could install MadGraph5_aMC@NLO.
+
+  In off-line lecture course **you can use a virtual machine environment** if you cannot install MadGraph5_aMC@NLO.
+  Ask me or TA for a virtual machine set-up.
+]
+
 ---
 Installation is simple: extract the file, and execute!
 ```sh
@@ -292,8 +328,8 @@ Installation is simple: extract the file, and execute!
 
 Defined multiparticle vl = ve vm vt
 Defined multiparticle vl~ = ve~ vm~ vt~
-Defined multiparticle all = g u c d s u~ c~ d~ s~ a ve vm vt e- mu- ve~ vm~ vt~ e+ mu+ t b t~ b~ z w+
-  h w- ta- ta+
+Defined multiparticle all = g u c d s u~ c~ d~ s~ a ve vm vt e- mu- ve~ vm~ vt~ e+ mu+
+  t b t~ b~ z w+ h w- ta- ta+
 MG5_aMC>
 ```
 Now you are in madgraph interface (with a prompt `MG5_aMC>`). You can quit from madgraph interface to the terminal by `exit` or `quit`.
@@ -345,9 +381,9 @@ If they are properly installed, you will see pythia output (`LOG` and `LHE`) and
 > gunzip unweighted_events.lhe.gz
 > less unweighted_events.lhe
 ```
-  (In `less`, you can use `f`/`b` for forward/backward navigation, and `q` to quit.)
+  (In `less`, you can use `f` and `b` keys for forward/backward navigation, and `q` to quit.)
 
-  You can browse `.root` files using `root`.
+  You can browse *.root files using `root`.
 ```sh
 > root
 ```
@@ -385,11 +421,29 @@ Without such scripts your work will not be justified.
 ]
 
 ---
-name: small_quizzes
+name: install_checkmate
+### 5. Installation : CheckMATE
 
-### 5. Small Quizzes
-.quiz[
-  (For Lecture A-2)
-  You know the Standard Model, so you can read the Standard Model file for FeynRules.
-  Open `$FeynRulespath/Models/SM/SM.fr` and read it.
-  What is written there?]
+* Requires
+   - Python 2.7
+   - Fortran compiler (gfortran >= 4.6 is ok)
+   - ROOT 5
+* Follow [official tutorial](http://checkmate.hepforge.org/tutorial/check_python.php) to install.
+
+.notes[
+  *Linux users* will easily install gcc and gfortran by
+  ```sh
+> sudo apt-get install gcc gfortran         # if you use Debian/Ubuntu
+> sudo yum install gcc-gfortran libgfortran # if you use RedHat/CentOS/Fedora 
+```
+
+  *macOS users* now should install a fortran compiler.
+  I recommend to install [Homebrew](http://brew.sh), and then install `gfortran` from Homebrew.
+  [Notes by Mihoko](http://research.kek.jp/people/nojiri/HepTools_install.pdf) might help you.
+
+  I do not know how to install on *Windows*. Tell me how to if you could install CheckMATE.
+
+  In off-line lecture course **you can use a virtual machine environment** if you cannot install CheckMATE.
+  Ask me or TA for a virtual machine set-up.
+]
+
