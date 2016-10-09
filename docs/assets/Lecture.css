@@ -31,6 +31,8 @@ div.exquiz p:first-child { text-indent: 3em; }
 .remark-inline-code { font-size: 90%;  font-family: 'Roboto Mono', monospace;  background: #f0f0f0; padding: 0 4px 0 4px; }
 .remark-slide-content code.remark-code { font-size: 13px; font-family: 'Roboto Mono', monospace;  background: #f0f0f0; line-height: 125%; }
 .remark-slide-content code.output { background: #e0e0e0; }
+.remark-slide-content code.shlarge,
+.remark-slide-content code.mg5large { font-size: 24px; }
 .remark-slide-content div.note code,
 .remark-slide-content div.note code.output { background: #d2d2d2; }
 
