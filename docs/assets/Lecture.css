@@ -57,6 +57,11 @@ code.mathematica span.code-prompt::after { content: "In[]:="; }
 
 .remark-slide-content em { font-weight: bold; font-style: normal; }
 .remark-slide-content strong { color: #ff4584; }
+.remark-slide-content span.ref { color: #888; font-size: 14px; }
 .remark-slide-content span.arxiv_link { color: #888; font-size: 14px; font-family: 'Roboto Mono', monospace; }
+.remark-slide-content span.ref a,
+.remark-slide-content span.arxiv_link a { color: inherit; }
+.remark-slide-content span.ref::before,
 .remark-slide-content span.arxiv_link::before { content: "["; }
+.remark-slide-content span.ref::after,
 .remark-slide-content span.arxiv_link::after { content: "]";  }

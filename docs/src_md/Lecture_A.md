@@ -1,4 +1,4 @@
-# Tools for BSM Physics (A-1)
+# Tools for BSM Physics (A)
 
 .author[
   [Sho Iwamoto](http://www.misho-web.com)
@@ -718,3 +718,154 @@ To learn how to use the FeynArts output `Standard_Model_FA`, let us calculate th
   Open `Lecture2-3.nb`, in which we calculate $\sigma(qq'\to qq')$ with `Standard_Model_FA` output files instead of the built-in SM files.
   Evaluate the lines one by one and check whether the same result is obtained.]
 
+---
+name: looptools
+
+### 3. One-loop level calculation with LoopTools
+
+#### `Lecture3-1.nb` : QCD one-loop calculation
+
+The last topic: * **LoopTools** for numerical evaluation of one-loop integrals. *
+
+We consider $\sigma_{\text{1-loop}}(u\bar u\to c\bar c)$ as an example to learn how to use LoopTools, and we will see a subtlety in this evaluation.
+
+.quiz[
+  How many one-loop diagrams does the process have? ![:answer](Two diagrams, which are box diagrams with gluons.) ]
+.quiz[
+  What kind of subtlety do we expect? ![:answer](Infrared divergence, because the gluon may have zero-momentum.) ]
+
+---
+.quiz[
+  Open `Lecture3-1.nb` and evaluate the lines one by one, paying attention to
+   * how to include one-loop level diagrams in the calculation,
+   * what is special in the amplitude of one-loop level diagrams,
+   * how to load `LoopTools`,
+   * how we can numerically evaluate the "special functions" in the one-loop amplitudes, and
+   * how we can check the presence of IR divergence.
+]
+
+---
+One-loop level diagrams can be included by introducing one-loop level topologies:
+![:code_title](Lecture3-1.nb)
+```mathematica
+topo0 = CreateTopologies[0, 2 -> 2];
+topo1 = CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Internal}];
+topologies = Join[topo1, topo0];
+```
+Then using `topologies` we can generate both tree and one-loop diagrams.
+
+.exquiz[
+  Which diagrams are excluded by this `ExcludeTopologies`?]
+
+---
+The one-loop level amplitude has special functions, `C0i[...]` and `D0i[...]`:
+```output
+...
+Alfas2 (
+    7/3 C0i[cc0, S, MC2, MC2, 0, 0, MC2]
+  - 7/2 D0i[dd00, S, MC2, T, MU2, MC2, MU2, 0, 0, MC2, MU2]
+  + 5/3 C0i[cc0, S, MC2, MC2, 0, 0, MC2]
+  + ... )
+```
+They are Passarino-Veltman integrals .ref[[Nucl. Phys. *B160* (1979) 151](http://dx.doi.org/10.1016/0550-3213%2879%2990234-7)].
+
+.quiz[
+  Find the definition of these functions in the LoopTools manual.]
+
+**LoopTools numerically evaluates these integrals.**
+We can load it by
+![:code_title](Lecture3-1.nb)
+```mathematica
+> Install["LoopTools"]
+```
+if `$Path` is correctly provided.
+After the installation, the Passarino-Veltman integrans can be evaluated, e.g.,
+![:code_title](Lecture3-1.nb)
+```mathematica
+> D0i[dd1, 5, 1, -2, 1, 1, 1, 1, 1, 1, 1]
+```
+```output
+Out[]:= -0.0331433 - 0.235571 I
+```
+
+---
+As we (should) have noticed, this crosssection
+$\sigma_{\text{1-loop}}(u\bar u\to c\bar c)$
+has IR divergence, because one of the gluons in the loop can have $k=0$ and its propagator
+$$
+\frac{-\ii}{k^2 + \ii \epsilon }
+$$
+falls in a pole.
+
+LoopTools may detect the divergence and output a message, like
+
+![:code_title](Lecture3-1.nb)
+```output
+ ffxc0i: infra-red divergent threepoint function, working with a cutoff    1.00000000000
+ ffxdbd: using IR cutoff lambda^2 =    1.00000000000
+```
+but also we can check the presence of IR divergence by ourselves by varying the Pauli-Villarss mass parameter $\lambda^2$:
+![:code_title](Lecture3-1.nb)
+```mathematica
+SetLambda[10^2];
+```
+The matrix element should not depend on Λ but does, which means it is IR-divergent.
+
+---
+.exquiz[
+  Read the LoopTools manual to find how to use `SetLambda`.]
+
+.note[
+  In this lecture we have used the *Mathematica interface* of LoopTools.
+  LoopTools can also be used in FORTRAN or C (C++) codes, which will reduce the computation time.
+  It is recommended to use FORTRAN or C for complicated process.]
+
+.exquiz[
+  Try to evaluate `B0[1000, 50, 80]` by using FORTRAN or C interface as well as on Mathematica, and verify the same result is obtained.
+  ![:hint](Solution can be found in LoopTools manual. The numerical value should be -4.40593 + 2.70414 I.) ]
+
+---
+#### `Lecture3-hgg.nb` : $\Gamma(h\to\gamma\gamma)$
+
+Now you can easily calculate the decay rate of $h\to\gamma\gamma$!
+
+.quiz[
+  Verify that the partial decay rate is given by
+  $$ \Gamma(h\to\gamma\gamma) = \frac{1}{32\pi m_h}\left|\mathcal M\right|^2.$$]
+.quiz[
+  Open `Lecture3-hgg.nb` and evaluate.
+  Calculate the partial decay rate of $h\to\gamma\gamma$ and compare with literatures, such as [CERN Yellow Report 3 (2013)](https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR2014).  ]
+
+---
+.exquiz[
+  Check that this calculation is
+  ![:hint](
+    To verify UV finiteness, you should look up `UVDivergentPart` in the FormCalc manual.
+    For IR finiteness, `SetLambda` in the LoopTools manual will help you.)
+   * UV finite,
+   * IR finite,
+   * gauge invariant.]
+.exquiz[
+  What does `PaVeReduce -> True` mean?
+  ![:hint](Read the FormCalc manual!)]
+
+---
+#### `Lecture3-ex-eevh.nb` [Exercise] Higgs production at the ILC
+
+Now it's time to do everything by yourself!
+
+We want to calculate the production cross section of Higgs boson at the ILC ($e^+ e^-$ collider with $\sqrt s = E\w{MC} = 250\GeV$).
+
+.quiz[
+  How can we produce Higgs boson at the ILC?
+  Which process will be dominant? ]
+
+
+.quiz[
+  Open `Lecture3-ex-eevh.nb`, and calculate $\sigma\w{tree}(ee\to hZ)$ and $\sigma\w{tree}(ee\to h\gamma)$ with FeynArts/FormCalc.]
+
+.quiz[
+  Find the cross section in reliable literatures, and compare your result with them.]
+  
+.exquiz[
+  Calculate the crosssections at the one-loop level.]
