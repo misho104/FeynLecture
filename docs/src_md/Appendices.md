@@ -62,7 +62,7 @@ Also you can write the `AppendTo` codes in the script `init.m`, which is automat
 
 AppendTo[$Path, "~/codes/FeynArts"]
 AppendTo[$Path, "~/codes/FormCalc"]
-AppendTo[$Path, "~/codes/LoopTools"]
+AppendTo[$Path, "~/codes/LoopTools/build"]
 
 $FeynRulesPath = "~/codes/FeynRules";
 AppendTo[$Path, $FeynRulesPath]
@@ -98,7 +98,7 @@ Rather I recommend to write a function to prepare `$Path` so that you can use th
 UseDefaultPackages = Function[
   AppendTo[$Path, "~/codes/FeynArts"];
   AppendTo[$Path, "~/codes/FormCalc"];
-  AppendTo[$Path, "~/codes/LoopTools"];
+  AppendTo[$Path, "~/codes/LoopTools/build"];
   $FeynRulesPath = "~/codes/FeynArts";
   AppendTo[$Path, $FeynRulesPath];
 ];
