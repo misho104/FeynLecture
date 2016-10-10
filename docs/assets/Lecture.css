@@ -33,8 +33,8 @@ div.exquiz p:first-child { text-indent: 3em; }
 .remark-slide-content code.output { background: #e0e0e0; }
 .remark-slide-content code.shlarge,
 .remark-slide-content code.mg5large { font-size: 24px; }
-.remark-slide-content div.note code,
-.remark-slide-content div.note code.output { background: #d2d2d2; }
+.remark-slide-content div.note code { background: #d9d9d9; }
+.remark-slide-content div.note code.output { background: #c7c7c7; }
 
 .remark-slide-content pre { margin: 14px 0px 14px 0px; }
 .remark-slide-content h6.code_title { margin-bottom: 0; padding-left: 1em; background: #d0d0d0; font-size: 14px; font-family: 'Roboto Mono', monospace; font-weight: bold; }

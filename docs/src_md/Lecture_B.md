@@ -1,4 +1,4 @@
-# Tools for BSM Physics (B-1)
+# Tools for BSM Physics (B)
 
 .author[
   [Sho Iwamoto](http://www.misho-web.com)
@@ -40,12 +40,14 @@
 ]
 
 ---
+name: introduction
+
 ### 0. Introduction: What is Monte Carlo simulation?
 
  * [Wikipedia](https://en.wikipedia.org/wiki/Monte_Carlo_method) :
   > computational algorithms that rely on repeated random sampling to obtain numerical results
  * Why do we need MC?
-  - Uncertainty principle : microscopic physics is probabilistic.
+  - Uncertainty principle : quantum physics is probabilistic.
 
 ---
 #### Example 1 (Rolling Dice)
@@ -110,14 +112,14 @@ print successes * 1.0 / trials # ==> 0.2382
 ```
 
 ---
-.topright[![:width 35%](assets/sin_exp_x.png)]
+.topright[![:width 35%](imgs/sin_exp_x.png)]
 #### Example 2 (Numerical integration)
 
 $$
- \int_0^1 \sin(\mathrm e^x){\mathrm d}x=?
+ \int_0^1 \sin(\mathrm e^x){\mathrm d}x=\ ?
 $$
 
-Answer: As the integrand <= 1, we can calculate the integral as the probability that an arrow thrown into the square hits below the function.
+Answer: As the integrand &le; 1, we can calculate the integral as the probability that an arrow thrown into the square hits below the line.
 With the following python2 code, *approximately 0.87*.
 .clear[
 ```python
@@ -146,7 +148,7 @@ print successes * 1.0 / trials # ==> 0.8716
 
 ---
 .note[
-  Note that $0 \le \sin(\mathrm e^x) \le 1$ (for the integrated range $0\le x\le 1$) is the crucial information in this calculation.
+  Note that 0 &le; sin(e<sup>x</sup>) &le; 1 (for the integrated range 0 &le; x &le; 1) is the crucial information in this calculation.
   In practice we do not know the range of integrand, and we have to figure it out.]
 .note[
   If the integrand has a peak, you will need many `samples` to converge the integral.
@@ -176,6 +178,8 @@ $$\frac{1}{6}\pm \frac{1}{\sqrt{6\times\text{(samples)}}}$$
 
 
 ---
+name: sm
+
 ### 1. MadGraph5 basic: Standard Model tree-level
 
 #### $pp\to t\bar t$, the most boring example
@@ -437,7 +441,7 @@ done
 Then all the crosssections you want are *automatically* calculated.
 
 ---
-#### Importance of scripting
+##### Importance of scripting
 
 At an early stage of your project, you may try-and-error on the MG5 user-friendly interactive interface.
 However, the MG5 interface **should not** be used for your final materials.
@@ -448,3 +452,476 @@ Also,
  * you can re-use the script in your next project,
  * when someone finds your work interesting and ask you to send the data, you can send the script.
 
+---
+#### Theoretical background (review)
+
+The crosssection $\sigma(pp\to t\bar t)$ is given by 
+$$ \sigma(pp\to t\bar t) = \sum\sub{a,b}\int_0^1\dd x\sub a \int_0^1 \dd x\sub b\
+                           f\sub a(x\sub a,\mu\w F) f\sub b(x\sub b,\mu\w F)\sigma(ab\to t\bar t)$$
+where
+ - $a,b=g, u, \bar u, d, \bar d, ...$ is a parton,
+ - $f_a(x, \mu\w F)$ is the parton distribution function, which describes the probability that a parton $a$ with an energy $x E\w{beam}$ is pulled out from a proton.
+ - $\mu\w F$ is the factorization scale.
+ - $\sigma(ab\to t\bar t)$ is the partonic cross section with $E\sub a = x\sub a E\w{beam}$ etc.:
+
+$$\sigma(ab\to t\bar t) = \frac{1}{2 E\sub a E\sub b |v\sub a-v\sub b|} \int\w{phase space}\dd\Pi\sub 2 \left|\mathcal M(ab\to t\bar t)\right|^2.$$
+
+.exquiz[
+  Look up "parton luminosity" in literatures, e.g., Ellis-Stirling-Webber Chapter 7.]
+  
+---
+name: models
+
+### 2. MadGraph5 basic+: Use other models
+
+#### How to use models
+The art of MadGraph5_aMC@NLO: **we can calculate processes in any models!**
+ - pre-installed models
+ - UFO from FeynRules
+
+.quiz[
+  Which models are pre-installed MadGraph5_aMC@NLO?]
+
+---
+Pre-installed models are stored in `models` directory of your MG5_aMC installation:
+```shlarge
+> ls models/
+```
+```output
+2HDM/    4Gen/     DY_SM/   EWdim6/
+...
+mssm/    mssm_v4/  nmssm/   sextet_diquarks/    sm/
+...
+```
+You may find `sm` directory, in which the `sm` model, which we used in the last section, is stored.
+.quiz[
+  In which format are the `sm` models written?
+  ![:answer](The UFO format. Note that the UFO format is explained in Lecture A-2.)]
+.exquiz[
+  Who are the authors of the `sm` directory?
+  ![:answer](N. Christensen and C. Duhr, as is written in __init__.py)]
+
+Also you may find `mssm` directory.
+Yes, the MSSM is pre-installed!
+Let's try to use it!
+
+---
+#### MSSM crosssections
+
+A model can be loaded by `import` command:
+```mg5large
+> import model mssm
+```
+```output
+INFO: Restrict model mssm with file ../models/mssm/restrict_default.dat .
+INFO: Run "set stdout_level DEBUG" before import for more information.
+INFO: Change particles name to pass to MG5 convention
+Kept definitions of multiparticles l- / j / vl / l+ / p / vl~ unchanged
+Defined multiparticle all = g u c d s u~ c~ d~ s~ a ve vm vt e- mu- ve~ vm~ vt~ e+ mu+
+  go ul cl t1 ur cr t2 dl sl b1 dr sr b2 ul~ cl~ t1~ ur~ cr~ t2~ dl~ sl~ b1~ dr~ sr~ b2~
+  t b t~ b~ z w+ h1 h2 h3 h+ sve svm svt el- mul- ta1- er- mur- ta2- w- h- sve~ svm~ svt~
+  el+ mul+ ta1+ er+ mur+ ta2+ n1 n2 n3 n4 x1+ x2+ ta- x1- x2- ta+
+```
+.quiz[
+  Which particles can you find in the MSSM model? ]
+.quiz[
+  How can we identify a particle? For example, what is the particle `sve`?]
+
+---
+Now you are ready to calculate MSSM cross sections!
+
+In this section we assume $m\sub{\tilde e\w L} = m\sub{\tilde e\w R} = 200\GeV$, ignoring the left-right mixing.
+.quiz[
+  Calculate $\sigma\w{LO}(pp\to \tilde e^+\w L \tilde e^-\w L)$ at the 8 TeV and 13 TeV LHC.
+  (You can ignore the left-right mixing.)]
+.quiz[
+  To verify your results, compare either of them (8 or 13 TeV) with literatures.]
+.quiz[
+  Calculate $\sigma\w{LO}(e^+ e^- \to \tilde e^+\w L\tilde e^-\w L)$ at the ILC with $E\w{beam}=250\GeV$, assuming that all the neutralinos ($\tilde \chi^0_{1,2,3,4}$, or `n1`&ndash;`n4`) are decoupled (extremely heavy and ignorable).  ]
+
+.exquiz[
+  Calculate the previous crosssection, assuming that $\tilde\chi^0\sub 1$ is a pure-Bino ($\tilde B$) with a mass $100\GeV$, and that the other neutralinos are decoupled.]
+
+---
+.exquiz[
+  We can consider any models once we have prepared FeynRules model, even $\phi^4$-theory:
+  $$ \mathcal L = \frac{1}{2}(\partial^\mu\phi)(\partial_\mu\phi) - \frac{\lambda}{4!}\phi^4 - \frac{m^2}{2}\phi^2.$$
+  Let us imagine we have $\phi\phi$ collider with $E\w{beam}=100\GeV$, and $m=1\GeV$ and $\lambda = 0.1$.
+  Prepare the UFO format files for this model (See [Lecture A-2](Lecture_A.html#feynrules)) and calculate $\sigma\w{LO}(\phi\phi\to\phi\phi)$ at this collider.]
+
+---
+##### Solutions to the quizzes
+
+We can see the particles by the command `display`.
+```mg5large
+> display particles
+```
+```output
+Current model contains 48 particles:
+w+/w- x1+/x1- x2+/x2- h+/h- ve/ve~ vm/vm~ vt/vt~ e-/e+ mu-/mu+ ta-/ta+ u/u~ c/c~ t/t~ d/d~
+s/s~ b/b~ sve/sve~ svm/svm~ svt/svt~ el-/el+ mul-/mul+ ta1-/ta1+ er-/er+ mur-/mur+ ta2-/ta2+
+ul/ul~ cl/cl~ t1/t1~ ur/ur~ cr/cr~ t2/t2~ dl/dl~ sl/sl~ b1/b1~ dr/dr~ sr/sr~ b2/b2~
+a z g n1 n2 n3 n4 go h1 h2 h3
+```
+
+```mg5large
+> display particles sve
+```
+```output
+Particle sve has the following properties:
+{
+    'name': 'sve',
+    'antiname': 'sve~',
+    'spin': 1,
+    'color': 1,
+    'charge': 0.00,
+    'mass': 'mdl_Msn1',
+    'width': 'mdl_Wsn1',
+    'pdg_code': 1000012,
+...
+}
+```
+Note that it is scalar (s=0) because `spin`=2s+1.
+
+---
+You can check interactions:
+```mg5large
+> display interactions sve
+```
+```output
+Interactions 92 : e+ x1- sve  has the following property:
+{
+    'id': 102,
+    'particles': [-11,-1000024,1000012],
+    'color': [1 ],
+    'lorentz': ['FFS1'],
+    'couplings': {(0, 0): 'GC_388'},
+    'orders': {'QED': 1},
+    'loop_particles': None,
+    'type': 'base',
+    'perturbation_type': None
+}
+...
+```
+Then, what is `GC_388`?
+```mg5large
+> display couplings GC_388
+```
+```output
+Note that this is the UFO informations.
+ "display couplings" present the actual definition
+prints the current states of mode
+name   	: GC_388
+value  	: -((ee*complex(0,1)*I89x11*VV1x1)/sw)
+order  	: {'QED': 1}
+```
+
+---
+Of course, you can also look up the particles / interactions / parameter by directly reading the UFO model files.
+
+.exquiz[
+  Read the help of `display` by
+  ```mg5
+> help display
+  ```]
+
+---
+Now calculate $\sigma\w{LO}(pp\to \tilde e^+\w L\tilde e^-\w L)$.
+(You can check which particle is $\tilde e^\pm$ by using `display particles el+` etc.)
+```mg5large
+> import model mssm
+> generate p p > el+ el-
+> output pp2elel
+```
+Let us see the diagrams by `display diagrams` (or `open index.html`).
+You will find four diagrams:
+
+.center[
+  ![:width 50%](imgs/pp2elel.png)]
+
+---
+We know that $\tilde e\w L^\pm$ is the only relevant particle, and in `param_card.dat` we need to modify only the mass of $\tilde e\w L$.
+Therefore,
+```mg5large
+> launch
+> 0
+```
+```output
+Do you want to edit a card (press enter to bypass editing)?
+  1 / param      : param_card.dat
+  2 / run        : run_card.dat
+...
+ [0, done, 1, param, 2, run, enter path][60s to answer]..
+```
+```mg5large
+> 1
+```
+![:code_title](param_card.dat)
+```mg5card
+...
+      1000005 5.130652e+02 # msd3
+      1000006 3.996685e+02 # msu3
+      1000011    200       # set of param :1*msl1, 1*msl2
+      1000012 1.852583e+02 # set of param :1*msn1, 1*msn2
+      1000015 1.344909e+02 # msl3
+      1000016 1.847085e+02 # msn3
+...
+```
+
+---
+Then modify the beam energy for 8 TeV LHC:
+```output
+Do you want to edit a card (press enter to bypass editing)?
+ [0, done, 1, param, 2, run, enter path][60s to answer]..
+```
+```mg5large
+> 2
+```
+![:code_title](run_card.dat)
+```mg5card
+...
+     1        = lpp1    ! beam 1 type 
+     1        = lpp2    ! beam 2 type
+     4000.0     = ebeam1  ! beam 1 total energy in GeV
+     4000.0     = ebeam2  ! beam 2 total energy in GeV
+...
+```
+```output
+Do you want to edit a card (press enter to bypass editing)?
+ [0, done, 1, param, 2, run, enter path][60s to answer]..
+```
+```mg5large
+> 0
+```
+And you will see the crosssection:
+```output
+  === Results Summary for run: run_01 tag: tag_1 ===
+
+     Cross-section :   0.00619 +- 1.09e-05 pb
+     Nb of events :  10000
+```
+
+---
+You can also use the `set` command (or write a script):
+```mg5large
+> import model mssm
+> generate p p > el+ el-
+> output pp2elel
+> launch --laststep=parton
+> set mass 1000011 200
+> set ebeam 4000
+> 0
+```
+
+.note[
+  In fact, you can use the variable name in the "comment" part:
+![:code_title](param_card.dat)
+```mg5card
+      1000011    200       # set of param :1*msl1, 1*msl2
+```
+  i.e., `set msl1 200` instead of `set mass 1000011 200`.
+  But I do not recommend to use this feature because it needs the comment line is correctly written, and very dangerous!]
+
+---
+.note[
+  You can use `set lhc 8` instead of `set ebeam 4000`:
+```mg5
+> set lhc 8
+```
+```output
+INFO: modify parameter lpp1 of the run_card.dat to 1
+INFO: modify parameter lpp2 of the run_card.dat to 1
+INFO: modify parameter ebeam1 of the run_card.dat to 4000.0
+INFO: modify parameter ebeam2 of the run_card.dat to 4000.0
+```
+  This will be useful in scripting.]
+
+---
+Then you are asked to compare your results with literatures so that you can be confident.
+
+If you are lazy enough, you google `slepton LHC cross section` and [find several plots](https://www.google.co.kr/search?q=slepton+LHC+cross+section&amp;tbm=isch).
+For example, [this figure](https://www.google.co.kr/search?q=slepton+LHC+cross+section&amp;tbm=isch&amp;imgrc=Nsy9FkD76jYgFM%3A) will be sufficient for this purpose.
+
+If you are a bit more careful, you will reach [LHC SUSY Cross Section Working Group](https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections), or [arXiv:1310.2621](https://arxiv.org/abs/1310.2621), and find that
+ $$\sigma\w{LO} = 7.3^{+0.3}\w{-1.4}\fb
+   \quad
+   \left(18.84^{+0.24}\sub{-0.30}\fb\right)$$
+for 8 TeV (13 TeV) and start to worry because your results are a bit smaller.
+However they are roughly comparable, and we accept this result.
+
+.note[
+  I am actually not sure why my results, which are 6.2 fb and 15.8 fb for 8 TeV and 13 TeV, are a bit smaller than the values above by Benjamin .arxiv_link[[1310.2621](https://arxiv.org/abs/1310.2621)].
+  I'd like you to tell me why if you find, but anyway this difference (about 20 %) is not so bad for LO calculation (because of scale or PDF uncertainties).]
+
+---
+For ILC cross section you execute `import model mssm` and
+```mg5
+> generate e+ e- > el+ el-
+```
+Here, `display diagrams` gives many diagrams:
+
+.center[
+  ![:width 80%](imgs/ee2elel.png)]
+
+As we assume `n1`&ndash;`n4` are heavy and ignorable, we want to consider only the first two diagrams.
+
+---
+This can be done by `/` option of `generate` command.
+So the solution is:
+```mg5large
+> import model mssm
+> generate e+ e- > el+ el- / n1 n2 n3 n4
+> output ee2elel
+```
+.quiz[
+  Check that you get diagrams as you want by `display diagrams`.]
+.exquiz[
+  Read the help of generate (`help generate`).]
+
+Then everything else is as before:
+```mg5large
+> launch --laststep=parton
+> set ilc 500
+> set mass 1000011 200
+> 0
+```
+and you will get the crosssection. ![:answer](I obtained 25.9fb.)
+
+---
+.note[
+  You can manually edit the files instead of `set`:
+![:code_title](param_card.dat)
+```mg5card
+...
+      1000011    200       # set of param :1*msl1, 1*msl2
+...
+```
+![:code_title](run_card.dat)
+```mg5card
+...
+#*********************************************************************
+# Collider type and energy                                           *
+# lpp: 0=No PDF, 1=proton, -1=antiproton, 2=photon from proton,      *
+#                                         3=photon from electron     *
+#*********************************************************************
+  0	= lpp1 ! beam 1 type 
+  0	= lpp2 ! beam 2 type
+  250.0	= ebeam1 ! beam 1 total energy in GeV
+  250.0	= ebeam2 ! beam 2 total energy in GeV
+...
+```
+]
+
+
+---
+##### Solutions to the extra quizzes
+
+The neutralino $\tilde\chi^0\sub{1,2,3,4}$ is a mixture of $(\tilde B, \tilde W^3, \tilde H\w d, \tilde H\w u)$.
+You are asked to set the mixing angle so that $\tilde\chi^0\sub 1\equiv \tilde B$.
+
+As `param_card.dat` follows [SLHA](https://arxiv.org/abs/hep-ph/0311123), the mixing should be written in `NMIX` block as
+$$\tilde\chi^0 = N\begin{pmatrix}-\ii\tilde B \\\\ -\ii\tilde W^3 \\\\ \tilde H\w d \\\\ \tilde H\w u\end{pmatrix}$$
+with $N$ being an unitary matrix.
+
+So, it is easy to set $N$ as a unit matrix.
+
+---
+Therefore, `generate` is now
+```mg5large
+> generate e e > el+ el- / n2 n3 n4
+```
+and `param_card.dat` should be
+
+![:code_title](param_card.dat)
+```mg5card
+BLOCK MASS #
+...
+      1000011    200       # set of param :1*msl1, 1*msl2
+...
+      1000022    100       # mneu1
+...
+BLOCK NMIX # 
+      1 1     1         # rnn1x1
+      1 2     0         # rnn1x2
+      1 3     0         # rnn1x3
+      1 4     0         # rnn1x4
+      2 1     0         # rnn2x1
+      2 2     1         # rnn2x2
+      2 3     0         # rnn2x3
+      2 4     0         # rnn2x4
+      3 1     0         # rnn3x1
+      3 2     0         # rnn3x2
+      3 3     1         # rnn3x3
+      3 4     0         # rnn3x4
+      4 1     0         # rnn4x1
+      4 2     0         # rnn4x2
+      4 3     0         # rnn4x3
+      4 4     1         # rnn4x4
+...
+```
+
+---
+Now you can go straightforwardly. ![:answer](I obtained 8.69fb.)
+
+---
+To calculate the process of $\phi^4$-theory, you need to generate the UFO from `phi4.fr`the UFO files from `phi4.fr` as explained in [Lecture A-2](Lecture_A.html#feynrules).
+
+Then you move the UFO files to `models` directory of MG5_aMC installation.
+```sh
+> mv phi_to_four_theory_UFO (your path to MG5)/models/
+> cd (your path to MG5)
+> ls models/
+```
+```output
+2HDM/      4Gen/    DY_SM/    EWdim6/
+...
+phi_to_four_theory_UFO/
+...
+```
+(or you can rename `phi_to_four_theory_UFO` to `phi4` etc.)
+
+Now you are ready!
+```mg5large
+> import model phi_to_four_theory_UFO
+> generate phi phi > phi phi
+> output phiphi2phiphi
+> launch
+```
+
+---
+The cards should be:
+![:code_title](param_card.dat)
+```mg5card
+Block hoge 
+    1   0.1        # lam 
+    3 1.000000e+02 # mmm 
+
+Block mass 
+  9000001 1 # mphi 
+```
+and
+![:code_title](run_card.dat)
+```mg5card
+     0         = lpp1    ! beam 1 type 
+     0         = lpp2    ! beam 2 type
+     100.0     = ebeam1  ! beam 1 total energy in GeV
+     100.0     = ebeam2  ! beam 2 total energy in GeV
+```
+
+---
+Compare your results with the theoretical cross section!
+
+$$
+\sigma
+= \frac{1}{4E\sub a E\sub b |v\sub a-v\sub b|}\int\dd\Pi_2/2 \ |\mathcal M|^2
+$$
+with $E\sub a=E\sub b=100\GeV$, $|v\sub a-v\sub b|=2|v\sub a|=1.9999$, and $\mathcal M=\lambda=0.1$.
+The phase space is halved because the final state particles are identical particles:
+$$
+\int\dd\Pi_2/2 = \frac{1}{2}\int\frac{\dd\Omega}{4\pi}\frac{1}{8\pi}\frac{2|p\w{final}|}{E\w{cm}}
+= 0.01989.
+$$
+Finally,
+$$
+\sigma\w{LO}(\phi\phi\to\phi\phi) = 2.486\times 10^{-9}\GeV^{-2} = 0.968\pb.
+$$
