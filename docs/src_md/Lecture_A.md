@@ -137,7 +137,7 @@ classes model {SM} initialized
   You can expand them by `//. Abbr[] //. Subexpr[]`.
   Let's expand the internal expressions! For example, expand `amplitude`.]
 .quiz[
-  Try to replace `FermionChains -> VA` by `FermionChains -> Dirac`.
+  Try to replace `FermionChains -> VA` by `FermionChains -> Chiral`.
   Check that it gives a different `amplitude`.
   Verify that, even though, the crosssections are the same as `VA` case.
   (Don't forget to call `ClearProcess[]` before `CalcFeynAmp`)]
