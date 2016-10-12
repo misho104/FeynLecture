@@ -41,7 +41,6 @@ CheckDiagonalQuadraticTerms[ExpandedLagrangian]
 (*Quit the kernel (by Quit[] or from menu) before executing this block!*)
 
 
-UseDefaultPackages[];
 SetDirectory[NotebookDirectory[]];
 <<FeynRules`;
 FR$Parallelize = False;
