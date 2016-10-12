@@ -464,7 +464,7 @@ where
  - $\mu\w F$ is the factorization scale.
  - $\sigma(ab\to t\bar t)$ is the partonic cross section with $E\sub a = x\sub a E\w{beam}$ etc.:
 
-$$\sigma(ab\to t\bar t) = \frac{1}{2 E\sub a E\sub b |v\sub a-v\sub b|} \int\w{phase space}\dd\Pi\sub 2 \left|\mathcal M(ab\to t\bar t)\right|^2.$$
+$$\sigma(ab\to t\bar t) = \frac{1}{2 E\sub a 2 E\sub b |v\sub a-v\sub b|} \int\w{phase space}\dd\Pi\sub 2 \left|\mathcal M(ab\to t\bar t)\right|^2.$$
 
 .exquiz[
   Look up "parton luminosity" in literatures, e.g., Ellis-Stirling-Webber Chapter 7.]
