@@ -373,7 +373,7 @@ M$ClassesDescription = {
   S[1] == {
         ClassName -> phi,
         SelfConjugate -> True,
-        Mass -> {mmm, 100},
+        Mass -> {mphi, 100},
         Width -> 0,
         PropagatorLabel -> phi,
         PropagatorType -> S,
@@ -439,7 +439,7 @@ There are 6 tests.
 You will find that
  - `The Lagrangian is hermitian.`
  - `All mass terms are diagonal.`
- - Analytical values (calculated from Lagrangian) and Model-file values (`Mass -> {mmm, 100}`) of masses are in agreement.
+ - Analytical values (calculated from Lagrangian) and Model-file values (`Mass -> {mphi, 100}`) of masses are in agreement.
  - `All kinetic terms are diagonal.`
  - `All kinetic terms are correctly normalized.`
  - `All quadratic terms are diagonal.`
