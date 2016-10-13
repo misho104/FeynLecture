@@ -723,16 +723,16 @@ name: looptools
 
 ### 3. One-loop level calculation with LoopTools
 
-#### `Lecture3-1.nb` : QCD one-loop calculation
+#### `Lecture3-1.nb` : QED one-loop calculation
 
 The last topic: * **LoopTools** for numerical evaluation of one-loop integrals. *
 
-We consider $\sigma_{\text{1-loop}}(u\bar u\to c\bar c)$ as an example to learn how to use LoopTools, and we will see a subtlety in this evaluation.
+We consider $\sigma_{\text{1-loop}}(e^+e^-\to\mu^+\mu^-)$ as an example to learn how to use LoopTools, and we will see a subtlety in this evaluation.
 
 .quiz[
-  How many one-loop diagrams does the process have? ![:answer](Two diagrams, which are box diagrams with gluons.) ]
+  How many one-loop diagrams does the process have? ![:answer](Two diagrams, which are box diagrams with photons.) ]
 .quiz[
-  What kind of subtlety do we expect? ![:answer](Infrared divergence, because the gluon may have zero-momentum.) ]
+  What kind of subtlety do we expect? ![:answer](Infrared divergence, because the photons may have momentum^2 = 0.) ]
 
 ---
 .quiz[
@@ -750,7 +750,7 @@ One-loop level diagrams can be included by introducing one-loop level topologies
 ```mathematica
 topo0 = CreateTopologies[0, 2 -> 2];
 topo1 = CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Internal}];
-topologies = Join[topo1, topo0];
+topo01 = Join[topo0, topo1];
 ```
 Then using `topologies` we can generate both tree and one-loop diagrams.
 
@@ -761,10 +761,10 @@ Then using `topologies` we can generate both tree and one-loop diagrams.
 The one-loop level amplitude has special functions, `C0i[...]` and `D0i[...]`:
 ```output
 ...
-Alfas2 (
-    7/3 C0i[cc0, S, MC2, MC2, 0, 0, MC2]
-  - 7/2 D0i[dd00, S, MC2, T, MU2, MC2, MU2, 0, 0, MC2, MU2]
-  + 5/3 C0i[cc0, S, MC2, MC2, 0, 0, MC2]
+Alfa2 (
+     4 C0i[cc0, S, MM2, MM2, 0, 0, MM2]
+  - 10 D0i[dd00, S, ME2, U, MM2, ME2, MM2, 0, 0, ME2, MM2]
+  -  4 D0i[dd1, S, ME2, T, MM2, ME2, MM2, 0, 0, ME2, MM2]
   + ... )
 ```
 They are Passarino-Veltman integrals .ref[[Nucl. Phys. *B160* (1979) 151](http://dx.doi.org/10.1016/0550-3213%2879%2990234-7)].
@@ -790,8 +790,8 @@ Out[]:= -0.0331433 - 0.235571 I
 
 ---
 As we (should) have noticed, this crosssection
-$\sigma_{\text{1-loop}}(u\bar u\to c\bar c)$
-has IR divergence, because one of the gluons in the loop can have $k=0$ and its propagator
+$\sigma_{\text{1-loop}}(e^+e^-\to\mu^+\mu^-)$
+has IR divergence, because one of the photons in the loop can have $k=0$ or $k^2=0$ and its propagator
 $$
 \frac{-\ii}{k^2 + \ii \epsilon }
 $$
@@ -809,7 +809,7 @@ but also we can check the presence of IR divergence by ourselves by varying the 
 ```mathematica
 SetLambda[10^2];
 ```
-The matrix element should not depend on Λ but does, which means it is IR-divergent.
+The matrix element should not depend on λ but does, which means it is IR-divergent.
 
 ---
 .exquiz[
@@ -839,9 +839,7 @@ Now you can easily calculate the decay rate of $h\to\gamma\gamma$!
 ---
 .exquiz[
   Check that this calculation is
-  ![:hint](
-    To verify UV finiteness, you should look up `UVDivergentPart` in the FormCalc manual.
-    For IR finiteness, `SetLambda` in the LoopTools manual will help you.)
+  ![:hint](To verify UV finiteness, you should look up `UVDivergentPart` in the FormCalc manual. For IR finiteness, `SetLambda` in the LoopTools manual will help you.)
    * UV finite,
    * IR finite,
    * gauge invariant.]
