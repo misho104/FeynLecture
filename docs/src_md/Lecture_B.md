@@ -925,3 +925,111 @@ Finally,
 $$
 \sigma\w{LO}(\phi\phi\to\phi\phi) = 2.486\times 10^{-9}\GeV^{-2} = 0.968\pb.
 $$
+
+---
+name: detector
+
+### 3. Detector simulation with Pythia-PGS + Delphes
+
+Parton level is not what we see:
+
+ - hadronization etc. by *Pythia6* / *Pythia8* / *HERWIG(++)* / ...
+   - **QCD hadronization**
+   - **decays**
+   - extra radiations (initial- / final state radiation)
+   - beam remnant (multiple interactions)
+ - detector simulation by *Delphes* / *PGS* / *GEANT* / ...
+   - detector alignment (coverage, gap, ...)
+   - detector efficiency / resolution
+
+Here we will use **Pythia6** (included in Pythia-PGS) and **Delphes3**.
+
+.note[
+  While Delphes3 is current standard, Pythia6 (Pythia-PGS) is (is becoming) obsolete.
+  We could use Pythia8 instead, but because of simpler installation we will use Pythia6 in this lecture.
+
+  (This lecture is also subject to update.)]
+
+---
+You can install Pythia-PGS and Delphes from MG5 interface:
+```mg5large
+> install pythia-pgs
+> install Delphes
+```
+Also install MadAnalysis to have plots:
+```mg5large
+> install MadAnalysis
+```
+
+---
+Then you can use them:
+```mg5large
+> generate p p > t t~
+> output pp2tt_delphes
+> launch
+> 3
+> 0
+```
+(type `3` and `0` as guided in the message) or instead
+```mg5large
+> launch --laststep=delphes
+```
+Now you can see on the HTML page that pythia and delphes outputs (and plots) are generated.
+
+**Warning:** Pythia-PGS + Delphes requires a large disk space (1&ndash;2GB) for each run.
+
+.quiz[
+  From the HTML page, open and compare the plots generated at parton-, pythia-, and Delphes-levels.]
+
+---
+The event files are stored in `Event` directory:
+```shlarge
+> ls pp2tt_delphes
+```
+```output
+Cards   Events       HTML        MGMEVersion.txt             README
+README.systematics   RunWeb      Source    SubProcesses      TemplateVersion.txt
+bin     crossx.html  index.html  lib       madevent.tar.gz   myprocid
+```
+```shlarge
+> ls pp2tt_delphes/Events/run_01
+```
+```output
+run_01_tag_1_banner.txt     tag_1_delphes.log         tag_1_delphes_events.lhco.gz
+tag_1_delphes_events.root   tag_1_pythia.log          tag_1_pythia_events.hep.gz
+tag_1_pythia_events.lhe.gz  tag_1_pythia_syst.dat.gz  unweighted_events.lhe.gz
+```
+
+`*_delphes_events.root` is the Delphes output, i.e., **data from the detectors**.
+
+.quiz[
+  Before looking into the output, read the log files `*.log`.]
+
+---
+You can browse the root file on `ROOT` `TBrowser`:
+```shlarge
+> root
+```
+```output
+   ------------------------------------------------------------
+  | Welcome to ROOT 6.06/00                http://root.cern.ch |
+  |                               (c) 1995-2014, The ROOT Team |
+  | Built for macosx64                                         |
+  | From tag v6-06-00, 9 December 2015                         |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q' |
+   ------------------------------------------------------------
+```
+```root
+> TBrowser my_browser
+> .q
+```
+  or more directly,
+  ```sh
+> root -l -e "TBrowser my_browser" tag_1_delphes_events.root
+```
+
+---
+But what did you do? Which detectors are used?
+
+.quiz[
+  To check this, read `pythia_card` and `delphes_card`.]
