@@ -710,7 +710,7 @@ You can also use the `set` command (or write a script):
 > launch --laststep=parton
 > set mass 1000011 200
 > set ebeam 4000
-> 0
+> done
 ```
 
 .note[
@@ -720,9 +720,11 @@ You can also use the `set` command (or write a script):
       1000011    200       # set of param :1*msl1, 1*msl2
 ```
   i.e., `set msl1 200` instead of `set mass 1000011 200`.
-  But I do not recommend to use this feature because it needs the comment line is correctly written, and very dangerous!]
+  But I do not recommend to use `msl1` etc. because this feature assumes the comment line is correctly and carefully written.]
 
 ---
+name: note_on_set_decay
+
 .note[
   You can use `set lhc 8` instead of `set ebeam 4000`:
 ```mg5
@@ -734,12 +736,27 @@ INFO: modify parameter lpp2 of the run_card.dat to 1
 INFO: modify parameter ebeam1 of the run_card.dat to 4000.0
 INFO: modify parameter ebeam2 of the run_card.dat to 4000.0
 ```
-  This will be useful in scripting.]
+  This will be useful in scripting. You can also use `set ilc 500`.]
+
+.note[
+  In fact, **the decay rate should also be set correctly** for particles with decays or particles in propagators.
+  Here we skipped that procedure because `el` appears just as final state stable particles.
+
+  You can set decay rates as
+```mg5
+> set decay 1000011 0.02
+```
+  or rather
+```mg5
+> set decay 1000011 auto
+```
+  will automatically calculate the decay rate and branching ratios.
+  (Of course you are asked to check the automatical calculation is correct.)]
 
 ---
 Then you are asked to compare your results with literatures so that you can be confident.
 
-If you are lazy enough, you google `slepton LHC cross section` and [find several plots](https://www.google.co.kr/search?q=slepton+LHC+cross+section&amp;tbm=isch).
+If you are as lazy as I, you google `slepton LHC cross section` and [find several plots](https://www.google.co.kr/search?q=slepton+LHC+cross+section&amp;tbm=isch).
 For example, [this figure](https://www.google.co.kr/search?q=slepton+LHC+cross+section&amp;tbm=isch&amp;imgrc=Nsy9FkD76jYgFM%3A) will be sufficient for this purpose.
 
 If you are a bit more careful, you will reach [LHC SUSY Cross Section Working Group](https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections), or [arXiv:1310.2621](https://arxiv.org/abs/1310.2621), and find that
@@ -787,9 +804,13 @@ Then everything else is as before:
 ```
 and you will get the crosssection. ![:answer](I obtained 25.9fb.)
 
+.note[
+  These syntax has some subtleties about gauge invariance.
+  For details, consult tutorials by developers, e.g., [one by Olivier Mattelaer](https://cp3.irmp.ucl.ac.be/projects/madgraph/raw-attachment/wiki/Madrid2015_2%20MC/Tutorial.pdf).]
+
 ---
 .note[
-  You can manually edit the files instead of `set`:
+  FYI, if you want to edit the files manually instead of using `set`, they will be:
 ![:code_title](param_card.dat)
 ```mg5card
 ...
@@ -811,7 +832,6 @@ and you will get the crosssection. ![:answer](I obtained 25.9fb.)
 ...
 ```
 ]
-
 
 ---
 ##### Solutions to the extra quizzes
@@ -978,10 +998,15 @@ Now you can see on the HTML page that pythia and delphes outputs (and plots) are
 
 **Warning:** Pythia-PGS + Delphes requires a large disk space (1&ndash;2GB) for each run.
 
+.note[
+  This is mainly because the STDHEP output (`*.hep` or compressed version `*.hep.gz`) contains all the information of PYTHIA output.
+  They are passed to Delphes, so you can remove them after you generate ROOT or LHCO output with Delphes.]
+
+---
+Let's check the outputs!
 .quiz[
   From the HTML page, open and compare the plots generated at parton-, pythia-, and Delphes-levels.]
 
----
 The event files are stored in `Event` directory:
 ```shlarge
 > ls pp2tt_delphes
@@ -1004,10 +1029,15 @@ tag_1_pythia_events.lhe.gz  tag_1_pythia_syst.dat.gz  unweighted_events.lhe.gz
 
 .quiz[
   Before looking into the output, read the log files `*.log`.]
+.quiz[
+  Read LHCO output (`*.lhco.gz`). You may have to unarchive the file by
+```sh
+> gunzip tag_1_delphes_events.lhco.gz
+```]
 
 ---
-You can browse the root file on `ROOT` `TBrowser`:
-```shlarge
+You can browse the root file with ROOT `TBrowser`:
+```sh
 > root
 ```
 ```output
@@ -1027,9 +1057,313 @@ You can browse the root file on `ROOT` `TBrowser`:
   ```sh
 > root -l -e "TBrowser my_browser" tag_1_delphes_events.root
 ```
+.quiz[
+  Try to understand what information is stored.
+  The header file `classes/DelphesClasses.h` in `Delphes` directory (in your MG5 installation) may help you.]
 
 ---
 But what did you do? Which detectors are used?
 
 .quiz[
   To check this, read `pythia_card` and `delphes_card`.]
+ 
+---
+`pythia_card.dat` contains configurations for Pythia (fortran style):
+![:code_title](pythia_card.dat)
+```fortran
+!...Parton showering on or off  
+      MSTP(61)=1
+      MSTP(71)=1
+ 
+!...Fragmentation/hadronization on or off 
+      MSTJ(1)=1
+ 
+!...Multiple interactions on or off 
+      MSTP(81)=20 
+
+!...Don't stop execution after 10 errors
+      MSTU(21)=1
+
+!...PDFset if MG set not supported by pythia-pgs package (set in lhapdf5 or higher)
+      LHAID= 10041
+```
+In principle you can write detailed configurations for hadronization, fragmentation, ISR, FSR, MI, etc.
+
+But in practice, as it is not our main interest, we (theoriests) often use the default card or just import an well-known configuration such as [ATLAS MC09 tune](https://cds.cern.ch/record/1247375/).
+
+---
+`delphes_card.dat` is a bit more important.
+
+Delphes is composed of many small modules, and we can build own detectors from those modules.
+You can illustrate the card by using `doc/data_flow.sh` in Delphes if you have installed a package `graphviz`.
+For example, the default delphes card is illustrated as follows:
+
+![:width 100%](imgs/data_flow.png)
+
+You can see "objects" are passed from modules to modules and stored in final "branches".
+
+---
+The first part defines the order of module execution:
+![:code_title](delphes_card.dat)
+```mg5card
+#######################################
+# Order of execution of various modules
+#######################################
+
+set ExecutionPath {
+  ParticlePropagator
+
+  ChargedHadronTrackingEfficiency
+  ElectronTrackingEfficiency
+  MuonTrackingEfficiency
+...
+  TrackMerger
+  Calorimeter
+  EFlowMerger
+
+  PhotonEfficiency
+  PhotonIsolation
+
+  ElectronFilter
+  ElectronEfficiency
+  ElectronIsolation
+...
+
+  BTagging
+  TauTagging
+
+  UniqueObjectFinder
+
+  ScalarHT
+
+  TreeWriter
+}
+```
+---
+Then each module is defined.
+For example:
+![:code_title](delphes_card.dat)
+```mg5card
+module Efficiency ElectronEfficiency {
+  set InputArray ElectronFilter/electrons
+  set OutputArray electrons
+
+  # set EfficiencyFormula {efficiency formula as a function of eta and pt}
+
+  # efficiency formula for electrons
+  set EfficiencyFormula {                                      (pt <= 10.0) * (0.00) +
+                                           (abs(eta) <= 1.5) * (pt > 10.0)  * (0.95) +
+                         (abs(eta) > 1.5 && abs(eta) <= 2.5) * (pt > 10.0)  * (0.85) +
+                         (abs(eta) > 2.5)                                   * (0.00)}
+}
+```
+`ElectronEffiency` is defined based on `Efficiency` module.
+It reads `electrons` output from `ElectronFilter` module, and outputs `electrons`.
+A parameter `EfficiencyFormula` is also defined.
+In this card the efficiency is set to
+
+ - miss all electrons with $P\w T$ < 10 GeV or |η| > 2.5.
+ - detect with a probability of 95% (85%) if |η| < 1.5 (> 1.5).
+
+.exquiz[
+  Read `modules/Efficiency.cc` and `.h` to see what the `Efficiency` module does.]
+
+---
+Finally the selected outputs are written in the output `root` file:
+![:code_title](delphes_card.dat)
+```mg5card
+module TreeWriter TreeWriter {
+# add Branch InputArray BranchName BranchClass
+  add Branch Delphes/allParticles Particle GenParticle
+
+  add Branch TrackMerger/tracks Track Track
+  add Branch Calorimeter/towers Tower Tower
+
+  add Branch Calorimeter/eflowTracks EFlowTrack Track
+  add Branch Calorimeter/eflowPhotons EFlowPhoton Tower
+  add Branch Calorimeter/eflowNeutralHadrons EFlowNeutralHadron Tower
+
+  add Branch GenJetFinder/jets GenJet Jet
+  add Branch GenMissingET/momentum GenMissingET MissingET
+
+  add Branch UniqueObjectFinder/jets Jet Jet
+  add Branch UniqueObjectFinder/electrons Electron Electron
+  add Branch UniqueObjectFinder/photons Photon Photon
+  add Branch UniqueObjectFinder/muons Muon Muon
+  add Branch MissingET/momentum MissingET MissingET
+  add Branch ScalarHT/energy ScalarHT ScalarHT
+}
+```
+Later you can read, e.g., the `Particle` branch (an object like an array) in your analysis code; elements in the array is an object of `GenParticle` class, which is defined in `classes/DelphesClasses.h`.
+
+---
+.quiz[
+  Check the following points in `delphes_card.dat`.
+
+  - coverage and strength of the magnetic field (in the tracker)
+  - efficiency for electrons and muons
+  - momentum resolutions
+  - how jets are defined (which algorithm is used)
+  - tau- and b-tag efficiency ]
+.exquiz[
+  Check further the following points:
+  - energy resolutions
+  - how the calorimeters are defined
+  - what the isolation modules do
+  - how the tau- and b-tagging are done ]
+
+.note[
+  You can use other pre-installed cards or your own cards by typing the path to the card in the prompt
+  ```output
+[0, done, 1, param, 2, run, 3, pythia, 4, enter path, ... ]
+>
+```]
+
+---
+#### Important note about decays in pythia-pgs
+There is one important note when you want `pythia-pgs` packages to handle decays of BSM particles.
+
+[As stated before](#note_on_set_decay), the decay width of new particles should be set properly in `param_card.dat`, especially for propagator particles or decaying particles.
+Also, of course, the branching ratio should be set for decaying particles.
+MadGraph5 uses the `decay` blocks in its Monte Carlo simulation.
+
+Pythia6 does not read the block automatically. *In principle,* we need to write
+![:code_title](pythia_card.dat)
+```fortran
+      IMSS(22)=24
+```
+in `pythia_card.dat` so that Pythia6 reads the decay blocks in `param_card.dat`.
+
+---
+This code is automatically added, as written in `pythia-pgs/src/ME2pythia.f`:
+![:code_title](pythia-pgs/src/ME2pythia.f)
+```fortran
+      if(model(1:2).ne.'sm'.and.model(1:4).ne.'mssm') then
+         call PYGIVE('IMSS(22)= 24') ! Logical unit number of SLHA decay file
+      endif
+```
+
+Therefore, **if your model name does not start with `sm` or `mssm`**, the decay rate and branching ratio in `param_card.dat` is automatically used in pythia-pgs.
+
+**If the name begins with `sm` or `mssm`**, the width and BRs in `param_card.dat` is used in pythia-pgs only if you have set `IMSS(22)=24` in `pythia_card.dat`.
+Otherwise Pythia6 internally calculates the widths and BRs and uses it.
+
+---
+name: analysis
+
+### 4. Analysis
+
+Usually, the goal of MC simulation is not to know the overall cross section, nor to generate events.
+We want to analyze the events; in particular, we want to impose event selections on the events to know how many events pass the selections, or to draw plots after the selections.
+
+There are several packages for this "event analysis", such as
+ - [CheckMATE](http://checkmate.hepforge.org/)
+ - [MadAnalysis](http://madanalysis.irmp.ucl.ac.be/)
+ - [DelphesAnalysis](https://cp3.irmp.ucl.ac.be/projects/delphes/wiki/WorkBook/DelphesAnalysis)
+
+As they have helpful tutorial, I am not giving another tutorial for these tools.
+Instead, in this section we will see how to write a basic analysis without those tools.
+.quiz[
+  Try to use CheckMATE, following [its tutorial](http://checkmate.hepforge.org/online_tutorial/web/index.php).]
+
+---
+[If you have successfully installed CheckMATE](Lecture_0.html#install_checkmate), your root has python-bindings:
+```shlarge
+> root-config --has-python
+```
+```output
+yes
+```
+Then you can use `ROOT` module.
+Try to execute
+```shlarge
+> python -c "import ROOT; print ROOT"
+```
+```output
+<module 'ROOT' from '/usr/local/root/lib/ROOT.pyc'>
+```
+If you have an error like `ImportError: No module named ROOT`, you have to add `$ROOTSYS/lib` to `$PYTHONPATH`.
+For example,
+```sh
+> export PYTHONPATH=$ROOTSYS/lib
+> python -c "import ROOT; print ROOT"
+```
+.note[
+  You can check the current value by
+```sh
+echo $ROOTSYS
+echo $PYTHONPATH
+```
+]
+If you still have error, check if the file `$ROOTSYS/lib/ROOT.py` exists.
+If not, root installation might have a problem.
+
+---
+Also you have to prepend (or append) your delphes installation path to `$LD_LIBRARY_PATH`:
+```sh
+> export LD_LIBRARY_PATH=(...)/MG5_aMC/Delphes:$LD_LIBRARY_PATH
+```
+(Make sure you have `libDelphes.so` in that directory (e.g., `(...)/MG5_aMC/Delphes`).
+
+---
+Then you can write the simple programs such as
+```python
+#!/usr/bin/python
+import ROOT     # to use ROOT
+import ctypes   # to use library generated by Delphes
+ctypes.cdll.LoadLibrary("libDelphes.so")
+
+events_before_cut = 0
+events_after_cut = 0
+
+myfile = ROOT.TFile("pp2tt/Events/run_01/tag_1_delphes_events.root")
+mytree = myfile.Delphes
+
+for event in mytree:
+    events_before_cut += 1
+    met  = event.MissingET[0].MET
+    nlep = event.Electron.GetEntries() + event.Muon.GetEntries()
+    if nlep == 0 and met < 50:
+        events_after_cut += 1
+
+print "all events:", events_before_cut
+print "after cuts:", events_after_cut
+```
+.quiz[
+  What kind of selection is used in this analysis?]
+
+---
+Or you can draw a simple histogram like
+```python
+#!/usr/bin/python
+import ROOT     # to use ROOT
+import ctypes   # to use library generated by Delphes
+ctypes.cdll.LoadLibrary("libDelphes.so")
+
+hist_ptj1 = ROOT.TH1D("hist_ptj1", "first jet PT;  GeV; /10GeV", 50, 0, 500);
+hist_ptj2 = ROOT.TH1D("hist_ptj2", "second jet PT; GeV; /10GeV", 50, 0, 500);
+hist_met  = ROOT.TH1D("hist_met",  "mET; GeV; /10GeV", 50, 0, 500);
+hist_nlep = ROOT.TH1D("hist_nlep", "##leptons", 6, -0.5, 5.5);
+
+myfile = ROOT.TFile("pp2tt/Events/run_01/tag_1_delphes_events.root")
+mytree = myfile.Delphes
+for event in mytree:
+    jet_pt = [j.PT for j in event.Jet]
+    jet_pt.sort(reverse=True)
+    if len(jet_pt) >= 1:
+        hist_ptj1.Fill(jet_pt[0])
+    if len(jet_pt) >= 2:
+        hist_ptj2.Fill(jet_pt[1])
+    met = event.MissingET[0].MET
+    hist_met.Fill(met)
+    nlep = event.Electron.GetEntries() + event.Muon.GetEntries()
+    hist_nlep.Fill(nlep)
+
+# draw graphs on canvas
+c1 = ROOT.TCanvas("c1")
+c1.Divide(2, 2)
+c1.cd(1); hist_ptj1.Draw();  c1.cd(2); hist_ptj2.Draw()
+c1.cd(3); hist_met.Draw();   c1.cd(4); hist_nlep.Draw()
+c1.SaveAs("hist.pdf")
+```
+For details of each command / class, read [ROOT manual](https://root.cern.ch/guides/users-guide) or `classes/DelphesClasses.h` in Delphes.
