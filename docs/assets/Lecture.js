@@ -32,6 +32,7 @@ if(window.MathJax){
 }
 
 remark.macros.code_title = function() { return '<h6 class="code_title">' + this + '</h6>'; };
+remark.macros.code_test = function(cmd) { return ''; };
 remark.macros.width = function (width) { return '<a href="' + this + '"><img style="width:' + width + '" src="' + this + '" /></a>'; };
 remark.macros.height = function (height) { return '<img style="height:' + height + '" src="' + this + '" />'; };
 remark.macros.style = function (style) { return '<span style="' + style + '">' + this + '</span>'; };

@@ -57,6 +57,7 @@ What is the probability to get the sum = 7?
 
 Answer: *~~1/6~~* ...with the following `python2` code, the probability is *approximately* 16.35%.
 
+![:code_test](python2 rolling_dice_1.py)
 ```python
 import random    # we will use 'random' module
 samples = 10000
@@ -89,6 +90,7 @@ What is the probability to get the sum = 7?
 
 Answer: With the following `python2` code, *approximately* 24%.
 
+![:code_test](python2 rolling_dice_2.py)
 ```python
 import random    # we will use 'random' module
 samples = 10000
@@ -122,6 +124,7 @@ $$
 Answer: As the integrand &le; 1, we can calculate the integral as the probability that an arrow thrown into the square hits below the line.
 With the following python2 code, *approximately 0.87*.
 .clear[
+![:code_test](python2 numerical_integration.py)
 ```python
 import random
 import math
@@ -1307,6 +1310,7 @@ Also you have to prepend (or append) your delphes installation path to `$LD_LIBR
 
 ---
 Then you can write the simple programs such as
+![:code_test](python2 pyroot_selection.py)
 ```python
 #!/usr/bin/python
 import ROOT     # to use ROOT
@@ -1334,6 +1338,7 @@ print "after cuts:", events_after_cut
 
 ---
 Or you can draw a simple histogram like
+![:code_test](python2 pyroot_histogram.py)
 ```python
 #!/usr/bin/python
 import ROOT     # to use ROOT
