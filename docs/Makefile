@@ -32,7 +32,13 @@ clean:
 	sed -e "s!%TITLE%!$(title) $*!" -e "/<textarea id=\"source\">/r ${SRC}" -e "s/%SOURCE%//" ${TEMPLATE} > $*.html
 
 .PHONY: archive
-archive: slides.zip
+archive: slides.zip feynlecture_a.tar.gz feynlecture_a.zip
 slides.zip: clean cold
 	zip slides.zip -r $(targets) assets remote index.html
+
+material_a = Lecture* models phi* readme.md MathematicaBasic.pdf MathematicaBasic.txt
+feynlecture_a.tar.gz:
+	(cd .. && tar czvf docs/$@ $(material_a))
+feynlecture_a.zip:
+	(cd .. && zip -r docs/$@ $(material_a))
 
