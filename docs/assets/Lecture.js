@@ -1,35 +1,27 @@
-if(window.MathJax){
-  MathJax.Hub.Config({
-    tex2jax: {
-      skipTags: ['script', 'noscript', 'style', 'textarea'],
-      inlineMath: [ ['$','$'] ],
-      displayMath: [ ['$$','$$'] ]
-    },
-    TeX: {
-      Macros: {
-        dd: ["\\mathrm{d}"],
-        ee: ["\\mathrm{e}"],
-        ii: ["\\mathrm{i}"],
-        unit: ["\\,\\mathrm{#1}", 1],
-        TeV: ["\\unit{GeV}"],
-        GeV: ["\\unit{GeV}"],
-        MeV: ["\\unit{GeV}"],
-        keV: ["\\unit{keV}"],
-        fb: ["\\unit{fb}"],
-        pb: ["\\unit{pb}"],
-        w: ["_{\\mathrm{#1}}", 1],
-        sub: ["_"],
-        conj: ["^*"]
-      }
+window.MathJax = {
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea'],
+    inlineMath: [ ['$','$'] ],
+    displayMath: [ ['$$','$$'] ]
+  },
+  TeX: {
+    Macros: {
+      dd: ["\\mathrm{d}"],
+      ee: ["\\mathrm{e}"],
+      ii: ["\\mathrm{i}"],
+      unit: ["\\,\\mathrm{#1}", 1],
+      TeV: ["\\unit{GeV}"],
+      GeV: ["\\unit{GeV}"],
+      MeV: ["\\unit{GeV}"],
+      keV: ["\\unit{keV}"],
+      fb: ["\\unit{fb}"],
+      pb: ["\\unit{pb}"],
+      w: ["_{\\mathrm{#1}}", 1],
+      sub: ["_"],
+      conj: ["^*"]
     }
-  });
-  MathJax.Hub.Queue(function() {
-    $(MathJax.Hub.getAllJax()).map(function(index, elem) {
-      return(elem.SourceElement());
-    }).parent().addClass('has-jax');
-  });
-  MathJax.Hub.Configured();
-}
+  }
+};
 
 remark.macros.code_title = function() { return '<h6 class="code_title">' + this + '</h6>'; };
 remark.macros.code_test = function(cmd) { return ''; };
