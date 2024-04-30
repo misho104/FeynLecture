@@ -4,7 +4,7 @@
     <title>%TITLE%</title>
     <meta charset="utf-8">
     <style>@import 'assets/Lecture.css';</style>
-    <script src="assets/jquery.min_3.1.0.js"></script>
+    <script src="assets/jquery-3.7.1.min.js"></script>
     <script src="assets/remark-0.14.0.min.js"></script>
     <script src="assets/Lecture.js"></script>
   </head>
